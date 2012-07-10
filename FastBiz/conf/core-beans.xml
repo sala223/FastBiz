@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+	http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	<bean id="SOLUTION_FACTORY" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:/comp/SolutionFactory"></property>
+		<property name="lookupOnStartup" value="false"></property>
+		<property name="cache" value="true"></property>
+		<property name="proxyInterface" value="com.fastbiz.core.solution.SolutionFactory"></property>
+	</bean>
+	<bean id="DATASOURCE" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:/comp/ds/test"></property>
+		<property name="lookupOnStartup" value="true"></property>
+		<property name="cache" value="true"></property>
+		<property name="proxyInterface" value="javax.sql.DataSource"></property>
+	</bean>
+	<bean id="XADATASOURCE" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:/comp/ds/test"></property>
+		<property name="lookupOnStartup" value="true"></property>
+		<property name="cache" value="true"></property>
+		<property name="proxyInterface" value="javax.sql.XADataSource"></property>
+	</bean>
+	<bean id="JPA_TRANSACTION_MANAGER" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="ENTITY_MANAGER_FACTORY" />
+	</bean>
+	<bean id="ENTITY_MANAGER_FACTORY" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="main" />
+	</bean>
+	<bean id="VALIDATOR_MESSAGE_INTERPOLATOR" class="com.fastbiz.core.validation.message.MessageSourceMessageInterpolator">
+		<constructor-arg index="0" ref="SOLUTION_MESSAGE_SOURCE_CREATOR" />
+	</bean>
+	<bean id="SOLUTION_MESSAGE_SOURCE_CREATOR" class="com.fastbiz.core.message.DefaultSolutionMessageSourceCreator" scope="singleton"></bean>
+	<bean id="VALIDATOR" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.apache.bval.jsr303.ApacheValidationProvider" />
+		<property name="messageInterpolator" ref="VALIDATOR_MESSAGE_INTERPOLATOR" />
+	</bean>
+	<tx:annotation-driven transaction-manager="JPA_TRANSACTION_MANAGER" order="10" />
+	<bean id="TRANSACTION_ATTRIBUTE_SOURCE" class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource" />
+	<bean id="TRANSACTION_ADVISOR" class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor">
+		<property name="TransactionInterceptor" ref="TRANSACTION_INTERCEPTOR" />
+		<property name="order" value="0" />
+	</bean>
+	<bean id="TRANSACTION_INTERCEPTOR" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<constructor-arg index="0" ref="JPA_TRANSACTION_MANAGER" />
+		<constructor-arg index="1" ref="TRANSACTION_ATTRIBUTE_SOURCE" />
+	</bean>
+	<bean id="TENANT_INJECTION_INTERCEPTOR" class="com.fastbiz.core.tenant.TenantInjectionInterceptor">
+		<constructor-arg index="0" ref="JPA_TRANSACTION_MANAGER" />
+		<constructor-arg index="1" ref="TENANT_HOLDER" />
+	</bean>
+	<bean id="TENANT_HOLDER" class="com.fastbiz.core.tenant.TenantHolder" />
+	<bean id="TENANT_ADVISOR" class="org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor">
+		<property name="expression"
+			value="@within(org.springframework.transaction.annotation.Transactional) or 
+				   @within(org.springframework.stereotype.Service) or 
+				   @annotation(org.springframework.transaction.annotation.Transactional)" />
+		<property name="advice" ref="TENANT_INJECTION_INTERCEPTOR" />
+	</bean>
+</beans>

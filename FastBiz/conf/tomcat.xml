@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><!-- Please refer TOMCAT configuration document to understand how to do configuration. 
+	Note: Please don't use APR connector. -->
+<Server port="8005" shutdown="SHUTDOWN">
+	<Listener className="org.apache.catalina.core.JasperListener" />
+	<Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+	<Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
+	<Service name="fastbiz">
+		<Connector scheme="http" connectionTimeout="20000" port="8080" protocol="org.apache.coyote.http11.Http11NioProtocol" />
+		<Connector SSLEnabled="true" clientAuth="false" maxThreads="150" port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+			scheme="https" secure="true" sslProtocol="TLS" keystoreFile="conf/tomcat-keystore" keystorePass="conf/tomcat-keystore.pin" />
+		<Connector port="8009" protocol="AJP/1.3" redirectPort="8443" />
+
+		<Engine defaultHost="localhost" jvmRoute="jvm1" name="fastbiz">
+			<Host appBase="webapps" autoDeploy="true" name="localhost" unpackWARs="true">
+				<Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="common" prefix="localhost_access_log."
+					resolveHosts="false" suffix=".txt" />
+			</Host>
+		</Engine>
+	</Service>
+</Server>

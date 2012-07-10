@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:bs="http://www.fastbiz.com.cn/schema/bootstrap" targetNamespace="http://www.fastbiz.com.cn/schema/bootstrap"
+	elementFormDefault="qualified">
+	<complexType name="services">
+		<sequence>
+			<element name="service" type="bs:service" maxOccurs="unbounded" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="service">
+		<sequence>
+			<element name="listener" maxOccurs="unbounded" minOccurs="0">
+				<simpleType>
+					<restriction base="string">
+						<minLength value="1"></minLength>
+					</restriction>
+				</simpleType>
+			</element>
+		</sequence>
+		<attribute name="class" type="string"></attribute>
+	</complexType>
+
+	<element name="services" type="bs:services"></element>
+</schema>

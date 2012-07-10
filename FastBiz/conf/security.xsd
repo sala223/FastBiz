@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsi:schema targetNamespace="http://www.fastbiz.com.cn/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema" xmlns:sec="http://www.fastbiz.com.cn/schema/security"
+	elementFormDefault="qualified">
+	<xsi:complexType name="key">
+		<xsi:sequence>
+			<xsi:element name="alias" type="xsi:string"></xsi:element>
+			<xsi:element name="algorithm" type="xsi:string"></xsi:element>
+		</xsi:sequence>
+	</xsi:complexType>
+
+	<xsi:complexType name="certificate">
+		<xsi:group ref="sec:certificateGroup" />
+	</xsi:complexType>
+	<xsi:group name="certificateGroup">
+		<xsi:all>
+			<xsi:element name="issuer" type="xsi:string"></xsi:element>
+			<xsi:element name="subject" type="xsi:string"></xsi:element>
+			<xsi:element name="signatureAlgorithm" type="xsi:string"></xsi:element>
+			<xsi:element name="validFrom" type="xsi:date"></xsi:element>
+			<xsi:element name="validTo" type="xsi:date"></xsi:element>
+		</xsi:all>
+	</xsi:group>
+
+	<xsi:complexType name="keyStore">
+		<xsi:sequence>
+			<xsi:element name="filePath" type="xsi:string"></xsi:element>
+			<xsi:element name="type" type="xsi:string"></xsi:element>
+		</xsi:sequence>
+	</xsi:complexType>
+</xsi:schema>

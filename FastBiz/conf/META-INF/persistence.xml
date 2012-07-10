@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="main" transaction-type="RESOURCE_LOCAL">
+		<description>persist unit for fastbiz applications</description>
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<mapping-file>META-INF/master-orm.xml</mapping-file>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<validation-mode>NONE</validation-mode>
+		<properties>
+			<property name="javax.persistence.nonJtaDataSource" value="java:/comp/ds/test" />
+			<property name="eclipselink.logging.level" value="FINE" />
+			<property name="eclipselink.logging.thread" value="false" />
+			<property name="eclipselink.logging.session" value="false" />
+			<property name="eclipselink.logging.timestamp" value="false" />
+			<property name="eclipselink.logging.exceptions" value="false" />
+			<property name="eclipselink.jdbc.read-connections.min" value="1" />
+			<property name="eclipselink.jdbc.write-connections.min" value="1" />
+			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
+			<property name="eclipselink.weaving" value="static" />
+			<property name="eclipselink.weaving.fetchgroups" value="static" />
+			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
+			<property name="eclipselink.ddl-generation.output-mode" value="database" />
+			<property name="eclipselink.jdbc.uppercase-columns" value="true" />
+			<property name="eclipselink.create-ddl-jdbc-file-name" value="runtime/sql/ddl_script.sql" />
+			<!-- single persist unit for multiple tenants -->
+			<property name="eclipselink.multitenant.tenants-share-cache" value="false" />
+			<property name="eclipselink.multitenant.tenants-share-emf" value="true" />
+			<property name="eclipselink.metadata-source" value="com.fastbiz.core.bootstrap.service.persistence.SolutionsMetaDataSource" />
+		</properties>
+	</persistence-unit>
+</persistence>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsi:schema targetNamespace="http://www.fastbiz.com.cn/schema/embedded" xmlns:xsi="http://www.w3.org/2001/XMLSchema" xmlns:sec="http://www.fastbiz.com.cn/schema/security"
+	xmlns:em="http://www.fastbiz.com.cn/schema/embedded" elementFormDefault="qualified">
+	<xsi:import namespace="http://www.fastbiz.com.cn/schema/security" schemaLocation="security.xsd" />
+
+	<xsi:complexType name="embedded">
+		<xsi:sequence>
+			<xsi:element name="scan" type="em:scan" minOccurs="1" maxOccurs="unbounded"></xsi:element>
+			<xsi:choice minOccurs="1" maxOccurs="1">
+				<xsi:element name="catalina" type="em:catalina" />
+			</xsi:choice>
+		</xsi:sequence>
+	</xsi:complexType>
+
+	<xsi:complexType name="scan">
+		<xsi:attribute name="location" type="xsi:string"></xsi:attribute>
+		<xsi:attribute name="isApplicationSet" type="xsi:boolean"></xsi:attribute>
+	</xsi:complexType>
+
+	<xsi:complexType name="catalina">
+		<xsi:group ref="em:catalinaGroup" minOccurs="1" maxOccurs="1" />
+	</xsi:complexType>
+	<xsi:group name="catalinaGroup">
+		<xsi:all>
+			<xsi:element name="httpPort" type="xsi:int"></xsi:element>
+			<xsi:element name="httpsPort" type="xsi:int"></xsi:element>
+			<xsi:element name="catalinaConfig" type="xsi:string"></xsi:element>
+			<xsi:element name="catalinaHome" type="xsi:string"></xsi:element>
+			<xsi:element name="dataMarshallerType" type="xsi:string"></xsi:element>
+			<xsi:element name="exportCertificate" type="xsi:boolean"></xsi:element>
+			<xsi:element name="keyStoreCreate" type="xsi:boolean"></xsi:element>
+			<xsi:element name="keyStore" type="sec:keyStore"></xsi:element>
+			<xsi:element name="key" type="sec:key"></xsi:element>
+			<xsi:element name="certificate" type="sec:certificate"></xsi:element>
+		</xsi:all>
+	</xsi:group>
+
+	<xsi:element name="embedded" type="em:embedded"></xsi:element>
+</xsi:schema>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="lib" path="runtime/weaving"/>
+	<classpathentry kind="src" path="core"/>
+	<classpathentry kind="src" output="runtime/applications/wms/WEB-INF/classes" path="applications/idm"/>
+	<classpathentry kind="src" output="boot" path="boot"/>
+	<classpathentry kind="src" output="runtime/solutions/idm" path="solutions/idm"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.context-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.context-sources-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.context.support-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.context.support-sources-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.core-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.core-sources-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/bcmail-jdk16-146.jar"/>
+	<classpathentry kind="lib" path="lib/bcprov-jdk16-146.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-over-slf4j-1.6.4.jar"/>
+	<classpathentry kind="lib" path="lib/logback-classic-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/logback-core-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/slf4j-api-1.6.4.jar"/>
+	<classpathentry kind="lib" path="conf"/>
+	<classpathentry kind="lib" path="lib/derby/derby.jar"/>
+	<classpathentry kind="lib" path="lib/derby/derbyclient.jar"/>
+	<classpathentry kind="lib" path="lib/derby/derbyLocale_cs.jar"/>
+	<classpathentry kind="lib" path="lib/derby/derbyLocale_de_DE.jar"/>
+	<classpathentry kind="lib" path="lib/derby/derbyLocale_es.jar"/>
+	<classpathentry kind="lib" path="lib/derby/derbyLocale_fr.jar"/>
+	<classpathentry kind="lib" path="lib/derby/derbyLocale_hu.jar"/>
+	<classpathentry kind="lib" path="lib/derby/derbyLocale_it.jar"/>
+	<classpathentry kind="lib" path="lib/derby/derbyLocale_ja_JP.jar"/>
+	<classpathentry kind="lib" path="lib/derby/derbyLocale_ko_KR.jar"/>
+	<classpathentry kind="lib" path="lib/derby/derbyLocale_pl.jar"/>
+	<classpathentry kind="lib" path="lib/derby/derbyLocale_pt_BR.jar"/>
+	<classpathentry kind="lib" path="lib/derby/derbyLocale_ru.jar"/>
+	<classpathentry kind="lib" path="lib/derby/derbyLocale_zh_CN.jar"/>
+	<classpathentry kind="lib" path="lib/derby/derbyLocale_zh_TW.jar"/>
+	<classpathentry kind="lib" path="lib/derby/derbynet.jar"/>
+	<classpathentry kind="lib" path="lib/c3p0-0.9.1.2-jdk1.3.jar"/>
+	<classpathentry kind="lib" path="lib/c3p0-0.9.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/c3p0-oracle-thin-extras-0.9.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat/tomcat-embed-core.jar" sourcepath="C:/workstation/tools/javathirdlib/apache-tomcat-7.0.25-src.zip"/>
+	<classpathentry kind="lib" path="lib/tomcat/tomcat-embed-jasper.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat/tomcat-embed-logging-juli.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat/tomcat-embed-logging-log4j.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat/tomcat-jdbc.jar"/>
+	<classpathentry kind="lib" path="lib/eclipselink/jpa/eclipselink-jpa-modelgen_2.3.2.v20111125-r10461.jar"/>
+	<classpathentry kind="lib" path="lib/eclipselink/jpa/javax.persistence_2.0.3.v201010191057.jar" sourcepath="C:/workstation/tools/javathirdlib/eclipselink/jlib/eclipselink-src.zip"/>
+	<classpathentry kind="lib" path="lib/eclipselink/eclipselink.jar" sourcepath="C:/workstation/tools/javathirdlib/eclipselink/jlib/eclipselink-src.zip"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.aop-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.aop-sources-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.beans-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.beans-sources-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.transaction-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.transaction-sources-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/jcl-over-slf4j-1.6.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.asm-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/com.springsource.org.aopalliance-1.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.expression-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.orm-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.orm-sources-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.jdbc-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.test-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.test-sources-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/junit-4.10.jar"/>
+	<classpathentry kind="lib" path="lib/cglib-2.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/asm-3.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-security-core-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-security-3.1.0.RELEASE/dist/spring-security-core-3.1.0.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-security-crypto-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/validation-api-1.0.0.GA.jar"/>
+	<classpathentry kind="lib" path="lib/bval-core-0.4.jar"/>
+	<classpathentry kind="lib" path="lib/bval-jsr303-0.4.jar"/>
+	<classpathentry kind="lib" path="lib/bval-extras-0.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-beanutils-1.8.3.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang3-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.web-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.web-sources-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/cxf-2.6.0.jar" sourcepath="C:/workstation/tools/javathirdlib/cxf/apache-cxf-2.6.0-src.zip"/>
+	<classpathentry kind="lib" path="lib/cxf/xmlschema-core-2.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/neethi-3.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/wsdl4j-1.6.2.jar"/>
+	<classpathentry kind="lib" path="lib/javassist.jar"/>
+	<classpathentry kind="lib" path="lib/javax.inject.jar"/>
+	<classpathentry kind="lib" path="lib/antlr-3.4-complete.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-security-config-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-security-3.1.0.RELEASE/dist/spring-security-config-3.1.0.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-security-web-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-security-3.1.0.RELEASE/dist/spring-security-web-3.1.0.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="lib/commons-codec-1.6.jar"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.web.servlet-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.web.servlet-sources-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/freemarker.jar" sourcepath="C:/workstation/tools/javathirdlib/freemarker-2.3.19/src"/>
+	<classpathentry kind="lib" path="lib/jackson-all-1.9.7.jar"/>
+	<classpathentry kind="lib" path="lib/commons-fileupload-1.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.oxm-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.oxm-sources-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/jstl-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/tomcat/ecj-3.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/org.springframework.orm-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.orm-sources-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/org.aspectj.matcher.jar"/>
+	<classpathentry kind="lib" path="lib/aspectjweaver.jar"/>
+	<classpathentry kind="output" path="runtime/framework"/>
+</classpath>

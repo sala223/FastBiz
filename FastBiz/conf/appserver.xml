@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<embedded xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.fastbiz.com.cn/schema/embedded" xmlns:sec="http://www.fastbiz.com.cn/schema/security"
+	xsi:schemaLocation="http://www.fastbiz.com.cn/schema/embedded http://www.fastbiz.com.cn/schema/appserver.xsd http://www.fastbiz.com.cn/schema/security http://www.fastbiz.com.cn/schema/security.xsd">
+	<scan location="runtime/applications" isApplicationSet="true" />
+	<catalina>
+		<httpPort>8080</httpPort>
+		<httpsPort>8443</httpsPort>
+		<catalinaConfig>conf/tomcat.xml</catalinaConfig>
+		<catalinaHome>data/tomcat</catalinaHome>
+		<dataMarshallerType>com.fastbiz.common.security.EncryptionDataMarshaller</dataMarshallerType>
+		<exportCertificate>false</exportCertificate>
+		<keyStoreCreate>true</keyStoreCreate>
+		<keyStore>
+			<sec:filePath>conf/tomcat-keystore</sec:filePath>
+			<sec:type>jks</sec:type>
+		</keyStore>
+		<key>
+			<sec:alias>fastbiz-ssl</sec:alias>
+			<sec:algorithm>RSA</sec:algorithm>
+		</key>
+		<certificate>
+			<sec:issuer>CN=fastbiz O=fastbiz.com.cn C=CN</sec:issuer>
+			<sec:subject>CN=fastbiz OU=CA Center O=fastbiz.com.cn</sec:subject>
+			<sec:signatureAlgorithm>SHA1WITHRSAENCRYPTION</sec:signatureAlgorithm>
+			<sec:validTo>2022-01-02</sec:validTo>
+			<sec:validFrom>2012-01-03</sec:validFrom>
+		</certificate>
+	</catalina>
+</embedded>

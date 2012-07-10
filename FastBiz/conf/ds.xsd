@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://www.fastbiz.com.cn/schema/ds" xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:ds="http://www.fastbiz.com.cn/schema/ds" elementFormDefault="qualified">
+	<complexType name="datasource">
+		<sequence>
+			<element name="jndi-name" type="string" minOccurs="1" maxOccurs="1"></element>
+			<element name="connection-url" type="string" minOccurs="1" maxOccurs="1"></element>
+			<element name="user-name" type="string" minOccurs="0" maxOccurs="1"></element>
+			<element name="password" type="string" minOccurs="0" maxOccurs="1"></element>
+			<group ref="ds:pool-info" />
+			<element name="property" type="ds:property" minOccurs="0" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="no-tx-datasource">
+		<complexContent>
+			<extension base="ds:datasource">
+				<sequence>
+					<element name="driver-class-name" type="string" minOccurs="1" maxOccurs="1"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="xa-datasource">
+		<complexContent>
+			<extension base="ds:datasource">
+				<sequence>
+					<element name="xa-datasource-class-name" type="string" minOccurs="1" maxOccurs="1"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="datasources">
+		<sequence>
+			<element name="no-tx-datasource" type="ds:no-tx-datasource"></element>
+			<element name="xa-datasource" type="ds:xa-datasource"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="property">
+		<attribute name="property" type="string"></attribute>
+		<attribute name="value" type="string"></attribute>
+	</complexType>
+
+	<simpleType name="transaction-isolation-level">
+		<restriction base="string">
+			<enumeration value="TRANSACTION_READ_UNCOMMITTED"></enumeration>
+			<enumeration value="TRANSACTION_READ_COMMITTED"></enumeration>
+			<enumeration value="TRANSACTION_REPEATABLE_READ"></enumeration>
+			<enumeration value="TRANSACTION_SERIALIZABLE"></enumeration>
+			<enumeration value="TRANSACTION_NONE"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<group name="pool-info">
+		<sequence>
+			<choice maxOccurs="unbounded">
+				<element name="transaction-isolation" type="ds:transaction-isolation-level" minOccurs="0" maxOccurs="1"></element>
+				<element name="min-pool-size" type="int" minOccurs="0" maxOccurs="1"></element>
+				<element name="max-pool-size" type="int" minOccurs="0" maxOccurs="1"></element>
+				<element name="initial-pool-size" type="int" minOccurs="0" maxOccurs="1"></element>
+				<element name="acquire-retry-attempts" type="int" minOccurs="0" maxOccurs="1"></element>
+				<element name="prepared-statement-cache-size" type="int" minOccurs="0" maxOccurs="1"></element>
+				<element name="check-valid-connection-sql" type="string" minOccurs="0" maxOccurs="1"></element>
+				<element name="valid-connection-checker-class-name" type="string" minOccurs="0" maxOccurs="1"></element>
+				<element name="blocking-timeout-millis" type="int" minOccurs="0" maxOccurs="1"></element>
+				<element name="max-idle-time" type="int" minOccurs="0" maxOccurs="1"></element>
+			</choice>
+		</sequence>
+	</group>
+
+	<element name="datasources" type="ds:datasources"></element>
+
+</schema>

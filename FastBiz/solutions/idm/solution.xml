@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<solution id="idm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.fastbiz.com.cn/schema/solution"
+	xsi:schemaLocation="http://www.fastbiz.com.cn/schema/solution http://www.fastbiz.com.cn/solution.xsd">
+	<entities>
+		<entity className="com.fastbiz.solution.idm.entity.User">
+			<enable-trigger>true</enable-trigger>
+		</entity>
+	</entities>
+</solution>

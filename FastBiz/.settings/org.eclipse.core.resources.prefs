@@ -1,0 +1,9 @@
+#Sun Jun 03 17:44:01 CST 2012
+eclipse.preferences.version=1
+encoding//conf/message/SecurityMessages.properties=UTF-8
+encoding//conf/message/SecurityMessages_zh.properties=UTF-8
+encoding//conf/message/ValidationMessages_zh.properties=UTF-8
+encoding//runtime/applications/idm/WEB-INF/jsp/index.jsp=UTF-8
+encoding//runtime/applications/idm/WEB-INF/jsp/login2.jsp=UTF-8
+encoding//runtime/share/ftl/login.ftl=UTF-8
+encoding//solutions/idm/ValidationMessages_zh.properties=UTF-8

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:sec="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/security 
+        http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+	<bean id="idmSolution" factory-bean="SOLUTION_FACTORY" factory-method="getSolution">
+		<constructor-arg index="0" value="idm" />
+	</bean>
+	<bean id="userManagementService" factory-bean="idmSolution" factory-method="getBean">
+		<constructor-arg index="0" value="userManagementService" />
+	</bean>
+	<bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
+		<property name="providers">
+			<list>
+				<ref local="authenticationProvider" />
+			</list>
+		</property>
+	</bean>
+	<bean name="authenticationProvider" class="com.fastbiz.core.web.spring.security.authentication.EclipseLinkMultiTenantAuthenticationProvider">
+		<property name="saltSource" ref="saltSource" />
+		<property name="passwordEncoder" ref="passwordEncoder" />
+		<property name="userDetailsService" ref="userDetailsService" />
+	</bean>
+	<bean name="saltSource" class="com.fastbiz.solution.idm.adapter.authentication.SaltSourceImpl" />
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+		<constructor-arg>
+			<list>
+				<ref local="webExpressionVoter" />
+				<ref local="authenticatedVoter" />
+			</list>
+		</constructor-arg>
+	</bean>
+	<bean id="userDetailsService" class="com.fastbiz.solution.idm.adapter.authentication.UserDetailsServiceImpl">
+		<constructor-arg index="0" ref="userManagementService" />
+	</bean>
+	<bean id="webExpressionVoter" class="org.springframework.security.web.access.expression.WebExpressionVoter" />
+	<bean id="authenticatedVoter" class="org.springframework.security.access.vote.AuthenticatedVoter" />
+	<bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+		<property name="authenticationManager" ref="authenticationManager" />
+		<property name="accessDecisionManager" ref="accessDecisionManager" />
+		<property name="securityMetadataSource" ref="securityInterceptorMetadataSource" />
+	</bean>
+	<bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
+		<property name="authenticationEntryPoint" ref="authenticationEntryPoint" />
+		<property name="accessDeniedHandler" ref="accessDeniedHandler" />
+	</bean>
+	<bean id="authenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+		<property name="loginFormUrl" value="/secure/login" />
+	</bean>
+	<bean id="accessDeniedHandler" class="org.springframework.security.web.access.AccessDeniedHandlerImpl">
+		<property name="errorPage" value="/accessDenied" />
+	</bean>
+	<bean id="multiTenantAuthenticationFilter" class="com.fastbiz.core.web.spring.security.authentication.MultiTenantAuthenticationFilter">
+		<property name="authenticationManager" ref="authenticationManager" />
+		<property name="filterProcessesUrl" value="/secure/authenticate" />
+		<property name="authenticationFailureHandler" ref="authenticationFailureHandler" />
+	</bean>
+	<bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
+		<property name="defaultFailureUrl" value="/secure/login" />
+		<property name="useForward" value="true" />
+	</bean>
+	<bean id="channelProcessingFilter" class="org.springframework.security.web.access.channel.ChannelProcessingFilter">
+		<property name="channelDecisionManager" ref="channelDecisionManager" />
+		<property name="securityMetadataSource" ref="channelMetadataSource" />
+	</bean>
+	<bean id="localeContextHolderFilter" class="com.fastbiz.core.locale.LocaleContextHolderFilter">
+		<property name="localeResolver" ref="localeResolver"/>
+	</bean>
+	<bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
+	</bean>
+	<bean id="channelDecisionManager" class="org.springframework.security.web.access.channel.ChannelDecisionManagerImpl">
+		<property name="channelProcessors">
+			<list>
+				<ref bean="secureChannelProcessor" />
+				<ref bean="insecureChannelProcessor" />
+			</list>
+		</property>
+	</bean>
+	<sec:filter-security-metadata-source id="securityInterceptorMetadataSource" use-expressions="true">
+		<sec:intercept-url pattern="/**" access="isAuthenticated()" />
+	</sec:filter-security-metadata-source>
+	<sec:filter-security-metadata-source id="channelMetadataSource">
+		<sec:intercept-url pattern="/secure/**" access="REQUIRES_SECURE_CHANNEL" />
+	</sec:filter-security-metadata-source>
+	<bean id="secureChannelProcessor" class="org.springframework.security.web.access.channel.SecureChannelProcessor" />
+	<bean id="insecureChannelProcessor" class="org.springframework.security.web.access.channel.InsecureChannelProcessor" />
+	<sec:global-method-security pre-post-annotations="disabled" />
+	<bean id="springSecurityFilterChain" name="org.springframework.security.filterChainProxy" class="org.springframework.security.web.FilterChainProxy">
+		<sec:filter-chain-map path-type="ant">
+			<sec:filter-chain pattern="/secure/authenticate"
+				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,multiTenantAuthenticationFilter,exceptionTranslationFilter" />
+			<sec:filter-chain pattern="/secure/**" filters="channelProcessingFilter,localeContextHolderFilter" />
+			<sec:filter-chain pattern="/static/**" filters="none" />
+			<sec:filter-chain pattern="/share/static/**" filters="none" />
+			<sec:filter-chain pattern="/**"
+				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,multiTenantAuthenticationFilter,exceptionTranslationFilter,filterSecurityInterceptor" />
+		</sec:filter-chain-map>
+	</bean>
+</beans>

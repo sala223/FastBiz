@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.fastbiz.com.cn/schema/ds"
+	xsi:schemaLocation="http://www.fastbiz.com.cn/schema/ds http://www.fastbiz.com.cn/ds.xsd">
+	<no-tx-datasource>
+		<jndi-name>java:/comp/ds/test</jndi-name>
+		<connection-url>jdbc:derby:fastbiz;</connection-url>
+		<user-name></user-name>
+		<password></password>
+		<transaction-isolation>TRANSACTION_SERIALIZABLE</transaction-isolation>
+		<min-pool-size>5</min-pool-size>
+		<max-pool-size>100</max-pool-size>
+		<initial-pool-size>3</initial-pool-size>
+		<acquire-retry-attempts>10</acquire-retry-attempts>
+		<prepared-statement-cache-size>180</prepared-statement-cache-size>
+		<check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
+		<valid-connection-checker-class-name>com.mchange.v2.c3p0.impl.DefaultConnectionTester</valid-connection-checker-class-name>
+		<blocking-timeout-millis>30000</blocking-timeout-millis>
+		<max-idle-time>15</max-idle-time>
+		<property property="p1" value="v1" />
+		<property property="p2" value="v2" />
+		<driver-class-name>org.apache.derby.jdbc.EmbeddedDriver</driver-class-name>
+	</no-tx-datasource>
+	<xa-datasource>
+		<jndi-name>java:/comp/ds/xatest</jndi-name>
+		<connection-url>jdbc:derby:fastbiz;</connection-url>
+		<user-name>sa</user-name>
+		<password>root</password>
+		<transaction-isolation>TRANSACTION_SERIALIZABLE</transaction-isolation>
+		<min-pool-size>5</min-pool-size>
+		<max-pool-size>100</max-pool-size>
+		<blocking-timeout-millis>5000</blocking-timeout-millis>
+		<max-idle-time>15</max-idle-time>
+		<property property="p1" value="v1" />
+		<property property="p2" value="v2" />
+		<xa-datasource-class-name>org.apache.derby.jdbc.ClientXADataSource</xa-datasource-class-name>
+	</xa-datasource>
+</datasources>

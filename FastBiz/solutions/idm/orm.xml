@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<entity-mappings xsi:schemaLocation="http://www.eclipse.org/eclipselink/xsds/persistence/orm http://www.eclipse.org/eclipselink/xsds/eclipselink_orm_2_1.xsd"
+	xmlns="http://www.eclipse.org/eclipselink/xsds/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1">
+	<entity class="com.fastbiz.solution.idm.entity.User">
+		<attributes>
+			<basic access="VIRTUAL" name="mobilePhone2" attribute-type="String">
+				<column name="FLEX_1" />
+				<access-methods get-method="get" set-method="set" />
+			</basic>
+		</attributes>
+	</entity>
+</entity-mappings>
