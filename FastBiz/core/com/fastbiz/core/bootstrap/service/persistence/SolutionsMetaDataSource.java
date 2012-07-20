@@ -12,6 +12,7 @@ import org.eclipse.persistence.jpa.metadata.XMLMetadataSource;
 import org.eclipse.persistence.logging.SessionLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.fastbiz.common.utils.ClassUtils;
 import com.fastbiz.core.solution.SolutionBrowser;
 import com.fastbiz.core.solution.StandardSolutionBrowser;
 
@@ -19,7 +20,11 @@ public class SolutionsMetaDataSource extends XMLMetadataSource{
 
     private SolutionBrowser     browser;
 
-    private static final Logger LOG = LoggerFactory.getLogger(SolutionsMetaDataSource.class);
+    private SolutionFilter      filter;
+
+    private static final String SOLUTION_FILTER_PROP = "eclipselink.metadata-source-filter";
+
+    private static final Logger LOG                  = LoggerFactory.getLogger(SolutionsMetaDataSource.class);
 
     public SolutionsMetaDataSource() {
         this.browser = new StandardSolutionBrowser();
@@ -27,6 +32,26 @@ public class SolutionsMetaDataSource extends XMLMetadataSource{
 
     @Override
     public XMLEntityMappings getEntityMappings(Map<String, Object> properties, ClassLoader classLoader, SessionLog log){
+        String filterClassName = (String) properties.get(SOLUTION_FILTER_PROP);
+        if (filterClassName != null) {
+            try {
+                Class<?> filterClass = ClassUtils.forName(filterClassName, null);
+                if (SolutionFilter.class.isAssignableFrom(filterClass)) {
+                    try {
+                        this.filter = (SolutionFilter) filterClass.newInstance();
+                    } catch (Throwable ex) {
+                        String fmt = "Cannot instantiate solution filter class from class name %s";
+                        LOG.warn(String.format(fmt,filterClassName),ex);
+                    }
+                }
+            } catch (ClassNotFoundException ex) {
+                String fmt = "Cannot load filter class from class name %s";
+                LOG.warn(String.format(fmt,filterClassName),ex);
+            } catch (LinkageError ex) {
+                String fmt = "Cannot load filter class from class name %s";
+                LOG.warn(String.format(fmt,filterClassName),ex);
+            }
+        }
         String[] solutionIds = browser.getSolutionIds();
         if (solutionIds.length == 0) {
             return null;
@@ -68,6 +93,11 @@ public class SolutionsMetaDataSource extends XMLMetadataSource{
     }
 
     public XMLEntityMappings getEntityMappings(Map<String, Object> properties, ClassLoader classLoader, String solutionId){
+        if (filter != null) {
+            if(!filter.accept(browser.getSolutionDescriptor(solutionId))){
+                return null;
+            }
+        }
         Reader reader = getEntityMappingsReader(properties, classLoader, solutionId);
         if (reader == null) {
             return null;

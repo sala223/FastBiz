@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsChecker;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.Assert;
+import com.fastbiz.core.tenant.TenantHolder;
 
 public abstract class AbstractMultiTenantAuthenticationProvider implements AuthenticationProvider, InitializingBean,
                 MessageSourceAware{
@@ -46,6 +47,7 @@ public abstract class AbstractMultiTenantAuthenticationProvider implements Authe
         String message = "Only MultiTenantAuthenticationToken is supported";
         Assert.isInstanceOf(MultiTenantAuthenticationToken.class, authentication, message);
         MultiTenantAuthenticationToken mtat = (MultiTenantAuthenticationToken) authentication;
+        TenantHolder.setTenant(mtat.getTenantId());
         String username = (authentication.getPrincipal() == null) ? "" : authentication.getName();
         UserDetails user = null;
         try {
@@ -55,18 +57,24 @@ public abstract class AbstractMultiTenantAuthenticationProvider implements Authe
             throw new BadCredentialsException(msg);
         }
         Assert.notNull(user, "retrieveUser returned null - a violation of the interface contract");
-        preAuthenticationChecks.check(user);
+        if (preAuthenticationChecks != null) {
+            preAuthenticationChecks.check(user);
+        }
         additionalAuthenticationChecks(user, mtat);
-        postAuthenticationChecks.check(user);
+        if (postAuthenticationChecks != null) {
+            postAuthenticationChecks.check(user);
+        }
         Object principalToReturn = user;
         return createSuccessAuthentication(principalToReturn, authentication, user);
     }
 
     protected Authentication createSuccessAuthentication(Object principal, Authentication authentication, UserDetails user){
-        Object credentials = authentication.getCredentials();
+        MultiTenantAuthenticationToken mtat = (MultiTenantAuthenticationToken) authentication;
+        String tenantId = mtat.getTenantId();
         Collection<? extends GrantedAuthority> mapAuthorities = authoritiesMapper.mapAuthorities(user.getAuthorities());
-        MultiTenantAuthenticationToken result = new MultiTenantAuthenticationToken(principal, credentials, mapAuthorities);
-        result.setDetails(authentication.getDetails());
+        MultiTenantAuthenticationToken result = new MultiTenantAuthenticationToken(tenantId, principal, mapAuthorities);
+        result.setAuthenticated(true);
+        result.setDetails(user);
         return result;
     }
 

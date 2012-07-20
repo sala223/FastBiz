@@ -9,4 +9,6 @@ public interface SolutionDescriptor{
     public String getEntityXmlORMappingFilePath();
 
     public String[] getBeanConfigurationFilesPathes();
+    
+    boolean isAdmin();
 }

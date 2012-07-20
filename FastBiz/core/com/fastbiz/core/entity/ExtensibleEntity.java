@@ -3,6 +3,7 @@ package com.fastbiz.core.entity;
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 import javax.persistence.Transient;
 import org.eclipse.persistence.annotations.VirtualAccessMethods;
 
@@ -21,4 +22,11 @@ public class ExtensibleEntity extends MultiTenantSupport{
     public Object set(String name, Object value){
         return extensions.put(name, value);
     }
+
+    @PrePersist
+    protected void prePersist(){
+        fillDefaultValue();
+    }
+
+    protected void fillDefaultValue(){}
 }

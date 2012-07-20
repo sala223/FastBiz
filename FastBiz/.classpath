@@ -4,6 +4,7 @@
 	<classpathentry kind="src" output="runtime/applications/wms/WEB-INF/classes" path="applications/idm"/>
 	<classpathentry kind="src" output="boot" path="boot"/>
 	<classpathentry kind="src" output="runtime/solutions/idm" path="solutions/idm"/>
+	<classpathentry kind="src" path="solutions/admin"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
 	<classpathentry kind="lib" path="lib/spring/org.springframework.context-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.context-sources-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring/org.springframework.context.support-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.context.support-sources-3.1.0.RELEASE.jar"/>
@@ -50,7 +51,7 @@
 	<classpathentry kind="lib" path="lib/com.springsource.org.aopalliance-1.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/spring/org.springframework.expression-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring/org.springframework.orm-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.orm-sources-3.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/spring/org.springframework.jdbc-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.jdbc-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.jdbc-sources-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring/org.springframework.test-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.test-sources-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/junit-4.10.jar"/>
@@ -78,7 +79,7 @@
 	<classpathentry kind="lib" path="lib/commons-codec-1.6.jar"/>
 	<classpathentry kind="lib" path="lib/spring/org.springframework.web.servlet-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.web.servlet-sources-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/freemarker.jar" sourcepath="C:/workstation/tools/javathirdlib/freemarker-2.3.19/src"/>
-	<classpathentry kind="lib" path="lib/jackson-all-1.9.7.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-all-1.9.7.jar" sourcepath="C:/workstation/tools/javathirdlib/jackson-mapper-asl-1.9.7-sources.jar"/>
 	<classpathentry kind="lib" path="lib/commons-fileupload-1.2.2.jar"/>
 	<classpathentry kind="lib" path="lib/spring/org.springframework.oxm-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.oxm-sources-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/jstl-1.2.jar"/>
@@ -86,5 +87,7 @@
 	<classpathentry kind="lib" path="lib/org.springframework.orm-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.orm-sources-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/org.aspectj.matcher.jar"/>
 	<classpathentry kind="lib" path="lib/aspectjweaver.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-batch-core-2.1.8.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/spring-batch-2.1.8.RELEASE/dist/spring-batch-core-2.1.8.RELEASE-sources.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-batch-infrastructure-2.1.8.RELEASE.jar"/>
 	<classpathentry kind="output" path="runtime/framework"/>
 </classpath>

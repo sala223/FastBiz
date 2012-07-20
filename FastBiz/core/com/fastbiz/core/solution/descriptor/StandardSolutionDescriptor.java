@@ -10,6 +10,8 @@ public class StandardSolutionDescriptor implements SolutionDescriptor{
     private static final String DEFAULT_BEANS_CONFIG_FILE_NAME = "beans.xml";
 
     private static final String DEFAULT_CXF_CONFIG_FILE_NAME   = "cxf.xml";
+    
+    private static final String ADMIN_SOLUTION_ID   = "admin";
 
     private File                directory;
 
@@ -45,5 +47,10 @@ public class StandardSolutionDescriptor implements SolutionDescriptor{
         } else {
             return new String[] { new File(directory, DEFAULT_BEANS_CONFIG_FILE_NAME).getAbsolutePath()};
         }
+    }
+
+    @Override
+    public boolean isAdmin(){
+        return ADMIN_SOLUTION_ID.equals(this.getSolutionId()); 
     }
 }

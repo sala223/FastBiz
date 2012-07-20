@@ -1,6 +1,8 @@
 package com.fastbiz.core.web.spring.security.authentication;
 
+import java.util.Collection;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 
 public class MultiTenantAuthenticationToken extends AbstractAuthenticationToken implements MultiTenantAuthentication{
 
@@ -17,6 +19,12 @@ public class MultiTenantAuthenticationToken extends AbstractAuthenticationToken 
         this.tenant = tenant;
         this.principal = principal;
         this.credentials = credentials;
+    }
+
+    public MultiTenantAuthenticationToken(Object tenant, Object principal, Collection<? extends GrantedAuthority> authorities) {
+        super(authorities);
+        this.tenant = tenant;
+        this.principal = principal;
     }
 
     @Override

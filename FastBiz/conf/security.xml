@@ -69,8 +69,8 @@
 	<bean id="localeContextHolderFilter" class="com.fastbiz.core.locale.LocaleContextHolderFilter">
 		<property name="localeResolver" ref="localeResolver"/>
 	</bean>
-	<bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter">
-	</bean>
+	<bean id="tenantContextBindFilter" class="com.fastbiz.core.tenant.TenantContextBindFilter" />
+	<bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter"/>
 	<bean id="channelDecisionManager" class="org.springframework.security.web.access.channel.ChannelDecisionManagerImpl">
 		<property name="channelProcessors">
 			<list>
@@ -91,12 +91,13 @@
 	<bean id="springSecurityFilterChain" name="org.springframework.security.filterChainProxy" class="org.springframework.security.web.FilterChainProxy">
 		<sec:filter-chain-map path-type="ant">
 			<sec:filter-chain pattern="/secure/authenticate"
-				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,multiTenantAuthenticationFilter,exceptionTranslationFilter" />
-			<sec:filter-chain pattern="/secure/**" filters="channelProcessingFilter,localeContextHolderFilter" />
+				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,multiTenantAuthenticationFilter" />
+			<sec:filter-chain pattern="/secure/login" filters="channelProcessingFilter,localeContextHolderFilter" />
 			<sec:filter-chain pattern="/static/**" filters="none" />
 			<sec:filter-chain pattern="/share/static/**" filters="none" />
 			<sec:filter-chain pattern="/**"
-				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,multiTenantAuthenticationFilter,exceptionTranslationFilter,filterSecurityInterceptor" />
+			
+				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,tenantContextBindFilter,exceptionTranslationFilter,filterSecurityInterceptor" />
 		</sec:filter-chain-map>
 	</bean>
 </beans>

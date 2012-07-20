@@ -3,14 +3,16 @@
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans 
-	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
 	http://www.springframework.org/schema/tx 
 	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
 	http://www.springframework.org/schema/aop 
 	http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 	http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
 	<bean id="SOLUTION_FACTORY" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:/comp/SolutionFactory"></property>
 		<property name="lookupOnStartup" value="false"></property>
@@ -32,6 +34,9 @@
 	<bean id="JPA_TRANSACTION_MANAGER" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="ENTITY_MANAGER_FACTORY" />
 	</bean>
+	<bean id="DATASOURCE_TRANSACTION_MANAGER" class=" org.springframework.jdbc.datasource.DataSourceTransactionManager ">
+		<property name="dataSource" ref="DATASOURCE" />
+	</bean>
 	<bean id="ENTITY_MANAGER_FACTORY" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
 		<property name="persistenceUnitName" value="main" />
 	</bean>
@@ -43,7 +48,6 @@
 		<property name="providerClass" value="org.apache.bval.jsr303.ApacheValidationProvider" />
 		<property name="messageInterpolator" ref="VALIDATOR_MESSAGE_INTERPOLATOR" />
 	</bean>
-	<tx:annotation-driven transaction-manager="JPA_TRANSACTION_MANAGER" order="10" />
 	<bean id="TRANSACTION_ATTRIBUTE_SOURCE" class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource" />
 	<bean id="TRANSACTION_ADVISOR" class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor">
 		<property name="TransactionInterceptor" ref="TRANSACTION_INTERCEPTOR" />

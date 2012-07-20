@@ -7,6 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.fastbiz.common.utils.DebugUtils;
 import com.fastbiz.core.solution.Solution;
 import com.fastbiz.core.solution.SolutionBrowser;
 import com.fastbiz.core.solution.SolutionBrowserAware;
@@ -26,7 +27,12 @@ public class StandardSolutionFactory implements SolutionFactory{
 
     private static final String   PARENT_BEAN_CONFIG_FILE = "core-beans.xml";
 
+    private static final String   SPRING_PROFILE_PROPERTY = "spring.profiles.active";
+
     public StandardSolutionFactory(SolutionBrowser solutionBrowser, boolean lazy) {
+        if (DebugUtils.isDebugEnabled()) {
+            System.setProperty(SPRING_PROFILE_PROPERTY, "debug");
+        }
         this.browser = solutionBrowser;
         if (!lazy) {
             createParentApplicationContext();

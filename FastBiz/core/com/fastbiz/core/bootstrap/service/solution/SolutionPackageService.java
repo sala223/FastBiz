@@ -13,13 +13,13 @@ import com.fastbiz.core.solution.spring.StandardSolutionFactory;
 
 public class SolutionPackageService extends BootstrapServiceBase{
 
-    private static final Logger LOG                   = LoggerFactory.getLogger(SolutionPackageService.class);
+    private static final Logger LOG                     = LoggerFactory.getLogger(SolutionPackageService.class);
 
     private SolutionFactory     factory;
 
     StandardSolutionBrowser     browser;
 
-    public static final String  SOLUTION_FACTORY_JNDI = "java:/comp/SolutionFactory";
+    public static final String  SOLUTION_FACTORY_JNDI   = "java:/comp/SolutionFactory";
 
     public void init(Application application){
         browser = new StandardSolutionBrowser();

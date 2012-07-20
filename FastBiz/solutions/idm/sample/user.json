@@ -1,0 +1,31 @@
+[ {
+  "id" : 1,
+  "createdTime" : "2012-07-19 15:56:34",
+  "createdBy" : 0,
+  "validFrom" : "2012-07-19 15:56:34",
+  "code" : "admin1",
+  "firstName" : "xia",
+  "lastName" : "pin",
+  "password" : 111111,
+  "age" : 20,
+  "telephone" : 13356563434,
+  "gender" : "male",
+  "salt" : "admin1",
+  "email" : "sala223@msn.com",
+  "enabled" : true,
+  "locked" : false
+},  {
+  "id" : 2,
+  "createdBy" : 0,
+  "code" : "admin2",
+  "firstName" : "xia",
+  "lastName" : "pin",
+  "password" : 111111,
+  "age" : 22,
+  "telephone" : 13356563434,
+  "gender" : "male",
+  "salt" : "admin2",
+  "email" : "sala223@msn.com",
+  "enabled" : true,
+  "locked" : false
+}]
