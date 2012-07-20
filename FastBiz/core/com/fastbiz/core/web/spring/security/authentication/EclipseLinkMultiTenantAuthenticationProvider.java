@@ -2,7 +2,6 @@ package com.fastbiz.core.web.spring.security.authentication;
 
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.SaltSource;
 import org.springframework.security.authentication.encoding.PasswordEncoder;
 import org.springframework.security.authentication.encoding.PlaintextPasswordEncoder;
@@ -20,10 +19,6 @@ public class EclipseLinkMultiTenantAuthenticationProvider extends AbstractMultiT
     private SaltSource         saltSource;
 
     private UserDetailsService userDetailsService;
-
-    @Override
-    protected void additionalAuthenticationChecks(UserDetails userDetails, MultiTenantAuthenticationToken authentication)
-                    throws AuthenticationException{}
 
     @Override
     protected UserDetails retrieveUser(String username, MultiTenantAuthenticationToken authentication)
@@ -44,7 +39,7 @@ public class EclipseLinkMultiTenantAuthenticationProvider extends AbstractMultiT
         return loadedUser;
     }
 
-    protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication)
+    protected void additionalAuthenticationChecks(UserDetails userDetails, MultiTenantAuthenticationToken authentication)
                     throws AuthenticationException{
         String msg = messages.getMessage("authentication.badCredentials", "Bad Credential");
         Object salt = null;

@@ -52,6 +52,7 @@ public abstract class AbstractMultiTenantAuthenticationProvider implements Authe
         UserDetails user = null;
         try {
             user = retrieveUser(username, mtat);
+            mtat.setDetails(user);
         } catch (UsernameNotFoundException notFound) {
             String msg = messages.getMessage("authentication.badCredentials", "Bad Credential");
             throw new BadCredentialsException(msg);
