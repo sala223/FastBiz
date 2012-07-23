@@ -15,10 +15,10 @@
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
 	<beans profile="debug">
 		<bean id="PROVISIONING_SERVICE" class="com.fastbiz.core.service.provisioning.ProvisioningService" />
-		<bean id="TRANSACTION_TEMPLATE" class="org.springframework.transaction.support.TransactionTemplate">
+		<bean id="TRANSACTION_TEMPLATE" class="org.springframework.transaction.support.TransactionTemplate" scope="prototype">
 			<property name="transactionManager" ref="JPA_TRANSACTION_MANAGER" />
 		</bean>
-		<bean id="FIXED_TENANT_RESOLVER" class="com.fastbiz.core.service.provisioning.FixedTenantResolver">
+		<bean id="FIXED_TENANT_RESOLVER" class="com.fastbiz.core.service.provisioning.FixedTenantResolver" scope="prototype">
 			<property name="tenantId" value="test" />
 		</bean>
 		<bean id="PROVISIONING_BEAN" class="com.fastbiz.core.service.provisioning.EntityDataProvisioningBean">
@@ -26,6 +26,6 @@
 			<property name="tenantResolver" ref="FIXED_TENANT_RESOLVER" />
 			<property name="transactionTemplate" ref="TRANSACTION_TEMPLATE" />
 		</bean>
-		<bean id="ENTITY_SOURCES" class="com.fastbiz.core.service.provisioning.JsonEntitySources" scope="prototype" />
+		<bean id="ENTITY_SOURCES" class="com.fastbiz.core.service.provisioning.JsonEntitySources"/>
 	</beans>
 </beans>

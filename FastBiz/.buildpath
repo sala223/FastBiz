@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="src" path="core"/>
+	<buildpathentry kind="src" path="applications/idm"/>
+	<buildpathentry kind="src" path="boot"/>
+	<buildpathentry kind="src" path="solutions/idm"/>
+	<buildpathentry kind="src" path="solutions/admin"/>
+	<buildpathentry kind="src" path="solutions/wms"/>
+	<buildpathentry kind="src" path="applications/wms"/>
+	<buildpathentry kind="con" path="org.eclipse.dltk.mod.launching.INTERPRETER_CONTAINER"/>
+	<buildpathentry kind="con" path="org.ebayopensource.vjet.eclipse.core.JSNATIVE_CONTAINER/JS Native Types"/>
+	<buildpathentry kind="con" path="org.ebayopensource.vjet.eclipse.core.BROWSER_CONTAINER/Browser SDK"/>
+	<buildpathentry kind="lib" path="lib/cxf/cxf-2.6.0.jar"/>
+</buildpath>

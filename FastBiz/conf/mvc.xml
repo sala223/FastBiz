@@ -18,6 +18,7 @@
 			</property>
 		</bean>
 	</mvc:interceptors>
+	 
 	<mvc:resources mapping="/static/**" location="/static/" />
 	<mvc:resources mapping="/html/**" location="/html/" />
 	<mvc:resources mapping="/share/static/**" location="file:/${FASTBIZ_HOME}/runtime/share/static/" />
@@ -27,7 +28,7 @@
 		<property name="templateLoaderPaths">
 			<list>
 				<value>/WEB-INF/ftl/</value>
-				<value>file:/#{systemProperties['FASTBIZ_HOME']}/runtime/share/ftl</value>
+				<value>file:/#{systemProperties['FASTBIZ_HOME']}/runtime/global/ftl</value>
 			</list>
 		</property>
 		<property name="freemarkerSettings">

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="core"/>
-	<classpathentry kind="src" output="runtime/applications/wms/WEB-INF/classes" path="applications/idm"/>
+	<classpathentry kind="src" output="runtime/applications/idm/WEB-INF/classes" path="applications/idm"/>
 	<classpathentry kind="src" output="boot" path="boot"/>
 	<classpathentry kind="src" output="runtime/solutions/idm" path="solutions/idm"/>
 	<classpathentry kind="src" path="solutions/admin"/>
+	<classpathentry kind="src" output="runtime/solutions/wms" path="solutions/wms"/>
+	<classpathentry kind="src" output="runtime/applications/wms/WEB-INF/classes" path="applications/wms"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre6"/>
 	<classpathentry kind="lib" path="lib/spring/org.springframework.context-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.context-sources-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring/org.springframework.context.support-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.context.support-sources-3.1.0.RELEASE.jar"/>

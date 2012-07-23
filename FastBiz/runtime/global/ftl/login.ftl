@@ -6,11 +6,8 @@
 <meta name="description" content="<@spring.message "page.login.title"/>"> 
 <title><@spring.message "page.login.title"/>
 </title>
-<link rel="stylesheet" type="text/css" href="<@spring.url "/share/static/css/main.css"/>" media="screen">
-<link rel="stylesheet" type="text/css" href="<@spring.url "/share/static/css/login.css"/>" media="screen">
-<!--[if lt IE 9]>
-<script src="/share/static/js/html5shiv.js"></script>
-<![endif]-->
+<link rel="stylesheet" type="text/css" href="/share/static/css/main.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/share/static/css/login.css" media="screen">
 </head>
 <body>
 	<div id="content" class="login_content">
@@ -50,7 +47,7 @@
 			</form>
 		</div>
 		<div id="logo">
-			<img src="<@spring.url "/share/static/img/logo.png"/>" />
+			<img src="/share/static/images/logo.png" />
 		</div>
 		<div id="footer" class="footer">
 			<span><@spring.message "page.copyright" /> </span>

@@ -24,6 +24,7 @@
 		<property name="passwordEncoder" ref="passwordEncoder" />
 		<property name="userDetailsService" ref="userDetailsService" />
 	</bean>
+	<bean id="passwordEncoder" class="com.fastbiz.solution.idm.adapter.authentication.SHAPasswordEncoder" />
 	<bean name="saltSource" class="com.fastbiz.solution.idm.adapter.authentication.SaltSourceImpl" />
 	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
 		<constructor-arg>
@@ -94,7 +95,6 @@
 				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,multiTenantAuthenticationFilter" />
 			<sec:filter-chain pattern="/secure/login" filters="channelProcessingFilter,localeContextHolderFilter" />
 			<sec:filter-chain pattern="/static/**" filters="none" />
-			<sec:filter-chain pattern="/share/static/**" filters="none" />
 			<sec:filter-chain pattern="/**"
 			
 				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,tenantContextBindFilter,exceptionTranslationFilter,filterSecurityInterceptor" />
