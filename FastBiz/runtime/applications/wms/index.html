@@ -3,17 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Flame Address Book</title>
-<link rel="stylesheet" href="/share/static/css/flame.css" />
+<title>t:index.title t:</title>
+<script data-main="static/js/init.js" src="/share/static/js/require-jquery.js"></script>
 </head>
 <body>
-  <script type="text/x-handlebars">
-    {{view Wms.HeaderView  id="header"}}
-  </script>
-  <script type="text/x-handlebars">
-    {{view Wms.RootView  id="root"}}
-  </script>
-  <script data-main="static/js/main.js" src="/share/static/js/require-jquery.js"></script>
+	<div id="header" class="header">
+		<div id="branding" class="branding"></div> 
+		<script type="text/x-handlebars">
+			<div id="menus" class="menus">
+				<div id="menul" class="menul"></div>
+				<div class="menu">
+					{{view Fb.LanguageSelectionMenu}}
+					<div>| {{t index.menu.myaccount}} |</div>
+					 		   
+					<div><a href="secure/logout">{{t index.menu.logout}}</a></div>
+				</div>
+				<div id="menur" class="menur"></div>
+				
+			</div>
+		</script>
+	</div> 
+		<script type="text/x-handlebars">
+			{{view Wms.MainView}}
+		</script>	
 </body>
 </html>
 

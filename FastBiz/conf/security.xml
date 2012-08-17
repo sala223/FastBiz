@@ -67,6 +67,7 @@
 		<property name="channelDecisionManager" ref="channelDecisionManager" />
 		<property name="securityMetadataSource" ref="channelMetadataSource" />
 	</bean>
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
 	<bean id="localeContextHolderFilter" class="com.fastbiz.core.locale.LocaleContextHolderFilter">
 		<property name="localeResolver" ref="localeResolver"/>
 	</bean>
@@ -95,8 +96,8 @@
 				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,multiTenantAuthenticationFilter" />
 			<sec:filter-chain pattern="/secure/login" filters="channelProcessingFilter,localeContextHolderFilter" />
 			<sec:filter-chain pattern="/static/**" filters="none" />
-			<sec:filter-chain pattern="/**"
-			
+			<sec:filter-chain pattern="/permitted/**" filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,tenantContextBindFilter" />
+			<sec:filter-chain pattern="/**"		
 				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,tenantContextBindFilter,exceptionTranslationFilter,filterSecurityInterceptor" />
 		</sec:filter-chain-map>
 	</bean>

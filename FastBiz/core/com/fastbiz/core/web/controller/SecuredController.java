@@ -1,4 +1,4 @@
-package com.fastbiz.core.web.spring.security.controller;
+package com.fastbiz.core.web.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 

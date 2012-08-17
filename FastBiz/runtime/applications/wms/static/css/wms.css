@@ -1,0 +1,105 @@
+.header {
+	background: url('../images/header_bg.jpg') repeat-x 0 0 #3D647F;
+	width: 100%;
+	top: 0px;
+	left: 0px;
+	height: 85px;
+	z-index: 0;
+	color:white;
+}
+
+.branding{
+	float:left;
+	background:url('../images/brand.png') no-repeat 0 0;
+	width:308px;
+	height: 85px;
+	color:black;
+}
+.menus{ 
+	float:right;
+	padding: 0;
+	font-family: verdana, sans-serif;
+	margin:0 auto;
+	width:600px;
+	color:#131313;
+	height:14px;
+	font-size: 10px;
+	display:block;
+}
+
+.menu>div{
+	position:relative;
+	float:left;
+	line-height: 22px;
+}
+
+.menul {
+float: left;
+width: 10px;
+padding: 4px 0;
+height: 14px;
+background: url('../images/menu_l.gif') no-repeat bottom left;
+}
+
+.menur {
+float: left;
+width: 10px;
+padding: 4px 0;
+height: 14px;
+background: url('../images/menu_r.gif') no-repeat bottom left;
+}
+
+.menu {
+	float:left;
+	color:white;
+	background:#131313;
+	font-family: verdana, sans-serif;
+	z-index:50;
+}
+
+.menu a{
+	color:white;
+	text-decoration: none;
+}
+
+.menus a:hover {
+text-decoration: underline;
+}
+
+.toolbar {
+background-color:#406885;
+}
+
+.main{
+	
+}
+
+.viewSwitcher-hidden{
+	float:left;
+	margin-left:2px;	 
+	background: url('../images/view_modes.png') no-repeat center right ;
+	cursor:pointer;
+}
+
+.viewSwitcher-full {
+	float:left;
+	margin-left:2px;	 
+	background: url('../images/view_modes.png') no-repeat center left ;
+	cursor:pointer;
+}
+
+.splitDivder{
+	border-width:0px 0px 0px 0px;	 
+	background: url('../images/spliter.png') repeat-x center left ;
+ }
+
+.search   input{
+	border-radius:0px;
+}
+
+.search   input:focus{
+	background-color: #F6FAF5;
+}
+
+
+

@@ -69,4 +69,21 @@
 				   @annotation(org.springframework.transaction.annotation.Transactional)" />
 		<property name="advice" ref="TENANT_INJECTION_INTERCEPTOR" />
 	</bean>
+	<bean id="JAXB2_MARSHALLER" class="org.springframework.oxm.jaxb.Jaxb2Marshaller" abstract="true">
+		<property name="classesToBeBound" > 
+			<list>
+       	 		<value>com.fastbiz.core.locale.Language</value>
+    		</list>
+    	</property>
+    	<property name="marshallerProperties" > 
+			<map>
+       	 		<entry key="jaxb.fragment">
+                    <value type="java.lang.Boolean">false</value>
+                </entry>
+                <entry key="jaxb.formatted.output">
+                    <value type="java.lang.Boolean">false</value>
+                </entry>
+    		</map>
+    	</property> 	
+	</bean>
 </beans>
