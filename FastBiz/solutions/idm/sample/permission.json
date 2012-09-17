@@ -1,0 +1,17 @@
+[
+{
+  "id" : 1,
+  "name" : "PER_MASTER_READ",
+  "description" : ""
+},  
+{
+  "id" : 2,
+  "name" : "PER_MASTER_WRITE",
+  "description" : ""
+},
+{
+  "id" : 3,
+  "name" : "PER_MASTER_DELETE",
+  "description" : ""
+}
+]

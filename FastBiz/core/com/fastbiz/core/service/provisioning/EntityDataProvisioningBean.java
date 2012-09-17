@@ -3,6 +3,8 @@ package com.fastbiz.core.service.provisioning;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.util.Assert;
@@ -19,6 +21,8 @@ public class EntityDataProvisioningBean extends TransactionalProvisioningBean im
     private EntitySources               entitySources;
 
     private TenantResolver              tenantResolver;
+    
+    private static final Logger LOG = LoggerFactory.getLogger(EntityDataProvisioningBean.class);
 
     public EntityDataProvisioningBean() {}
 
@@ -46,6 +50,7 @@ public class EntityDataProvisioningBean extends TransactionalProvisioningBean im
     @Override
     protected TransactionalTasklet getTransactionalTasklet(){
         LoadBulkEntitiesTasklet tasklet = new LoadBulkEntitiesTasklet();
+        LOG.debug("Provisioning entity sources:" + this.entitySources);
         tasklet.setEntities(this.entitySources.getEntitySet());
         return tasklet;
     }

@@ -9,4 +9,7 @@
 			</basic>
 		</attributes>
 	</entity>
+	<entity class="com.fastbiz.solution.idm.entity.Permission"/>
+	<entity class="com.fastbiz.solution.idm.entity.Role"/>
+	<entity class="com.fastbiz.solution.idm.entity.SystemRole"/>
 </entity-mappings>

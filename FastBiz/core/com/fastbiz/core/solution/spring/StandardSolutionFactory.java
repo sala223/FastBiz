@@ -26,7 +26,7 @@ public class StandardSolutionFactory implements SolutionFactory{
     private ApplicationContext    parent;
 
     private static final String   PARENT_BEAN_CONFIG_FILE = "core-beans.xml";
-
+    
     private static final String   SPRING_PROFILE_PROPERTY = "spring.profiles.active";
 
     public StandardSolutionFactory(SolutionBrowser solutionBrowser, boolean lazy) {

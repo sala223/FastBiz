@@ -1,0 +1,15 @@
+[
+	{
+  		"@type":".SystemRole",
+  		"id" : 1,
+  		"name" : "SYS_ROLE_MD_ADMIN",
+  		"description" : "",
+  		"permissions":[{"id" : 1},{"id" : 2},{"id" : 3}]
+	},
+	{
+		"@type":".SystemRole",
+  		"id" : 2,
+ 		"name" : "SYS_ROLE_MD_READER", 
+ 		"description" : "",
+ 		"permissions":[{"id" : 1}]
+}]

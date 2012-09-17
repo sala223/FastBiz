@@ -1,24 +1,26 @@
 package com.fastbiz.wms.web.controller;
 
-import java.util.ArrayList;
-import java.util.Locale;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import com.fastbiz.core.locale.Language;
+import com.fastbiz.wms.web.model.ui.FunctionGroup;
+import com.fastbiz.wms.web.service.IFunctionGroupService;
 
 @Controller
 @RequestMapping("/ui")
 public class UIController{
-    
-    @RequestMapping("/functionGroups")
-    public ModelAndView getFunctionGroup(){
-        ArrayList<Language> languages = new ArrayList<Language>(); 
-        languages.add(new Language(Locale.CHINESE.getLanguage(),Locale.CHINESE.getDisplayLanguage(Locale.CHINESE)));
-        languages.add(new Language(Locale.ENGLISH.getLanguage(),Locale.ENGLISH.getDisplayLanguage(Locale.ENGLISH)));
+
+    @Autowired
+    private IFunctionGroupService functionGroupService;
+
+    @RequestMapping("/functionGroup")
+    public ModelAndView getSystemFunctionGroup(){
+        FunctionGroup functionGroup = functionGroupService.getSystemFunctionGroup();
         ModelAndView mav = new ModelAndView();
-        mav.addObject(languages);
-        return mav;   
+        if (functionGroup != null) {
+            mav.addObject(functionGroup);
+        }
+        return mav;
     }
-    
 }

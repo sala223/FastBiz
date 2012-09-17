@@ -4,7 +4,5 @@ import com.fastbiz.wms.web.model.ui.FunctionGroup;
 
 public interface IFunctionGroupService{
 
-    public FunctionGroup getRootFunctionGroup();
-
-    public FunctionGroup getFunctionGroup(String functionGroup);
+    public FunctionGroup getSystemFunctionGroup();
 }

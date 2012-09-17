@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:sec="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans 
         http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/context
+   		http://www.springframework.org/schema/context/spring-context-3.0.xsd 
         http://www.springframework.org/schema/security 
         http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 	<bean id="idmSolution" factory-bean="SOLUTION_FACTORY" factory-method="getSolution">
 		<constructor-arg index="0" value="idm" />
 	</bean>
-	<bean id="userManagementService" factory-bean="idmSolution" factory-method="getBean">
-		<constructor-arg index="0" value="userManagementService" />
+	<bean id="userDetailsService" factory-bean="idmSolution" factory-method="getBean" autowire="no">
+		<constructor-arg index="0" value="userDetailsService" />
+	</bean>
+	<bean id="passwordEncoder" factory-bean="idmSolution" factory-method="getBean">
+		<constructor-arg index="0" value="shaPasswordEncoder" />
+	</bean>
+	<bean id="saltSource" factory-bean="idmSolution" factory-method="getBean">
+		<constructor-arg index="0" value="saltSource" />
 	</bean>
 	<bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
 		<property name="providers">
@@ -24,9 +32,7 @@
 		<property name="passwordEncoder" ref="passwordEncoder" />
 		<property name="userDetailsService" ref="userDetailsService" />
 	</bean>
-	<bean id="passwordEncoder" class="com.fastbiz.solution.idm.adapter.authentication.SHAPasswordEncoder" />
-	<bean name="saltSource" class="com.fastbiz.solution.idm.adapter.authentication.SaltSourceImpl" />
-	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+	<bean id="webAccessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
 		<constructor-arg>
 			<list>
 				<ref local="webExpressionVoter" />
@@ -34,14 +40,20 @@
 			</list>
 		</constructor-arg>
 	</bean>
-	<bean id="userDetailsService" class="com.fastbiz.solution.idm.adapter.authentication.UserDetailsServiceImpl">
-		<constructor-arg index="0" ref="userManagementService" />
+	<bean id="bizResourceVoter" class="com.fastbiz.core.web.spring.security.access.BizResourceAccessDecisionVoter">
+		<property name="expressionHandler" ref="bizResourceSecurityExpressionHandler" />
 	</bean>
+	<bean id="bizResourceSecurityExpressionHandler" class="com.fastbiz.core.web.spring.security.access.BizResourceSecurityExpressionHandler">
+		<property name="permissionEvaluator">
+			<bean id="bizPermissionEvaluator" class="com.fastbiz.core.web.spring.security.access.BizPermissionEvaluator" />
+		</property>
+	</bean>
+	<bean id="roleVoter" class="org.springframework.security.access.vote.RoleVoter" />
 	<bean id="webExpressionVoter" class="org.springframework.security.web.access.expression.WebExpressionVoter" />
 	<bean id="authenticatedVoter" class="org.springframework.security.access.vote.AuthenticatedVoter" />
 	<bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
 		<property name="authenticationManager" ref="authenticationManager" />
-		<property name="accessDecisionManager" ref="accessDecisionManager" />
+		<property name="accessDecisionManager" ref="webAccessDecisionManager" />
 		<property name="securityMetadataSource" ref="securityInterceptorMetadataSource" />
 	</bean>
 	<bean id="exceptionTranslationFilter" class="org.springframework.security.web.access.ExceptionTranslationFilter">
@@ -69,10 +81,10 @@
 	</bean>
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
 	<bean id="localeContextHolderFilter" class="com.fastbiz.core.locale.LocaleContextHolderFilter">
-		<property name="localeResolver" ref="localeResolver"/>
+		<property name="localeResolver" ref="localeResolver" />
 	</bean>
 	<bean id="tenantContextBindFilter" class="com.fastbiz.core.tenant.TenantContextBindFilter" />
-	<bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter"/>
+	<bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter" />
 	<bean id="channelDecisionManager" class="org.springframework.security.web.access.channel.ChannelDecisionManagerImpl">
 		<property name="channelProcessors">
 			<list>
@@ -96,8 +108,9 @@
 				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,multiTenantAuthenticationFilter" />
 			<sec:filter-chain pattern="/secure/login" filters="channelProcessingFilter,localeContextHolderFilter" />
 			<sec:filter-chain pattern="/static/**" filters="none" />
-			<sec:filter-chain pattern="/permitted/**" filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,tenantContextBindFilter" />
-			<sec:filter-chain pattern="/**"		
+			<sec:filter-chain pattern="/permitted/**"
+				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,tenantContextBindFilter" />
+			<sec:filter-chain pattern="/**"
 				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,tenantContextBindFilter,exceptionTranslationFilter,filterSecurityInterceptor" />
 		</sec:filter-chain-map>
 	</bean>

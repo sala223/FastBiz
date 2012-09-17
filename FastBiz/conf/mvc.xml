@@ -10,6 +10,7 @@
         http://www.springframework.org/schema/context/spring-context-3.0.xsd
        ">
 	<mvc:default-servlet-handler />
+	<context:component-scan base-package="com.fastbiz.idm.web.controller" />
 	<mvc:annotation-driven />
 	<mvc:interceptors>
 		<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
@@ -90,14 +91,16 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	<bean id="viewNameTranslator" class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator" />
-	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	<bean id="messageSourceUI" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
-				<value>classpath:message/SecurityMessages</value>
 				<value>/WEB-INF/messages/message</value>
 			</list>
 		</property>
-		<property name="cacheSeconds" value="60" />
+		<property name="parentMessageSource">
+			<ref bean="messageSource"/>
+		</property>
+		<property name="cacheSeconds" value="60000" />
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>

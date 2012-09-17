@@ -5,16 +5,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import com.fastbiz.solution.idm.entity.User;
 import com.fastbiz.solution.idm.service.UserManagementService;
 import com.fastbiz.common.utils.Assert;
 
+@Service("userDetailsService")
 public class UserDetailsServiceImpl implements UserDetailsService, InitializingBean{
 
     @Autowired
     private UserManagementService userManagementService;
 
+    public UserDetailsServiceImpl() {}
+
     public UserDetailsServiceImpl(UserManagementService userManagementService) {
+        this.userManagementService = userManagementService;
+    }
+
+    public void setUserManagementService(UserManagementService userManagementService){
         this.userManagementService = userManagementService;
     }
 

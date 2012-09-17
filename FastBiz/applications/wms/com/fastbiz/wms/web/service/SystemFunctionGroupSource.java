@@ -2,17 +2,16 @@ package com.fastbiz.wms.web.service;
 
 import com.fastbiz.wms.web.model.ui.FunctionGroup;
 
-
 public class SystemFunctionGroupSource implements FunctionGroupSource{
 
-    @Override
-    public FunctionGroup loadFunctionGroup(){
-        // TODO Auto-generated method stub
-        return null;
+    private FunctionGroup functionGroup;
+
+    public void setFunctionGroup(FunctionGroup functionGroup){
+        this.functionGroup = functionGroup;
     }
 
     @Override
-    public String getParentFunctionGroupId(){
-        // TODO Auto-generated method stub
-        return null;
-    }}
+    public FunctionGroup getFunctionGroup(){
+        return functionGroup;
+    }
+}

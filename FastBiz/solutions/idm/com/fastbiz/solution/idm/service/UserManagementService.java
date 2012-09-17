@@ -4,6 +4,7 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.fastbiz.core.validation.exception.ValidationException;
@@ -12,7 +13,6 @@ import com.fastbiz.solution.idm.dal.UserDAL;
 import com.fastbiz.solution.idm.entity.User;
 import com.fastbiz.solution.idm.util.SolutionHelper;
 
-@Transactional
 @Service("userManagementService")
 public class UserManagementService{
 
@@ -23,6 +23,7 @@ public class UserManagementService{
     protected PasswordEncoder passwordEncoder;
 
     @Autowired
+    @Qualifier("VALIDATOR")
     protected Validator       validator;
 
     public void setUserDAL(UserDAL userDAL){
@@ -37,6 +38,7 @@ public class UserManagementService{
         this.validator = validator;
     }
 
+    @Transactional
     public void createUser(User user){
         user.fillDefaultValue();
         Set<ConstraintViolation<User>> violations = validator.validate(user);
@@ -47,10 +49,12 @@ public class UserManagementService{
         userDAL.createUser(user);
     }
 
+    @Transactional
     public void updateUser(User user){
         userDAL.update(user);
     }
 
+    @Transactional
     public void updatePassword(String code, String newPassword){
         User user = userDAL.getUserByCode(code);
         if (user != null) {
@@ -59,6 +63,7 @@ public class UserManagementService{
         }
     }
 
+    @Transactional
     public User getUserByCode(String userCode){
         return userDAL.getUserByCode(userCode);
     }

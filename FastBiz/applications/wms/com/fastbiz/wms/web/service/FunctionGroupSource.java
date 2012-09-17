@@ -4,7 +4,5 @@ import com.fastbiz.wms.web.model.ui.FunctionGroup;
 
 public interface FunctionGroupSource{
 
-    FunctionGroup loadFunctionGroup();
-    
-    String getParentFunctionGroupId();
+    FunctionGroup getFunctionGroup();
 }

@@ -43,7 +43,7 @@ public class JsonEntitySources implements EntitySources, SolutionDescriptorAware
 
     @Override
     public List<EntityPostConstructor> getPostConstructors(){
-        if(this.postConstructors != null){
+        if (this.postConstructors != null) {
             return Collections.unmodifiableList(postConstructors);
         }
         return null;
@@ -65,6 +65,17 @@ public class JsonEntitySources implements EntitySources, SolutionDescriptorAware
     @Override
     public void setSolutionDescriptor(SolutionDescriptor solutionDescriptor){
         this.solutionDescriptor = solutionDescriptor;
+    }
+
+    @Override
+    public String toString(){
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("{");
+        for (JsonFile file : files) {
+            buffer.append(file.toString() + ";");
+        }
+        buffer.append("}");
+        return buffer.toString();
     }
 
     public static class JsonFile{
@@ -94,6 +105,11 @@ public class JsonEntitySources implements EntitySources, SolutionDescriptorAware
 
         public void setEntityClassName(String entityClassName){
             this.entityClassName = entityClassName;
+        }
+
+        @Override
+        public String toString(){
+            return "JsonFile [fileName=" + fileName + ", entityClassName=" + entityClassName + "]";
         }
     }
 

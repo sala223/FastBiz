@@ -7,14 +7,25 @@
 	http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-3.0.xsd 
     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
-	<import resource="classpath:tpl.xml" />
 	<context:component-scan base-package="com.fastbiz.solution.idm.dal" />
 	<context:component-scan base-package="com.fastbiz.solution.idm.service" />
-	<bean id="passwordEncoder" class="com.fastbiz.solution.idm.adapter.authentication.SHAPasswordEncoder" />
+	<context:component-scan base-package="com.fastbiz.solution.idm.adapter.authentication" />
 	<beans profile="debug">
 		<bean id="ENTITY_SOURCES" class="com.fastbiz.core.service.provisioning.JsonEntitySources" scope="prototype">
 			<property name="JsonFiles">
 				<list>
+					<bean class="com.fastbiz.core.service.provisioning.JsonEntitySources$JsonFile">
+						<property name="fileName" value="sample/permission.json" />
+						<property name="entityClassName" value="com.fastbiz.solution.idm.entity.Permission[]" />
+					</bean>
+					<bean class="com.fastbiz.core.service.provisioning.JsonEntitySources$JsonFile">
+						<property name="fileName" value="sample/system_role.json" />
+						<property name="entityClassName" value="com.fastbiz.solution.idm.entity.SystemRole[]" />
+					</bean>
+					<bean class="com.fastbiz.core.service.provisioning.JsonEntitySources$JsonFile">
+						<property name="fileName" value="sample/role.json" />
+						<property name="entityClassName" value="com.fastbiz.solution.idm.entity.Role[]" />
+					</bean>
 					<bean class="com.fastbiz.core.service.provisioning.JsonEntitySources$JsonFile">
 						<property name="fileName" value="sample/user.json" />
 						<property name="entityClassName" value="com.fastbiz.solution.idm.entity.User[]" />
@@ -24,7 +35,7 @@
 			<property name="postConstructors">
 				<list>
 					<bean class="com.fastbiz.solution.idm.provisioning.UserPostConstructor">
-						<property name="passwordEncoder" ref="passwordEncoder" />
+						<property name="passwordEncoder" ref="shaPasswordEncoder" />
 					</bean>
 				</list>
 			</property>

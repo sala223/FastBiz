@@ -1,0 +1,14 @@
+[ 
+	{
+		"@type":".Role",
+  		"id" : 10001,
+  		"name" : "DUR_ADMIN",
+  		"description" : "" 
+	},  
+	{
+		"@type":".Role",
+  		"id" : 10002,
+  		"name" : "UDR_OPERATOR",
+  		"description" : ""
+	}
+]

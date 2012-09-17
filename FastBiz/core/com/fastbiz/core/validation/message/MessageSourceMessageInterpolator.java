@@ -35,6 +35,8 @@ public class MessageSourceMessageInterpolator implements MessageInterpolator{
 
     private Map<Class<? extends Payload>, String> sidCache                              = new WeakHashMap<Class<? extends Payload>, String>();
 
+    private String messageBaseName = SOLUTION_VALIDATION_MESSAGES_BASENAME;
+    
     public MessageSourceMessageInterpolator(SolutionMessageSourceCreator messageSourceCreator) {
         setMessageSourceCreator(messageSourceCreator);
     }
@@ -90,13 +92,18 @@ public class MessageSourceMessageInterpolator implements MessageInterpolator{
         return replace(sid, message, descriptor.getAttributes(), locale);
     }
 
+    
+    public void setMessageBaseName(String messageBaseName){
+        this.messageBaseName = messageBaseName;
+    }
+
     protected MessageSource getMessageSource(String sid){
         if (sid == null) {
             return defaultMessageSource;
         }
         MessageSource messageSource = messageSources.get(sid);
         if (messageSource == null) {
-            String[] basenames = { SOLUTION_VALIDATION_MESSAGES_BASENAME };
+            String[] basenames = { messageBaseName };
             messageSource = messageSourceCreator.createMessageSource(sid, basenames);
         }
         if (messageSource == null) {

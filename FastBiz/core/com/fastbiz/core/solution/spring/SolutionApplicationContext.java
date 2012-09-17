@@ -10,14 +10,20 @@ import com.fastbiz.core.solution.descriptor.SolutionDescriptor;
 
 public class SolutionApplicationContext extends AbstractXmlApplicationContext{
 
-    private SolutionDescriptor solutionDescriptor;
+    private SolutionDescriptor  solutionDescriptor;
 
-    public static String       SOLUTION_DESCRIPTOR_BEAN_NAME = "SOLUTION_DESCRIPTOR";
+    public static String        SOLUTION_DESCRIPTOR_BEAN_NAME = "SOLUTION_DESCRIPTOR";
+
+    private static final String DEFAULT_BEAN_CONFIG_FILE      = "classpath:tpl.xml";
 
     public SolutionApplicationContext(SolutionDescriptor descriptor, ApplicationContext parent, boolean refresh) {
         super(parent);
         this.solutionDescriptor = descriptor;
-        setConfigLocations(descriptor.getBeanConfigurationFilesPathes());
+        String[] confPathes = descriptor.getBeanConfigurationFilesPathes();
+        String[] newConfPathes = new String[confPathes.length + 1];
+        newConfPathes[0] = DEFAULT_BEAN_CONFIG_FILE;
+        System.arraycopy(confPathes, 0, newConfPathes, 1, confPathes.length);
+        setConfigLocations(newConfPathes);
         if (refresh) {
             refresh();
         }

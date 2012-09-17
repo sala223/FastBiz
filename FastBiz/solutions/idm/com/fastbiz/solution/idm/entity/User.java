@@ -1,10 +1,15 @@
 package com.fastbiz.solution.idm.entity;
 
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.eclipse.persistence.annotations.Cache;
 import org.eclipse.persistence.annotations.FetchGroup;
 import org.eclipse.persistence.annotations.FetchAttribute;
 import com.fastbiz.core.entity.MasterData;
@@ -13,6 +18,7 @@ import com.fastbiz.core.entity.type.Gender;
 import com.fastbiz.core.entity.type.Image;
 import com.fastbiz.solution.idm.validation.IDMPayload;
 
+@Cache
 @Entity(name = "M_USER")
 @FetchGroup(name = "AuthenticationInfo", attributes = { @FetchAttribute(name = "name"), @FetchAttribute(name = "password"),
                 @FetchAttribute(name = "email"), @FetchAttribute(name = "telephone"), })
@@ -21,43 +27,47 @@ public class User extends MasterData{
     @Column(length = 32, unique = true)
     @Size(message = "{user.code.Size}", min = 4, max = 32, payload = IDMPayload.class)
     @NotNull(message = "{user.code.NotNull}", payload = IDMPayload.class)
-    private String  code;
+    private String     code;
 
     @Column(length = 32)
     @Size(message = "{user.firstName.Size}", min = 1, max = 31, payload = IDMPayload.class)
     @NotNull(message = "{user.firstName.NotNull}", payload = IDMPayload.class)
-    private String  firstName;
+    private String     firstName;
 
     @Column(length = 56)
     @Size(message = "{user.lastName.Size}", min = 1, max = 31, payload = IDMPayload.class)
     @NotNull(message = "{user.lastName.NotNull}", payload = IDMPayload.class)
-    private String  lastName;
+    private String     lastName;
 
     @NotNull(message = "{user.password.NotNull}", payload = IDMPayload.class)
     @Size(message = "{user.password.Size}", min = 6, max = 30, payload = IDMPayload.class)
     @Column(length = 56)
-    private String  password;
+    private String     password;
 
-    private int     age;
+    private int        age;
 
     @Column(length = 20)
-    private String  telephone;
+    private String     telephone;
 
-    private Image   image;
+    private Image      image;
 
-    private Gender  gender;
+    private Gender     gender;
 
     @Column(length = 12)
-    private String  salt;
+    private String     salt;
 
     @Embedded
-    private Email   email;
+    private Email      email;
 
     @Column
-    private boolean enabled;
+    private boolean    enabled;
 
     @Column
-    private boolean locked;
+    private boolean    locked;
+
+    @OneToMany(fetch=FetchType.EAGER)
+    @JoinTable(name = "USER_ROLE")
+    private List<Role> roles;
 
     public String getPassword(){
         return password;
@@ -153,5 +163,13 @@ public class User extends MasterData{
 
     public void setCode(String code){
         this.code = code;
+    }
+
+    public List<Role> getRoles(){
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles){
+        this.roles = roles;
     }
 }

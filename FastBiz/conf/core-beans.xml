@@ -10,8 +10,6 @@
 	http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 	http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
-    <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
-	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
 	<bean id="SOLUTION_FACTORY" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:/comp/SolutionFactory"></property>
@@ -42,6 +40,7 @@
 	</bean>
 	<bean id="VALIDATOR_MESSAGE_INTERPOLATOR" class="com.fastbiz.core.validation.message.MessageSourceMessageInterpolator">
 		<constructor-arg index="0" ref="SOLUTION_MESSAGE_SOURCE_CREATOR" />
+		<property name="messageBaseName" value="message/ValidationMessages" />
 	</bean>
 	<bean id="SOLUTION_MESSAGE_SOURCE_CREATOR" class="com.fastbiz.core.message.DefaultSolutionMessageSourceCreator" scope="singleton"></bean>
 	<bean id="VALIDATOR" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
@@ -62,6 +61,16 @@
 		<constructor-arg index="1" ref="TENANT_HOLDER" />
 	</bean>
 	<bean id="TENANT_HOLDER" class="com.fastbiz.core.tenant.TenantHolder" />
+	<bean id="parentMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+			<list>
+				<value>classpath:message/Messages</value>
+			</list>
+		</property>
+		<property name="cacheSeconds" value="60000" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="useCodeAsDefaultMessage" value="true" />
+    </bean>
 	<bean id="TENANT_ADVISOR" class="org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor">
 		<property name="expression"
 			value="@within(org.springframework.transaction.annotation.Transactional) or 

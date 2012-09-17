@@ -28,22 +28,24 @@ Wms.searchConroller=Ember.Object.create({
 });
 
 Wms.FunctionGroup = Em.Object.extend({
+	id:null,
 	text:null,
-	icon:null
+	icon:null,
+	subs:[]
 });
 
 Wms.functionsConroller=Ember.Object.create({
 	functionGroups:[], 
-	
-	loadFunctionGroups:function(){ 
-		var fgs = this.get('functionGroups');
-		fgs.push(Wms.FunctionGroup.create({text:'test'}));
-		fgs.push(Wms.FunctionGroup.create({text:'test2'})); 
+	 
+	loadFunctionGroups:function(){ 	
+		var controller = this;
+		jQuery.getJSON("ui/functionGroup.json", function(json) {
+			var rootFunctionGroup = Wms.FunctionGroup.create();
+			rootFunctionGroup.setProperties(json['functionGroup']);
+			controller.set('functionGroups',rootFunctionGroup['subs']); 
+		});		 
 	}
 });
-
-Wms.functionsConroller.loadFunctionGroups();
-
 
 Wms.MainView = Flame.View.extend({
 	elementId: 'mainView',
@@ -170,35 +172,40 @@ Wms.MainView = Flame.View.extend({
 		
 		leftView: Flame.View.extend({
 			childViews:'functionGroupsView'.w(),
-
+			layout: { height:'100%' },
 			functionGroupsView: Fb.AccordionView.extend({
-				layout: { height: '100%', left: 0, right: 0, top: 0 },
-				//functionGroupsBinding:'^controller.functionGroups',
-				functionGroups:[Wms.FunctionGroup.create({text:'This is a long text to display tooltip'}),Wms.FunctionGroup.create({text:'test2'})],
-			
+				functionGroupsBinding:Ember.Binding.oneWay('Wms.functionsConroller.functionGroups'),
+				animated:'slide', 
+				clearStyle:true,
+				collapsible:true,
+				
 				init:function(){
 					this._super();
-					this._functionGroupsDidChange();
 				},
 
 				_functionGroupsDidChange:function(){
 					this.destroyAllChildren(); 
 					var functionGroups = this.get('functionGroups'); 
+					if(!functionGroups){
+						return;
+					}
 					var self = this;
 					var contentViews = this.get('contentViews');
-					functionGroups.forEach(function(functionGroup){
+					$.each(functionGroups,function(index){
 						var contentView = self.createChildView(Flame.View);
-						self.get('headers').push(functionGroup.get('text'));
+						self.get('headers').push(functionGroups[index].display); 
 						self.get('contentViews').push(contentView);
 					});	
 					this._createTabs();
-				}
+				}.observes('functionGroups')
 			})
 		})
 		
 	})
 	 
 });
+
+Wms.functionsConroller.loadFunctionGroups();
 
 
 

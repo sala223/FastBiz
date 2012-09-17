@@ -28,6 +28,7 @@
 			<property name="eclipselink.multitenant.tenants-share-cache" value="false" />
 			<property name="eclipselink.multitenant.tenants-share-emf" value="true" />
 			<property name="eclipselink.metadata-source" value="com.fastbiz.core.bootstrap.service.persistence.SolutionsMetaDataSource" />
+			<property name="system.tenant.id" value="SYSTEM"/>
 		</properties>
 	</persistence-unit>
 </persistence>

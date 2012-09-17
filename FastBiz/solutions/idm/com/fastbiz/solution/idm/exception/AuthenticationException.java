@@ -9,6 +9,8 @@ public class AuthenticationException extends IDMException{
     public static int         AUTHENTICATION_USER_NAME_NOT_FOUND = 1000;
 
     public static int         AUTHENTICATION_BAD_CREDENTIAL      = 1001;
+    
+    public static int         AUTHENTICATION_NOT_AUTHENTICATED      = 1002;
 
     public AuthenticationException(int errorCode) {
         super(AUTHENTICATION_SERVICE, errorCode);
