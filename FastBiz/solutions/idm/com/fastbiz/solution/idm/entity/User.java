@@ -9,8 +9,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import org.eclipse.persistence.annotations.BatchFetch;
-import org.eclipse.persistence.annotations.BatchFetchType;
 import org.eclipse.persistence.annotations.Cache;
 import org.eclipse.persistence.annotations.FetchGroup;
 import org.eclipse.persistence.annotations.FetchAttribute;
@@ -69,7 +67,6 @@ public class User extends MasterData{
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "USER_ROLE")
-    @BatchFetch(BatchFetchType.JOIN)
     private List<Role> roles;
 
     public String getPassword(){
