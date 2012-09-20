@@ -1,6 +1,5 @@
 package com.fastbiz.core.solution.spring;
 
-import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ContextResource;
@@ -47,8 +46,13 @@ public class SolutionResoruceLoader extends FileSystemResourceLoader implements 
 
         private String resourceRelativePath;
 
+        public SolutionResource(SolutionDescriptor solutionDescriptor,String resourceRelativePath) {
+            super(solutionDescriptor.getSolutionPath() + resourceRelativePath);
+            this.solutionId = solutionDescriptor.getSolutionId();
+        }
+        
         public SolutionResource(String solutionId, String solutionRootPath, String resourceRelativePath) {
-            super(solutionRootPath + File.separator + resourceRelativePath);
+            super(solutionRootPath  + resourceRelativePath);
             this.solutionId = solutionId;
         }
 

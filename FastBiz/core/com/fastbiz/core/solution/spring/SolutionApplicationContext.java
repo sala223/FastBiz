@@ -7,6 +7,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import com.fastbiz.core.solution.SolutionDescriptorAware;
 import com.fastbiz.core.solution.descriptor.SolutionDescriptor;
+import com.fastbiz.core.solution.spring.SolutionResoruceLoader.SolutionResource;
 
 public class SolutionApplicationContext extends AbstractXmlApplicationContext{
 
@@ -49,8 +50,8 @@ public class SolutionApplicationContext extends AbstractXmlApplicationContext{
 
     @Override
     protected Resource getResourceByPath(String path){
-        if (path != null && path.startsWith("/")) {
-            path = path.substring(1);
+        if(path != null && path.startsWith("/")){
+            return new SolutionResource(solutionDescriptor,path);
         }
         return new FileSystemResource(path);
     }

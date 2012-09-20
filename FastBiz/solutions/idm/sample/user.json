@@ -15,7 +15,11 @@
   		"email" : "sala223@msn.com",
   		"enabled" : true,
   		"locked" : false,
-  		"roles":[ {"@type":".SystemRole","id":1}, {"@type":".SystemRole","id":2} ]
+  		"roles":[ {"@type":".SystemRole","id":1}, {"@type":".SystemRole","id":2} ],
+  		"stringAttributes":{
+  			"test attribute1":{"attributeName":"test attribute1", "value":"test attribute1 value"},
+  			"test attribute2":{"attributeName":"test attribute2", "value":"test attribute2 value"}
+  		}
 	},  
 	{
   		"id" : 2,

@@ -9,9 +9,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.eclipse.persistence.annotations.BatchFetch;
+import org.eclipse.persistence.annotations.BatchFetchType;
 import org.eclipse.persistence.annotations.Cache;
 import org.eclipse.persistence.annotations.FetchGroup;
 import org.eclipse.persistence.annotations.FetchAttribute;
+import org.eclipse.persistence.annotations.Index;
 import com.fastbiz.core.entity.MasterData;
 import com.fastbiz.core.entity.type.Email;
 import com.fastbiz.core.entity.type.Gender;
@@ -24,8 +27,9 @@ import com.fastbiz.solution.idm.validation.IDMPayload;
                 @FetchAttribute(name = "email"), @FetchAttribute(name = "telephone"), })
 public class User extends MasterData{
 
-    @Column(length = 32, unique = true)
-    @Size(message = "{user.code.Size}", min = 4, max = 32, payload = IDMPayload.class)
+    @Column(length = 16, unique = true)
+    @Index
+    @Size(message = "{user.code.Size}", min = 4, max = 16, payload = IDMPayload.class)
     @NotNull(message = "{user.code.NotNull}", payload = IDMPayload.class)
     private String     code;
 
@@ -57,16 +61,15 @@ public class User extends MasterData{
     private String     salt;
 
     @Embedded
+    @Index(unique=true)
     private Email      email;
-
-    @Column
-    private boolean    enabled;
 
     @Column
     private boolean    locked;
 
-    @OneToMany(fetch=FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "USER_ROLE")
+    @BatchFetch(BatchFetchType.JOIN)
     private List<Role> roles;
 
     public String getPassword(){
@@ -139,14 +142,6 @@ public class User extends MasterData{
 
     public void setLastName(String lastName){
         this.lastName = lastName;
-    }
-
-    public boolean isEnabled(){
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled){
-        this.enabled = enabled;
     }
 
     public boolean isLocked(){

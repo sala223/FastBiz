@@ -186,7 +186,7 @@ Fb.AccordionHeaderView=Flame.View.extend({
     classNames: ['fb-accordion-header-view'],
     layout: { left: 0, top: 0, right: 0, height:30},
 	header:'',
-	handlebars: "{{header}}",
+	handlebars: "<a href=\"#\">{{header}}</a>",
 	tagName:'h3', 
 	
 	templateContext: function() {

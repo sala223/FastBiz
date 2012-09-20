@@ -9,13 +9,11 @@ public class BusinessException extends InfrastructureException{
 
     protected int                 errorCode;
 
-    protected String              solutionId;
+    private String              solutionId;
 
     protected static String       indentation             = "[FASTBIZ-SOLUTION]";
 
     protected static final String CR                      = System.getProperty("line.separator");
-
-    public static final int       ENTITY_VALIDATION_ERROR = 100000;
 
     public BusinessException(String solutionId, int errorCode, Throwable cause) {
         super(cause);

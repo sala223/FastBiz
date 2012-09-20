@@ -178,6 +178,7 @@ Wms.MainView = Flame.View.extend({
 				animated:'slide', 
 				clearStyle:true,
 				collapsible:true,
+				fillSpace:true,
 				
 				init:function(){
 					this._super();

@@ -17,23 +17,26 @@ public abstract class MasterData extends ExtensibleEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private long id;
+    private long    id;
 
     @Temporal(value = TemporalType.TIME)
     @Column(nullable = false)
-    private Date createdTime;
+    private Date    createdTime;
 
     @Temporal(value = TemporalType.TIME)
-    private Date changedTime;
+    private Date    changedTime;
 
     @Column
-    private long createdBy;
+    private long    createdBy;
 
     @Temporal(value = TemporalType.DATE)
-    private Date validFrom;
+    private Date    validFrom;
 
     @Temporal(value = TemporalType.DATE)
-    private Date validTo;
+    private Date    validTo;
+
+    @Column
+    private boolean isEnabled = true;
 
     public long getId(){
         return id;
@@ -81,6 +84,14 @@ public abstract class MasterData extends ExtensibleEntity{
 
     public void setValidTo(Date validTo){
         this.validTo = validTo;
+    }
+
+    public boolean isEnabled(){
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean isEnabled){
+        this.isEnabled = isEnabled;
     }
 
     public void fillDefaultValue(){

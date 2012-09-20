@@ -2,26 +2,38 @@ package com.fastbiz.core.validation.exception;
 
 import java.io.StringWriter;
 import javax.validation.ConstraintViolation;
-import com.fastbiz.core.biz.exception.BusinessException;
+import com.fastbiz.common.exception.InfrastructureException;
 
-@SuppressWarnings("rawtypes")
-public class ValidationException extends BusinessException{
+public class ValidationException extends InfrastructureException{
 
-    private static final long       serialVersionUID = 1L;
+    private static final long     serialVersionUID = 1L;
 
-    protected ConstraintViolation[] violations;
+    private ConstraintViolation<?>[] violations;
 
-    public ValidationException(String solutionId, ConstraintViolation[] violations) {
-        super(solutionId, ValidationException.ENTITY_VALIDATION_ERROR, null);
+    private String                solutionId;
+
+    protected static final String CR               = System.getProperty("line.separator");
+
+    public ValidationException(String solutionId, ConstraintViolation<?>[] violations) {
+        super(null);
         this.violations = violations;
+        this.solutionId = solutionId;
     }
 
-    public ConstraintViolation[] getViolations(){
+    public ConstraintViolation<?>[] getViolations(){
         return violations;
     }
 
+    public String getSolutionId(){
+        return solutionId;
+    }
+
+    public void setSolutionId(String solutionId){
+        this.solutionId = solutionId;
+    }
+
     @Override
-    public String getInternalMessage(){
+    public String getMessage(){
         StringWriter writer = new StringWriter(100);
         writer.write(CR);
         if (violations != null && violations.length > 0) {

@@ -1,4 +1,4 @@
-@import url("jquery-ui-1.8.22.custom.css");
+@import url("jquery-ui-1.8.23.custom.css");
 
 .fb-tooltip {
 }
@@ -35,4 +35,8 @@
 	-webkit-border-radius: 5px;
 	font-family: Arial, Helvetica, Verdana, sans-serif;
 	font-size: 12px; 
+}
+.ui-accordion-override{
+	position:static;
+	display:inline-block;
 }

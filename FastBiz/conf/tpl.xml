@@ -12,13 +12,11 @@
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<context:annotation-config />
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
-	<bean id="solutionResourceLoader" class="com.fastbiz.core.solution.spring.SolutionResoruceLoader"/>
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="parentMessageSource" ref="parentMessageSource"/>
-		<property name="resourceLoader" ref="solutionResourceLoader"/>
         <property name="basenames">
 			<list>
-				<value>message/Messages</value>
+				<value>/message/Messages</value>
 			</list>
 		</property>
 		<property name="cacheSeconds" value="60000" />

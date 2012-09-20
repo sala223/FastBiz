@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
+import org.codehaus.jackson.annotate.JsonMethod;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -21,6 +23,9 @@ public class JsonUtils{
         objectMapper.configure(SerializationConfig.Feature.USE_ANNOTATIONS, false);
         objectMapper.configure(SerializationConfig.Feature.WRITE_ENUMS_USING_TO_STRING, true);
         objectMapper.configure(SerializationConfig.Feature.INDENT_OUTPUT, true);
+        objectMapper.setVisibility(JsonMethod.FIELD, Visibility.PUBLIC_ONLY);
+        objectMapper.setVisibility(JsonMethod.SETTER, Visibility.NON_PRIVATE);
+        objectMapper.setVisibility(JsonMethod.GETTER, Visibility.NON_PRIVATE);
         objectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
         objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
     }

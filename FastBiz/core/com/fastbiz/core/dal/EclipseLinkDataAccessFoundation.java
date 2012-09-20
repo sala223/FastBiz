@@ -16,6 +16,12 @@ import com.fastbiz.core.dal.view.ViewId;
 
 public class EclipseLinkDataAccessFoundation extends JPADataAccessFoundation{
 
+    @SuppressWarnings("unchecked")
+    public <T> List<T> all(Class<T> entityType){
+        Session session = getSession();
+        return session.readAllObjects(entityType);
+    }
+
     public void bulkInsert(List<?> objects){
         EntityManager em = getEntityManager();
         ServerSession serverSession = em.unwrap(ServerSession.class);
@@ -56,8 +62,12 @@ public class EclipseLinkDataAccessFoundation extends JPADataAccessFoundation{
     }
 
     protected ClassDescriptor getClassDescrptor(String entity){
-        EntityManager em = getEntityManager();
-        Session session = em.unwrap(Session.class);
+        Session session = getSession();
         return session.getClassDescriptorForAlias(entity);
+    }
+
+    protected Session getSession(){
+        EntityManager em = getEntityManager();
+        return  em.unwrap(Session.class);
     }
 }

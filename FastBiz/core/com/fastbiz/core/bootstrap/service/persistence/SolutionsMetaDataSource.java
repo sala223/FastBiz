@@ -58,7 +58,7 @@ public class SolutionsMetaDataSource extends XMLMetadataSource{
         }
         XMLEntityMappings target = getEntityMappings(properties, classLoader, solutionIds[0]);
         for (int i = 1; i < solutionIds.length; ++i) {
-            XMLEntityMappings source = getEntityMappings(properties, classLoader, solutionIds[0]);
+            XMLEntityMappings source = getEntityMappings(properties, classLoader, solutionIds[i]);
             if (target == null) {
                 if (source != null) {
                     target = source;

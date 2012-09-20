@@ -26,7 +26,7 @@
 			<list>
 				<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
 					<property name="id" value="SYS_1" />
-					<property name="display" value="SYS_1" />
+					<property name="display" value="functiongroup.SYS_1" />
 					<property name="icon" value="/static/images/fg_root.jpg" />
 					<property name="accessExpression" value="hasPermission('PER_MASTER_READ') or hasPermission('PER_MASTER_WRITE') or hasPermission('PER_MASTER_DELETE')" />
 					<property name="subs">
@@ -40,19 +40,40 @@
 								<property name="id" value="SYS_1_2" />
 								<property name="display" value="SYS_1_2" />
 								<property name="icon" value="/static/images/fg_root.jpg" />
+								<property name="accessExpression" value="hasRole('DUR_ADMIN')" />
 							</bean>
 						</list>
 					</property>
 				</bean>
 				<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
 					<property name="id" value="SYS_2" />
-					<property name="display" value="SYS_2" />
+					<property name="display" value="functiongroup.SYS_2" />
 					<property name="icon" value="/static/images/fg_root.jpg" />
-					<property name="accessExpression" value="hasRole('DUR_ADMIN')" />
+				
 				</bean>
 				<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
 					<property name="id" value="SYS_3" />
-					<property name="display" value="SYS_3" />
+					<property name="display" value="functiongroup.SYS_3" />
+					<property name="icon" value="/static/images/fg_root.jpg" />
+				</bean>
+				<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
+					<property name="id" value="SYS_4" />
+					<property name="display" value="functiongroup.SYS_4" />
+					<property name="icon" value="/static/images/fg_root.jpg" />
+				</bean>
+				<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
+					<property name="id" value="SYS_5" />
+					<property name="display" value="functiongroup.SYS_5" />
+					<property name="icon" value="/static/images/fg_root.jpg" />
+				</bean>
+				<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
+					<property name="id" value="SYS_6" />
+					<property name="display" value="functiongroup.SYS_6" />
+					<property name="icon" value="/static/images/fg_root.jpg" />
+				</bean>
+				<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
+					<property name="id" value="SYS_7" />
+					<property name="display" value="functiongroup.SYS_7" />
 					<property name="icon" value="/static/images/fg_root.jpg" />
 				</bean>
 			</list>

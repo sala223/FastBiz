@@ -14,6 +14,8 @@ public class ProvisioningTest extends IDMTest{
         users[0] = new User();
         users[1] = new User();
         users[0].setCreatedTime(new Date());
+        users[0].addStringAttribute("test1", "test1");
+        users[1].addStringAttribute("test2", "test2");
         System.out.println(JsonUtils.toJson(users));
     }
 }

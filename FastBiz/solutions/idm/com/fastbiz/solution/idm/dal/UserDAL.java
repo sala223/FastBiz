@@ -17,7 +17,7 @@ public class UserDAL extends EclipseLinkDataAccessFoundation implements Constant
     }
 
     public User getUserByCode(String code){
-        CriteriaBuilder builder = createQueryBuilder(User.class);
+        CriteriaBuilder builder = createQueryBuilder();
         CriteriaQuery<User> query = builder.createQuery(User.class);
         Root<User> root = query.from(User.class);
         query.where(builder.equal(root.get(USER.USER_NAME_PROP), code));

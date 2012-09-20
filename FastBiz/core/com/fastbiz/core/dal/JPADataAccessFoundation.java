@@ -114,7 +114,7 @@ public class JPADataAccessFoundation implements EntityManagerAware{
         return null;
     }
 
-    public <T> CriteriaBuilder createQueryBuilder(Class<T> type){
+    public <T> CriteriaBuilder createQueryBuilder(){
         EntityManager em = getEntityManager();
         return em.getCriteriaBuilder();
     }

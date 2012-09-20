@@ -21,13 +21,13 @@
 						<p  class="label">
 							<label for="companycode"><@spring.message "page.login.form.companycode"/></label>
 						</p>
-						<input class="glow" type="text" id="companycode" name="f_tenant" value="">
+						<input class="glow" type="text" id="companycode" name="f_tenant" value="${RequestParameters.f_tenant?if_exists}">
 					</div>
 					<div class="inputbox">
 						<p class="label">
 							<label for="username"><@spring.message "page.login.form.username"/></label>
 						</p>
-						<input class="glow" type="text" id="username" name="f_username" value="">
+						<input class="glow" type="text" id="username" name="f_username" value="${RequestParameters.f_username?if_exists}">
 					</div>
 					<div class="inputbox">
 						<p class="label">

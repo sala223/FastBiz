@@ -29,7 +29,7 @@ requirejs.config({
     baseUrl: 'static/js',
     paths: {
         'jquery-1.7.2.min': '/share/static/js/jquery-1.7.2',
-		'jquery-ui': '/share/static/js/jquery-ui-1.8.22.custom',
+		'jquery-ui': '/share/static/js/jquery-ui-1.8.22.custom.min',
 		'jquery.url': '/share/static/js/jquery.url.js',
 		'ember-0.9.8.1': '/share/static/js/ember-0.9.8.1',
 		'flame-0.2.1': '/share/static/js/flame-0.2.1',
