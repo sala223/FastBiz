@@ -16,8 +16,11 @@ public class Main{
 
     public static void main(String args[]) throws ClassNotFoundException, InstantiationException, IllegalAccessException,
                     IllegalArgumentException, InvocationTargetException, SecurityException, NoSuchMethodException{
-        ClassLoader bootStrapClassLoader = setBootStrapClassLoader();
+        ClassLoader bootStrapClassLoader = createBootStrapClassLoader();
         Class<?> bootstrapControllerClass = bootStrapClassLoader.loadClass(BOOTSTRAP_CONTROLLER_CLASS_NAME);
+        if (bootstrapControllerClass.getClassLoader() == bootStrapClassLoader) {
+            Thread.currentThread().setContextClassLoader(bootStrapClassLoader);
+        }
         Class<?> environmentConfigurationClass = bootStrapClassLoader.loadClass(ENVIRONMENT_CONFIGURATION_CLASS_NAME);
         Method setConfigMethod = environmentConfigurationClass.getMethod("setBootstrapConfigFilePath", String.class);
         setConfigMethod.invoke(null, new Object[] { BOOTSTARUP_CONF_FILE });
@@ -33,7 +36,7 @@ public class Main{
         System.exit(0);
     }
 
-    private static ClassLoader setBootStrapClassLoader(){
+    private static ClassLoader createBootStrapClassLoader(){
         ClassLoader parent = Thread.currentThread().getContextClassLoader();
         if (parent == null) {
             parent = Main.class.getClassLoader();
@@ -42,7 +45,6 @@ public class Main{
             parent = ClassLoader.getSystemClassLoader();
         }
         BootstrapClassLoader bc = new BootstrapClassLoader(new File(BOOT_CONF_FILE_NAME), parent);
-        Thread.currentThread().setContextClassLoader(bc);
         return bc;
     }
 }

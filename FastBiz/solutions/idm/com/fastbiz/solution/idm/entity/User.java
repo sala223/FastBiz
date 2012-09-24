@@ -1,5 +1,6 @@
 package com.fastbiz.solution.idm.entity;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -23,7 +24,9 @@ import com.fastbiz.solution.idm.validation.IDMPayload;
 @Entity(name = "M_USER")
 @FetchGroup(name = "AuthenticationInfo", attributes = { @FetchAttribute(name = "name"), @FetchAttribute(name = "password"),
                 @FetchAttribute(name = "email"), @FetchAttribute(name = "telephone"), })
-public class User extends MasterData{
+public class User extends MasterData implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     @Column(length = 16, unique = true)
     @Index

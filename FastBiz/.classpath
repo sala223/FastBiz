@@ -84,7 +84,6 @@
 	<classpathentry kind="lib" path="lib/spring/org.springframework.oxm-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.oxm-sources-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/tomcat/ecj-3.7.2.jar"/>
-	<classpathentry kind="lib" path="lib/org.springframework.orm-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.orm-sources-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/org.aspectj.matcher.jar"/>
 	<classpathentry kind="lib" path="lib/aspectjweaver.jar"/>
 	<classpathentry kind="lib" path="lib/spring/spring-batch-core-2.1.8.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/spring-batch-2.1.8.RELEASE/dist/spring-batch-core-2.1.8.RELEASE-sources.jar"/>
