@@ -2,8 +2,10 @@ package com.fastbiz.common.security;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import javax.xml.bind.annotation.XmlRootElement;
 import com.fastbiz.common.utils.SecurityUtils;
 
+@XmlRootElement
 public class KeyStoreInfo implements Serializable{
 
     private static final long serialVersionUID = 1L;

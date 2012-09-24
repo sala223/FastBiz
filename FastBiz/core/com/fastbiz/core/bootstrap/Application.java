@@ -14,8 +14,6 @@ public class Application{
 
     private Map<Class<? extends BootstrapService>, BootstrapService> services       = new HashMap<Class<? extends BootstrapService>, BootstrapService>();
 
-    private ClassLoader                                              bootstrapClassLoader;
-
     private Application() {}
 
     public static Application getApplication(){
@@ -48,13 +46,5 @@ public class Application{
     @SuppressWarnings("unchecked")
     public <T extends BootstrapService> T getBootstrapService(Class<T> type){
         return (T) services.get(type);
-    }
-
-    public ClassLoader getBootstrapClassLoader(){
-        return bootstrapClassLoader;
-    }
-
-    void setBootstrapClassLoader(ClassLoader bootstrapClassLoader){
-        this.bootstrapClassLoader = bootstrapClassLoader;
     }
 }

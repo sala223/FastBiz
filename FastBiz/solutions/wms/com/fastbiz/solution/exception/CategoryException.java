@@ -12,6 +12,8 @@ public class CategoryException extends WMSException{
 
     private static int          CATEGORY_ALREADY_EXIST          = 10000003;
 
+    private static int          CATEGORY_NON_EXIST              = 10000004;
+
     public CategoryException(int errorCode) {
         super(CATEGORY_SERVICE_NAME, errorCode);
     }
@@ -31,8 +33,12 @@ public class CategoryException extends WMSException{
     public static CategoryException disableCategoryChildrenExistException(){
         return new CategoryException(DISABLE_CATEGORY_CHILDREN_EXIST);
     }
-    
+
     public static CategoryException CategoryAlreadyExistException(){
         return new CategoryException(CATEGORY_ALREADY_EXIST);
+    }
+
+    public static CategoryException CategoryNonExistException(){
+        return new CategoryException(CATEGORY_NON_EXIST);
     }
 }

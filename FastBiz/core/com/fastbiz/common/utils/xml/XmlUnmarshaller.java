@@ -37,8 +37,25 @@ public class XmlUnmarshaller<T> {
     private boolean             namespaceAware            = true;
 
     public XmlUnmarshaller(Class<?> ... classesToBeBound) {
+        Assert.notEmpty(classesToBeBound);
         try {
             JAXBContext context = JAXBContext.newInstance(classesToBeBound);
+            delegate = context.createUnmarshaller();
+        } catch (JAXBException ex) {
+            LOG.error(ex.toString());
+            throw new XmlException(ex, "Cannot create JAXB Context");
+        }
+    }
+
+    public XmlUnmarshaller(String ... classesToBeBound) {
+        Assert.notEmpty(classesToBeBound);
+        try {
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+            StringBuffer buffer = new StringBuffer();
+            for (String className : classesToBeBound) {
+                buffer.append(className + ":");
+            }
+            JAXBContext context = JAXBContext.newInstance(buffer.toString(), classLoader);
             delegate = context.createUnmarshaller();
         } catch (JAXBException ex) {
             LOG.error(ex.toString());

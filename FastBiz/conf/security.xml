@@ -11,11 +11,17 @@
 	<bean id="idmSolution" factory-bean="SOLUTION_FACTORY" factory-method="getSolution">
 		<constructor-arg index="0" value="idm" />
 	</bean>
-	<bean id="userDetailsService" factory-bean="idmSolution" factory-method="getBean" autowire="no">
-		<constructor-arg index="0" value="userDetailsService" />
+	<bean id="userDAL" factory-bean="idmSolution" factory-method="getBean">
+		<constructor-arg index="0" value="userDAL" />
 	</bean>
 	<bean id="passwordEncoder" factory-bean="idmSolution" factory-method="getBean">
 		<constructor-arg index="0" value="shaPasswordEncoder" />
+	</bean>
+	<bean id="userManagementService" factory-bean="idmSolution" factory-method="getBean">
+		<constructor-arg index="0" value="userManagementService" />
+	</bean>
+	<bean id="userDetailsService" factory-bean="idmSolution" factory-method="getBean">
+		<constructor-arg index="0" value="userDetailsService" />
 	</bean>
 	<bean id="saltSource" factory-bean="idmSolution" factory-method="getBean">
 		<constructor-arg index="0" value="saltSource" />

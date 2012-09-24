@@ -54,8 +54,8 @@ public class BootstrapServiceWrapper implements BootstrapService{
                     LOG.error(String.format(fmt, listener.getClass(), this.service), e);
                 }
             }
-        } catch (Throwable e) {
-            fireServiceEvent(BootstrapServiceEvent.createStartErrorEvent(service, e));
+        } catch (Throwable ex) {
+            fireServiceEvent(BootstrapServiceEvent.createStartErrorEvent(service, ex));
         }
     }
 

@@ -10,6 +10,7 @@ import com.fastbiz.solution.wms.dal.CategoryDAL;
 import com.fastbiz.solution.wms.entity.Category;
 
 @Service("categoryService")
+@Transactional
 public class CategoryService{
 
     @Autowired
@@ -19,32 +20,64 @@ public class CategoryService{
     @Qualifier("VALIDATOR")
     protected Validator validator;
 
-    public void deleteCategory(String categoryId){}
+    public void deleteCategory(int categoryId){
+        categoryDAL.remove(Category.class, categoryId);
+    }
+
+    public void removeCategoryByName(String categoryName){
+        categoryDAL.removeCategoryByName(categoryName);
+    }
+    
+    public void getCategoryChildren(int categoryId){
+        categoryDAL.remove(Category.class, categoryId);
+    }
+
+    public void updateCategoryParent(int categoryId, int parentCategoryId){
+        Category find = categoryDAL.find(Category.class, categoryId);
+        if (find == null) {
+            throw CategoryException.CategoryNonExistException();
+        }
+        Category parent = categoryDAL.find(Category.class, categoryId);
+        if (parent == null) {
+            throw CategoryException.parentCategoryNotExistException();
+        }
+        find.setParent(parent);
+        categoryDAL.merge(find);
+    }
+
+    public void updateCategoryParent(String categoryName, String parentCategoryName){
+        Category find = categoryDAL.findCategoryByName(categoryName);
+        if (find == null) {
+            throw CategoryException.CategoryNonExistException();
+        }
+        Category parent = categoryDAL.findCategoryByName(parentCategoryName);
+        if (parent == null) {
+            throw CategoryException.parentCategoryNotExistException();
+        }
+        find.setParent(parent);
+        categoryDAL.merge(find);
+    }
 
     @Transactional
-    public void newCategory(Category category, int parentId){
+    public void newCategory(Category category){
         validator.validate(category);
         Category find = categoryDAL.findCategoryByName(category.getName());
         if (find != null) {
             throw CategoryException.CategoryAlreadyExistException();
         }
-        if (parentId >= 0) {
-            Category parent = categoryDAL.find(Category.class, parentId);
+        Category parentValue = category.getParent();
+        if (parentValue != null) {
+            Category parent = categoryDAL.find(Category.class, parentValue.getId());
             if (parent == null) {
                 throw CategoryException.parentCategoryNotExistException();
             }
-            if (category.getChildren() != null) {
-                category.getChildren().clear();
-            }
-            categoryDAL.insert(category);
-            parent.getChildren().add(category);
-            categoryDAL.update(parent);
-        } else {
-            if (category.getChildren() != null) {
-                category.getChildren().clear();
-            }
-            categoryDAL.insert(category);
         }
+        categoryDAL.insert(category);
+    }
+
+    @Transactional
+    public Category getCategoryByName(String categoryName){
+        return categoryDAL.findCategoryByName(categoryName);
     }
 
     @Transactional

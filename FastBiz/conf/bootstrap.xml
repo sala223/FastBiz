@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.fastbiz.com.cn/schema/bootstrap"
 	xsi:schemaLocation="http://www.fastbiz.com.cn/schema/bootstrap http://www.fastbiz.com.cn/schema/bootstrap.xsd">
-	<service class="com.fastbiz.core.bootstrap.service.derby.Derby"></service>
+	<service class="com.fastbiz.core.bootstrap.service.derby.Derby"/>
 	<service class="com.fastbiz.core.bootstrap.service.jndi.JNDI" />
 	<service class="com.fastbiz.core.bootstrap.service.datasource.DataSourceService" />
 	<service class="com.fastbiz.core.bootstrap.service.solution.SolutionPackageService" />

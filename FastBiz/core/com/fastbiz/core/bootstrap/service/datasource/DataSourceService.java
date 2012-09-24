@@ -60,7 +60,23 @@ public class DataSourceService extends BootstrapServiceBase implements DataSourc
     }
 
     @Override
-    public void stop(Application application){}
+    public void stop(Application application){
+        InitialContext initContext = null;
+        try {
+            initContext = new InitialContext();
+            for (DataSourceDefinition dsd : definitions) {
+                String jndiName = dsd.getJndiName();
+                try {
+                    DataSourceDelegator ds = (DataSourceDelegator) initContext.lookup(jndiName);
+                    ds.close();
+                } catch (NamingException ex) {
+                    LOG.warn("Cannot find datasource object from JNDI {}", jndiName);
+                }
+            }
+        } catch (NamingException ex) {
+            throw new BootstrapServiceException(this.getClass().getName(), ex);
+        }
+    }
 
     @Override
     public DataSourcesDefinition getDataSourcesDefinition(){

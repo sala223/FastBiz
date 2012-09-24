@@ -1,16 +1,18 @@
 package com.fastbiz.solution.wms.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.eclipse.persistence.annotations.BatchFetch;
 import org.eclipse.persistence.annotations.BatchFetchType;
 import org.eclipse.persistence.annotations.Cache;
@@ -38,14 +40,17 @@ public class Category extends MultiTenantSupport{
     @Column(length = 512)
     private String         description;
 
-    @OneToMany
-    @JoinTable(name = "CATEGORY_HIEARCHY", joinColumns = { @JoinColumn(name = "PARENT") }, inverseJoinColumns = { @JoinColumn(name = "ID") })
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "PARENT", nullable = true)
+    @JsonIgnore
+    private Category       parent;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "CATEGORY", joinColumns = { @JoinColumn(name = "PARENT") }, inverseJoinColumns = { @JoinColumn(name = "ID") })
     @BatchFetch(BatchFetchType.JOIN)
     private List<Category> children;
 
-    public Category() {
-        children = new ArrayList<Category>();
-    }
+    public Category() {}
 
     public Category(String name) {
         this();
@@ -82,6 +87,14 @@ public class Category extends MultiTenantSupport{
 
     public void setDescription(String description){
         this.description = description;
+    }
+
+    public Category getParent(){
+        return parent;
+    }
+
+    public void setParent(Category parent){
+        this.parent = parent;
     }
 
     public List<Category> getChildren(){

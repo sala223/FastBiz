@@ -13,13 +13,15 @@ import com.fastbiz.core.solution.spring.StandardSolutionFactory;
 
 public class SolutionPackageService extends BootstrapServiceBase{
 
-    private static final Logger LOG                     = LoggerFactory.getLogger(SolutionPackageService.class);
+    private static final Logger LOG                   = LoggerFactory.getLogger(SolutionPackageService.class);
 
     private SolutionFactory     factory;
 
     StandardSolutionBrowser     browser;
 
-    public static final String  SOLUTION_FACTORY_JNDI   = "java:/comp/SolutionFactory";
+    public static final String  SOLUTION_FACTORY_JNDI = "java:/comp/SolutionFactory";
+
+    public static final String  SOLUTION_BROWSER_JNDI = "java:/comp/SolutionBrowser";
 
     public void init(Application application){
         browser = new StandardSolutionBrowser();
@@ -42,6 +44,13 @@ public class SolutionPackageService extends BootstrapServiceBase{
         } catch (NamingException ex) {
             String fmt = "Cannot bind solution factory instance to JNDI %s";
             throw new BootstrapServiceException(this.getClass().getName(), ex, fmt, SOLUTION_FACTORY_JNDI);
+        }
+        try {
+            application.getBootstrapService(JNDI.class).bind(SOLUTION_BROWSER_JNDI, browser);
+            LOG.info("Bind SolutionBroser to {}", SOLUTION_BROWSER_JNDI);
+        } catch (NamingException ex) {
+            String fmt = "Cannot bind solution browser instance to JNDI %s";
+            throw new BootstrapServiceException(this.getClass().getName(), ex, fmt, SOLUTION_BROWSER_JNDI);
         }
     }
 

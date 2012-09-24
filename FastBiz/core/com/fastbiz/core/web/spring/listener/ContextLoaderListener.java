@@ -9,7 +9,7 @@ import com.fastbiz.core.solution.StandardSolution;
 
 public class ContextLoaderListener extends org.springframework.web.context.ContextLoaderListener{
 
-    private static final String SOLUTION_ID_PARAMETER    = "solutionId";
+    private static final String SOLUTION_ID_PARAMETER = "solutionId";
 
     protected ApplicationContext loadParentContext(ServletContext servletContext){
         String solutionId = servletContext.getInitParameter(SOLUTION_ID_PARAMETER);
@@ -18,12 +18,16 @@ public class ContextLoaderListener extends org.springframework.web.context.Conte
             return null;
         }
         Solution solution = SolutionFactoryLocator.getSolutionFactory().getSolution(solutionId);
-        if(solution == null){
-            servletContext.log(String.format("Invalid solution id %s, it is not managed yet.",solutionId)); 
+        if (solution == null) {
+            servletContext.log(String.format("Invalid solution id %s, it is not managed yet.", solutionId));
             return null;
-        }else{
+        } else {
+            boolean hasCXF = solution.containsBean("cxf");
+            if (hasCXF) {
+                servletContext.addServlet("CXFServlet", "org.apache.cxf.transport.servlet.CXFServlet");
+                servletContext.getServletRegistration("CXFServlet").addMapping("/wsapi/*");
+            }
             return ((StandardSolution) solution).unwrap(ApplicationContext.class);
         }
     }
-   
 }

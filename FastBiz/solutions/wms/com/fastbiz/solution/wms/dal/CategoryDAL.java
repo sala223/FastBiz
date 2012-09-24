@@ -1,5 +1,6 @@
 package com.fastbiz.solution.wms.dal;
 
+import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -33,5 +34,20 @@ public class CategoryDAL extends EclipseLinkDataAccessFoundation implements Cons
         Root<Category> root = query.from(Category.class);
         query.where(builder.equal(root.get(CATEGORY.CATEGORY_NAME_PROPERTY), name));
         return executeSingleQuery(query);
+    }
+    
+    public int removeCategoryByName(String categoryName){
+        String eql = "DELETE FROM %s as c where c.name=:NAME";
+        Query query = this.getEntityManager().createQuery(String.format(eql, Constants.CATEGORY.CATEGORY_ENTITY_NAME));
+        query.setParameter("NAME", categoryName);
+        return query.executeUpdate();
+    }
+
+    public List<Category> getCategoryChildren(int categoryId){
+        CriteriaBuilder builder = createQueryBuilder();
+        CriteriaQuery<Category> query = builder.createQuery(Category.class);
+        Root<Category> root = query.from(Category.class);
+        query.where(builder.equal(root.get(CATEGORY.CATEGORY_PARENT_ID_PROPERTY), categoryId));
+        return this.executeQuery(query);
     }
 }

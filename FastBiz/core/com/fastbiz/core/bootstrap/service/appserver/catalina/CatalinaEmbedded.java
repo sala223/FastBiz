@@ -194,6 +194,15 @@ public class CatalinaEmbedded implements Embedded{
         }
     }
 
+    private void setStandardConfiguration(ApplicationDescriptor application, StandardContext context){
+        String docBase = application.getDocBase();
+        if (new File(FileUtils.newFilePath(docBase, "WEB-INF", "web-beans.xml")).exists()) {
+            context.getServletContext().setInitParameter("solutionId", application.getName());
+            context.getServletContext().setInitParameter("contextConfigLocation", "WEB-INF/web-beans.xml");
+            context.addApplicationListener("com.fastbiz.core.web.spring.listener.ContextLoaderListener");
+        }
+    }
+
     public void addApplicationContext(ApplicationDescriptor application){
         Host host = getHost();
         StandardContext context = new StandardContext();
@@ -205,6 +214,9 @@ public class CatalinaEmbedded implements Embedded{
         context.setReloadable(true);
         context.setCookies(true);
         context.setAddWebinfClassesResources(true);
+        context.setParent(host);
+        setStandardConfiguration(application, context);
+        host.addChild(context);
         WebappLoader loader = new WebappLoader(Thread.currentThread().getContextClassLoader());
         context.setLoader(loader);
         if (application.getType() == ApplicationType.STANDARD_FOLDER) {
@@ -218,7 +230,6 @@ public class CatalinaEmbedded implements Embedded{
                 }
             }
         }
-        host.addChild(context);
     }
 
     private KeyStoreInfo getKeyStoreInfo(){

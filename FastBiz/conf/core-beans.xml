@@ -12,31 +12,38 @@
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
 	<bean id="SOLUTION_FACTORY" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName" value="java:/comp/SolutionFactory"></property>
-		<property name="lookupOnStartup" value="false"></property>
-		<property name="cache" value="true"></property>
-		<property name="proxyInterface" value="com.fastbiz.core.solution.SolutionFactory"></property>
+		<property name="jndiName" value="java:/comp/SolutionFactory" />
+		<property name="lookupOnStartup" value="false" />
+		<property name="cache" value="true" />
+		<property name="proxyInterface" value="com.fastbiz.core.solution.SolutionFactory" />
 	</bean>
 	<bean id="DATASOURCE" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName" value="java:/comp/ds/test"></property>
-		<property name="lookupOnStartup" value="true"></property>
-		<property name="cache" value="true"></property>
-		<property name="proxyInterface" value="javax.sql.DataSource"></property>
+		<property name="jndiName" value="java:/comp/ds/test" />
+		<property name="lookupOnStartup" value="true" />
+		<property name="cache" value="true" />
+		<property name="proxyInterface" value="javax.sql.DataSource" />
 	</bean>
 	<bean id="XADATASOURCE" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName" value="java:/comp/ds/test"></property>
-		<property name="lookupOnStartup" value="true"></property>
-		<property name="cache" value="true"></property>
-		<property name="proxyInterface" value="javax.sql.XADataSource"></property>
+		<property name="jndiName" value="java:/comp/ds/test" />
+		<property name="lookupOnStartup" value="true" />
+		<property name="cache" value="true" />
+		<property name="proxyInterface" value="javax.sql.XADataSource" />
 	</bean>
 	<bean id="JPA_TRANSACTION_MANAGER" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="ENTITY_MANAGER_FACTORY" />
 	</bean>
-	<bean id="DATASOURCE_TRANSACTION_MANAGER" class=" org.springframework.jdbc.datasource.DataSourceTransactionManager ">
+	<bean id="DATASOURCE_TRANSACTION_MANAGER" class=" org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="DATASOURCE" />
 	</bean>
-	<bean id="ENTITY_MANAGER_FACTORY" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="main" />
+	<bean id="ENTITY_MANAGER_FACTORY" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="DATASOURCE" />
+		<property name="jpaDialect" ref="JPA_DIALECT" />
+		<property name="loadTimeWeaver">
+			<bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+		</property>
+	</bean>
+	<bean name="JPA_DIALECT" class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect">
+		<property name="lazyDatabaseTransaction" value="true" />
 	</bean>
 	<bean id="VALIDATOR_MESSAGE_INTERPOLATOR" class="com.fastbiz.core.validation.message.MessageSourceMessageInterpolator">
 		<constructor-arg index="0" ref="SOLUTION_MESSAGE_SOURCE_CREATOR" />
@@ -62,7 +69,7 @@
 	</bean>
 	<bean id="TENANT_HOLDER" class="com.fastbiz.core.tenant.TenantHolder" />
 	<bean id="parentMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basenames">
+		<property name="basenames">
 			<list>
 				<value>classpath:message/Messages</value>
 			</list>
@@ -70,29 +77,26 @@
 		<property name="cacheSeconds" value="60000" />
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="useCodeAsDefaultMessage" value="true" />
-    </bean>
-	<bean id="TENANT_ADVISOR" class="org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor">
-		<property name="expression"
-			value="@within(org.springframework.transaction.annotation.Transactional) or 
-				   @within(org.springframework.stereotype.Service) or 
-				   @annotation(org.springframework.transaction.annotation.Transactional)" />
-		<property name="advice" ref="TENANT_INJECTION_INTERCEPTOR" />
+	</bean>
+	<bean id="TENANT_ADVISOR" class="com.fastbiz.core.tenant.TenantInjectionAdvisor">
+		<property name="transactionAttributeSource" ref="TRANSACTION_ATTRIBUTE_SOURCE" />
+		<property name="tenantInjectionInterceptor" ref="TENANT_INJECTION_INTERCEPTOR" />
 	</bean>
 	<bean id="JAXB2_MARSHALLER" class="org.springframework.oxm.jaxb.Jaxb2Marshaller" abstract="true">
-		<property name="classesToBeBound" > 
+		<property name="classesToBeBound">
 			<list>
-       	 		<value>com.fastbiz.core.locale.Language</value>
-    		</list>
-    	</property>
-    	<property name="marshallerProperties" > 
+				<value>com.fastbiz.core.locale.Language</value>
+			</list>
+		</property>
+		<property name="marshallerProperties">
 			<map>
-       	 		<entry key="jaxb.fragment">
-                    <value type="java.lang.Boolean">false</value>
-                </entry>
-                <entry key="jaxb.formatted.output">
-                    <value type="java.lang.Boolean">false</value>
-                </entry>
-    		</map>
-    	</property> 	
+				<entry key="jaxb.fragment">
+					<value type="java.lang.Boolean">false</value>
+				</entry>
+				<entry key="jaxb.formatted.output">
+					<value type="java.lang.Boolean">false</value>
+				</entry>
+			</map>
+		</property>
 	</bean>
 </beans>

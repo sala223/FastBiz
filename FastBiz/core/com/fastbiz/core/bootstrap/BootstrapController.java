@@ -20,26 +20,9 @@ public class BootstrapController{
 
     private volatile boolean       stop     = false;
 
-    private ClassLoader            bootstrapClassLoader;
-
     private List<BootstrapService> services = new ArrayList<BootstrapService>();
 
     public BootstrapController() {}
-    
-    public void setBootstrapClassLoader(ClassLoader classLoader){
-        this.bootstrapClassLoader = classLoader;
-    }
-
-    public ClassLoader getBootstrapClassLoader(){
-        ClassLoader cl = bootstrapClassLoader;
-        if (cl == null) {
-            cl = Thread.currentThread().getContextClassLoader();
-        }
-        if (cl == null) {
-            cl = this.getClass().getClassLoader();
-        }
-        return cl;
-    }
 
     private void logBrand(){
         StringBuffer buffer = new StringBuffer();
@@ -54,11 +37,6 @@ public class BootstrapController{
 
     public void init(){
         logBrand();
-        if (bootstrapClassLoader == null) {
-            bootstrapClassLoader = BootstrapController.class.getClassLoader();
-        }
-        Thread.currentThread().setContextClassLoader(bootstrapClassLoader);
-        Application.getApplication().setBootstrapClassLoader(bootstrapClassLoader);
         setShutdownHook();
         BootstrapConfiguration bc = new BootstrapConfiguration(EnvironmentConfigration.getBootstrapConfigFilePath());
         List<ServiceInformation> services = bc.getBootstrapServices();
@@ -115,6 +93,7 @@ public class BootstrapController{
                 LOG.error("Failed shutdown service {} ", e);
             }
         }
+        
         System.exit(0);
     }
 
@@ -132,6 +111,7 @@ public class BootstrapController{
                 }
             }
         };
+        hook.setDaemon(true);
         Runtime.getRuntime().addShutdownHook(hook);
     }
 
