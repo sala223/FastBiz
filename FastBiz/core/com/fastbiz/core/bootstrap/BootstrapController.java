@@ -93,8 +93,6 @@ public class BootstrapController{
                 LOG.error("Failed shutdown service {} ", e);
             }
         }
-        
-        System.exit(0);
     }
 
     private void setShutdownHook(){
