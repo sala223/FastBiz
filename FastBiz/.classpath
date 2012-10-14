@@ -36,12 +36,11 @@
 	<classpathentry kind="lib" path="lib/derby/derbynet.jar"/>
 	<classpathentry kind="lib" path="lib/c3p0-0.9.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/c3p0-oracle-thin-extras-0.9.1.2.jar"/>
-	<classpathentry kind="lib" path="lib/tomcat/tomcat-embed-core.jar" sourcepath="C:/workstation/tools/javathirdlib/apache-tomcat-7.0.25-src.zip"/>
+	<classpathentry kind="lib" path="lib/tomcat/tomcat-embed-core.jar" sourcepath="C:/workstation/tools/javathirdlib/apache-tomcat-7.0.30-src.zip"/>
 	<classpathentry kind="lib" path="lib/tomcat/tomcat-embed-jasper.jar"/>
 	<classpathentry kind="lib" path="lib/tomcat/tomcat-embed-logging-juli.jar"/>
 	<classpathentry kind="lib" path="lib/tomcat/tomcat-embed-logging-log4j.jar"/>
 	<classpathentry kind="lib" path="lib/tomcat/tomcat-jdbc.jar"/>
-	<classpathentry kind="lib" path="lib/eclipselink/jpa/eclipselink-jpa-modelgen_2.3.2.v20111125-r10461.jar"/>
 	<classpathentry kind="lib" path="lib/eclipselink/eclipselink.jar" sourcepath="C:/workstation/tools/javathirdlib/eclipselink/eclipselink/jlib/eclipselink-src.zip"/>
 	<classpathentry kind="lib" path="lib/spring/org.springframework.aop-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.aop-sources-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/spring/org.springframework.beans-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.beans-sources-3.1.0.RELEASE.jar"/>
@@ -89,5 +88,6 @@
 	<classpathentry kind="lib" path="lib/spring/spring-batch-core-2.1.8.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/spring-batch-2.1.8.RELEASE/dist/spring-batch-core-2.1.8.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="lib/spring/spring-batch-infrastructure-2.1.8.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/eclipselink/jpa/javax.persistence_2.0.4.v201112161009.jar"/>
+	<classpathentry kind="lib" path="lib/spring/org.springframework.instrument.tomcat-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.instrument.tomcat-sources-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="output" path="runtime/framework"/>
 </classpath>

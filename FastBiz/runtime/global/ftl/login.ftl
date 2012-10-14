@@ -6,6 +6,7 @@
 <meta name="description" content="<@spring.message "page.login.title"/>"> 
 <title><@spring.message "page.login.title"/>
 </title>
+<script type="text/javascript" src="/share/static/js/login.js"></script>
 <link rel="stylesheet" type="text/css" href="/share/static/css/main.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/share/static/css/login.css" media="screen">
 </head>
@@ -34,6 +35,7 @@
 							<label for="password"><@spring.message "page.login.form.password"/></label>
 						</p>
 						<input class="glow" type="password" id="password" name="f_password" size="18" autocomplete="off" onkeypress="checkCaps(event)">
+						<div id="capsTip" style="visibility:hidden;color:#DA0000;"><@spring.message "page.login.caps.tip"/></div> 
 					</div>
 					<div class="inputbox">
 						<input class="checkbox" type="checkbox" id="rememberMe" name="rememberMe"> 

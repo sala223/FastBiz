@@ -33,12 +33,69 @@
 						<list>
 							<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
 								<property name="id" value="SYS_1_1" />
-								<property name="display" value="SYS_1_1" />
+								<property name="display" value="functiongroup.SYS_1_1" />
 								<property name="icon" value="/static/images/fg_root.jpg" />
+								<property name="subs">
+									<list>
+										<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
+											<property name="id" value="SYS_1_1_1" />
+											<property name="display" value="functiongroup.SYS_1_1_1" />
+											<property name="icon" value="/static/images/fg_root.jpg" />
+										</bean>
+										<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
+											<property name="id" value="SYS_1_1_2" />
+											<property name="display" value="functiongroup.SYS_1_1_2" />
+											<property name="icon" value="/static/images/fg_root.jpg" />
+										</bean>
+									</list>
+								</property>
 							</bean>
 							<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
 								<property name="id" value="SYS_1_2" />
-								<property name="display" value="SYS_1_2" />
+								<property name="display" value="functiongroup.SYS_1_2" />
+								<property name="icon" value="/static/images/fg_root.jpg" />
+								<property name="subs">
+									<list>
+										<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
+											<property name="id" value="SYS_1_2_1" />
+											<property name="display" value="functiongroup.SYS_1_2_1" />
+											<property name="icon" value="/static/images/fg_root.jpg" />
+										</bean>
+										<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
+											<property name="id" value="SYS_1_2_2" />
+											<property name="display" value="functiongroup.SYS_1_2_2" />
+											<property name="icon" value="/static/images/fg_root.jpg" />
+										</bean>
+										<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
+											<property name="id" value="SYS_1_2_3" />
+											<property name="display" value="functiongroup.SYS_1_2_3" />
+											<property name="icon" value="/static/images/fg_root.jpg" />
+										</bean>
+									</list>
+								</property>
+							</bean>
+							<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
+								<property name="id" value="SYS_1_3" />
+								<property name="display" value="functiongroup.SYS_1_3" />
+								<property name="icon" value="/static/images/fg_root.jpg" />
+								<property name="subs">
+									<list>
+										<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
+											<property name="id" value="SYS_1_3_1" />
+											<property name="display" value="functiongroup.SYS_1_3_1" />
+											<property name="icon" value="/static/images/fg_root.jpg" />
+										</bean>
+										<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
+											<property name="id" value="SYS_1_3_2" />
+											<property name="display" value="functiongroup.SYS_1_3_2" />
+											<property name="icon" value="/static/images/fg_root.jpg" />
+										</bean>
+									</list>
+								</property>
+							</bean>
+							<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
+								<property name="id" value="functiongroup.SYS_1_4" />
+								<property name="display" value="SYS_1_4" />
 								<property name="icon" value="/static/images/fg_root.jpg" />
 								<property name="accessExpression" value="hasRole('DUR_ADMIN')" />
 							</bean>

@@ -4,7 +4,9 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 public class EnvironmentConfigration{
 
     private static final String        APPLICATION_HOME_KEY           = "FASTBIZ_HOME";

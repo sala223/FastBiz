@@ -39,7 +39,7 @@
 		<property name="dataSource" ref="DATASOURCE" />
 		<property name="jpaDialect" ref="JPA_DIALECT" />
 		<property name="loadTimeWeaver">
-			<bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+			<bean class="org.springframework.instrument.classloading.ReflectiveLoadTimeWeaver" />
 		</property>
 	</bean>
 	<bean name="JPA_DIALECT" class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect">

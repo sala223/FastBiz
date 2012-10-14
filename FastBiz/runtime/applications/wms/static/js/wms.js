@@ -1,4 +1,4 @@
-Fb.loadLanguageResource('static/js/i18n');
+Fb.loadLanguageResource('static/js/i18n'); 
 Fb.translate();
 
 var Wms = Em.Application.create({
@@ -23,20 +23,30 @@ Wms.User=Em.Object.extend({
     gender:null
 });
 
-Wms.searchConroller=Ember.Object.create({
+Wms.searchConroller=Em.Object.create({
 	searchText: 'test',
 });
 
 Wms.FunctionGroup = Em.Object.extend({
 	id:null,
-	text:null,
+	display:null,
 	icon:null,
 	subs:[]
 });
 
-Wms.functionsConroller=Ember.Object.create({
+Wms.FunctionGroupNode = Em.Object.extend({
+	functionGroup:null,
+	treeItemIsExpanded:false,
+});
+
+Wms.FunctionGroupLeaf = Em.Object.extend({
+	functionGroup:null,
+	treeItemIsExpanded:false
+});
+
+Wms.functionsConroller=Em.Object.create({
 	functionGroups:[], 
-	 
+	
 	loadFunctionGroups:function(){ 	
 		var controller = this;
 		jQuery.getJSON("ui/functionGroup.json", function(json) {
@@ -47,13 +57,87 @@ Wms.functionsConroller=Ember.Object.create({
 	}
 });
 
+Wms.FunctionGroupContentTreeItemView=Flame.TreeItemView.extend({
+	classNames: ['fg-tree-item'],
+	 toggleButton: Flame.DisclosureView.extend({
+		classNames: ['flame-tree-view-toggle'],
+		ignoreLayoutManager:true,
+        useAbsolutePosition:false,
+        acceptsKeyResponder:false,
+        visibilityTargetBinding:'parentView.isExpanded',
+        action:function() {return false;},
+        imageExpanded: Flame.image('disclosure_triangle_down.png'),
+		imageCollapsed:Flame.image('disclosure_triangle_left.png')
+    })
+});
+
+Wms.FunctionGroupContentTreeView=Flame.TreeView.extend({
+	allowReordering:false,
+	functionGroup:null,
+	layout: { top: 5, left:10},
+	itemViewClass:Wms.FunctionGroupContentTreeItemView,
+	handlebarsMap:{
+		'Wms.FunctionGroupNode':'{{content.functionGroup.display}}', 
+		'Wms.FunctionGroupLeaf':'{{content.functionGroup.display}}', 
+		'defaultTemplate': '{{content}}'
+	},
+	
+	initContent:function(){
+		var fg = this.get('functionGroup');
+		if(fg != null && fg.subs != null){	
+			var content = [];
+			for(var i = 0 ; i < fg.subs.length; i++){
+				var sub=fg.subs[i];			
+				if(sub.subs && sub.subs.length>0){
+					var node=Wms.FunctionGroupNode.create({
+						functionGroup:sub
+					});
+					content.push(node);		
+					this._createNodeRecursively(node,sub); 
+				}else{
+					var node=Wms.FunctionGroupLeaf.create({
+						functionGroup:sub
+					});
+					content.push(node);		
+				}	
+			}
+			this.set('content',content);        
+		}	
+	}.observes('functionGroup'),
+	
+	_createNodeRecursively:function(parentNode, functionGroup){
+		
+		if(functionGroup.subs && functionGroup.subs.length >0){
+			if(!parentNode.treeItemChildren){
+				parentNode.set('treeItemChildren',[]); 
+			}
+			for(var i = 0 ; i < functionGroup.subs.length; i++){
+				var sub=functionGroup.subs[i];		
+				if(sub.subs && sub.subs.length>0){
+					var node=Wms.FunctionGroupNode.create({
+						functionGroup:sub
+					});
+					this.createNodeRecursively(node,sub);
+					parentNode.get('treeItemChildren').push(node);				 
+				}else{
+					var node=Wms.FunctionGroupLeaf.create({
+						functionGroup:sub
+					});
+					parentNode.get('treeItemChildren').push(node);
+				}		
+			}
+		}
+	}
+});		
+
+
 Wms.MainView = Flame.View.extend({
 	elementId: 'mainView',
 	childViews:'toolBarView frameView'.w(),
 	classNames: ['main'],
 	layout: { top: 85, bottom:0, width:'100%'},
 	layoutManager: Flame.VerticalStackLayoutManager.create({ spacing: 0 }),
-	
+	    
 	toolBarView:Flame.View.extend({
 		elementId: 'toolBarView',
 		controller: Wms.searchConroller,
@@ -87,7 +171,9 @@ Wms.MainView = Flame.View.extend({
 			},
 			
 			click:function(event) {
+				console.log('Got an click event');
 				this.set('isHidden',!this.get('isHidden'));
+				return false;
 			},	
 			
 			mouseEnter: function(){
@@ -129,7 +215,7 @@ Wms.MainView = Flame.View.extend({
 	}),
 
 	frameView:Flame.HorizontalSplitView.extend({
-		elementId: 'flameView',
+		elementId: 'frameView',
 		controller: Wms.functionsConroller,
 		leftWidth:250,
 		minLeftWidth:0,
@@ -167,7 +253,9 @@ Wms.MainView = Flame.View.extend({
 			return ret;
 		},
 	
+		
 		rightView: Flame.TabView.extend({	
+		 
 		}),
 		
 		leftView: Flame.View.extend({
@@ -193,20 +281,22 @@ Wms.MainView = Flame.View.extend({
 					var self = this;
 					var contentViews = this.get('contentViews');
 					$.each(functionGroups,function(index){
-						var contentView = self.createChildView(Flame.View);
-						self.get('headers').push(functionGroups[index].display); 
-						self.get('contentViews').push(contentView);
+						if(functionGroups[index].subs && functionGroups[index].subs.length>=0){
+							var contentView = Wms.FunctionGroupContentTreeView.create();
+							contentView.set('functionGroup',functionGroups[index]);
+							self.get('headers').pushObject(functionGroups[index].display); 
+							self.get('contentViews').pushObject(contentView);
+						}
 					});	
 					this._createTabs();
 				}.observes('functionGroups')
 			})
 		})
-		
-	})
-	 
+	})	
 });
 
 Wms.functionsConroller.loadFunctionGroups();
+
 
 
 

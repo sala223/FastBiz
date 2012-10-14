@@ -5,7 +5,6 @@ Fb.urls={};
 Fb.init=function(){
 	Flame.imagePath = '/share/static/images/';	 
 	Fb.imagePath = '/share/static/images/';	 
-	Fb.forEach = Ember.ArrayUtils.forEach;
 	Fb.urls.language='permitted/locale/language.json';
 	Fb.urls.supportedLanguages='permitted/locale/supportedLanguages.json';
 	window.I18N=Ember.STRINGS;
@@ -76,9 +75,9 @@ JQ.Widget = Em.Mixin.create({
 		var ui = null;
 		if(jQuery.ui.version <= '1.8.22'){
 			ui = new uiType();
-			uiType.call(ui,options,this.get('element')); 
+			uiType.call(ui,options,this.$()); 
 		}else{
-			ui = jQuery.ui[this.get('uiType')](options, this.get('element'));
+			ui = jQuery.ui[this.get('uiType')](options, this.$());
 		}
 		this.set('ui',ui);
 	} ,
@@ -151,12 +150,6 @@ Fb.AccordionView = Flame.View.extend(JQ.Widget,{
         this.addObserver('contentViews', this, this._createTabs);
 	},
 	
-	
-	didInsertElement: function() {
-		this._super();
-		this.$().accordion();
-    },
-	
 	_createTabs:function(){
 		this.destroyAllChildren(); 
 		var headers = this.get('headers');
@@ -167,6 +160,8 @@ Fb.AccordionView = Flame.View.extend(JQ.Widget,{
 				self._createTab(header, contentViews[idx]);
 			}
 		});
+		
+		this.rerender();
 	},
 	
 	_createTab:function(header,contentView){
@@ -174,10 +169,11 @@ Fb.AccordionView = Flame.View.extend(JQ.Widget,{
 		if(typeof headerViewClass != 'undefined'){
 			headerView = this.createChildView(headerViewClass);
 		}else{
-			headerView = this.createChildView(Fb.AccordionHeaderView);
+			headerView = Fb.AccordionHeaderView.create();
 		}
 		headerView.set('header',header);
 		this.get('childViews').pushObject(headerView);
+		contentView.get('classNames').push('fb-accordion-content-view');
 		this.get('childViews').pushObject(contentView);
 	} 
 });
@@ -197,15 +193,6 @@ Fb.AccordionHeaderView=Flame.View.extend({
 		this._super();
 	}
 });
-
-Fb.AccordionContentView=Ember.View.extend({
-    classNames: ['fb-accordion-content-view'],
-	tagName:'div',
-	init: function(){
-		this._super();
-	}
-});
-
 
 Fb.languageConroller=Ember.Object.create({
 	refresh:true,
@@ -233,7 +220,7 @@ Fb.LanguageSelectionMenu=Flame.SelectButtonView.extend({
 	itemTitleKey:'languageTitle',
 	itemValueKey:'languageCode',
 	itemActionKey:'action',
-	subMenuKey:undefined,
+	subMenuKey:'subMenuKey',
 	value:Fb.language,
 	itemsBinding:'controller.supportedLanguages',
 	layout:{width:100},

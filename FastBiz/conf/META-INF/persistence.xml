@@ -19,9 +19,9 @@
 			<property name="eclipselink.jdbc.sequence-connection-pool.min" value="2" />
 			<property name="eclipselink.jdbc.exclusive-connection.mode" value="Always"/>
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
-			<property name="eclipselink.weaving" value="static" />
+			<property name="eclipselink.weaving" value="true" />
 			<property name="eclipselink.cache.shared.default" value="true" />
-			<property name="eclipselink.weaving.fetchgroups" value="static" />
+			<property name="eclipselink.weaving.fetchgroups" value="true" />
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
 			<property name="eclipselink.ddl-generation.output-mode" value="database" />
 			<property name="eclipselink.jdbc.uppercase-columns" value="true" />

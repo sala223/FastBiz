@@ -1,5 +1,5 @@
 @import url("jquery-ui-1.8.23.custom.css");
-
+@import url("flame.css");
 .fb-tooltip {
 }
 	
@@ -39,4 +39,8 @@
 .ui-accordion-override{
 	position:static;
 	display:inline-block;
+}
+
+.fb-accordion-content-view{
+	border:0;
 }

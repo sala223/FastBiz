@@ -16,12 +16,20 @@ public class Main{
 
     public static void main(String args[]) throws ClassNotFoundException, InstantiationException, IllegalAccessException,
                     IllegalArgumentException, InvocationTargetException, SecurityException, NoSuchMethodException{
-        ClassLoader bootStrapClassLoader = createBootStrapClassLoader();
-        Class<?> bootstrapControllerClass = bootStrapClassLoader.loadClass(BOOTSTRAP_CONTROLLER_CLASS_NAME);
-        if (bootstrapControllerClass.getClassLoader() == bootStrapClassLoader) {
-            Thread.currentThread().setContextClassLoader(bootStrapClassLoader);
+        Class<?> bootstrapControllerClass = null;
+        try {
+            bootstrapControllerClass = Class.forName(BOOTSTRAP_CONTROLLER_CLASS_NAME);
+            System.out.println("BootstrapClassLoader is not set, auto weave will not work.");
+            Thread.currentThread().setContextClassLoader(new DummyInstrumentableClassLoader(bootstrapControllerClass.getClassLoader())); 
+        } catch (ClassNotFoundException ex) {
+            ClassLoader bootstrapClassLoader = createBootStrapClassLoader();
+            bootstrapControllerClass = bootstrapClassLoader.loadClass(BOOTSTRAP_CONTROLLER_CLASS_NAME);
+            bootstrapClassLoader.loadClass(BOOTSTRAP_CONTROLLER_CLASS_NAME);
+            Thread.currentThread().setContextClassLoader(bootstrapClassLoader);
+            System.out.println("BootstrapClassLoader is set, enable auto weave.");
         }
-        Class<?> environmentConfigurationClass = bootStrapClassLoader.loadClass(ENVIRONMENT_CONFIGURATION_CLASS_NAME);
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        Class<?> environmentConfigurationClass = classLoader.loadClass(ENVIRONMENT_CONFIGURATION_CLASS_NAME);
         Method setConfigMethod = environmentConfigurationClass.getMethod("setBootstrapConfigFilePath", String.class);
         setConfigMethod.invoke(null, new Object[] { BOOTSTARUP_CONF_FILE });
         Object instance = bootstrapControllerClass.getConstructor().newInstance();

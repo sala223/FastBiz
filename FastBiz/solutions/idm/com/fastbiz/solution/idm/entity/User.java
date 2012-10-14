@@ -22,7 +22,7 @@ import com.fastbiz.solution.idm.validation.IDMPayload;
 
 @Cache
 @Entity(name = "M_USER")
-@FetchGroup(name = "AuthenticationInfo", attributes = { @FetchAttribute(name = "name"), @FetchAttribute(name = "password"),
+@FetchGroup(name = "AuthenticationInfo", attributes = { @FetchAttribute(name = "code"), @FetchAttribute(name = "password"),
                 @FetchAttribute(name = "email"), @FetchAttribute(name = "telephone"), })
 public class User extends MasterData implements Serializable{
 
