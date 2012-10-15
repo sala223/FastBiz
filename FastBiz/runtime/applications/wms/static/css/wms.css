@@ -105,5 +105,13 @@ background-color:#406885;
 	background:white;
 }
 
+.fg-tree-item .flame-list-item-view{
+	padding:5px;
+	background:white;
+}
+
+.fg-tree-item .flame-tree-item-view-content{
+	height:22px;
+}
 
 

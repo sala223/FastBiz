@@ -37,6 +37,7 @@ Wms.FunctionGroup = Em.Object.extend({
 Wms.FunctionGroupNode = Em.Object.extend({
 	functionGroup:null,
 	treeItemIsExpanded:false,
+	treeItemChildren:[]
 });
 
 Wms.FunctionGroupLeaf = Em.Object.extend({
@@ -57,8 +58,27 @@ Wms.functionsConroller=Em.Object.create({
 	}
 });
 
+Wms.functionsConroller.loadFunctionGroups();
+
+
 Wms.FunctionGroupContentTreeItemView=Flame.TreeItemView.extend({
 	classNames: ['fg-tree-item'],
+	layout: { top: 0, left:0, height:0, padding:5},
+	 
+	click:function(event) {
+		var fg = this.get('content').get('functionGroup');
+		if(fg.subs && fg.subs.length>0){
+			return true;
+		}
+		
+		if(fg.url){
+			open(fg.url);
+		}else{
+			alert("function group url is not set");
+		}
+		return false;
+	},	
+			
 	 toggleButton: Flame.DisclosureView.extend({
 		classNames: ['flame-tree-view-toggle'],
 		ignoreLayoutManager:true,
@@ -73,12 +93,12 @@ Wms.FunctionGroupContentTreeItemView=Flame.TreeItemView.extend({
 
 Wms.FunctionGroupContentTreeView=Flame.TreeView.extend({
 	allowReordering:false,
+	defaultIsExpanded:true,
 	functionGroup:null,
-	layout: { top: 5, left:10},
 	itemViewClass:Wms.FunctionGroupContentTreeItemView,
 	handlebarsMap:{
-		'Wms.FunctionGroupNode':'{{content.functionGroup.display}}', 
-		'Wms.FunctionGroupLeaf':'{{content.functionGroup.display}}', 
+		'Wms.FunctionGroupNode':'{{#if content.functionGroup.icon}}<img {{bindAttr src="content.functionGroup.icon"}}/>{{else}}<img src="static/images/wheel-icon.png"}}{{/if}} {{content.functionGroup.display}}', 
+		'Wms.FunctionGroupLeaf':'{{#if content.functionGroup.icon}}<img {{bindAttr src="content.functionGroup.icon"}}/>{{else}}<img src="static/images/wheel-icon.png"}}{{/if}} {{content.functionGroup.display}}', 
 		'defaultTemplate': '{{content}}'
 	},
 	
@@ -108,7 +128,7 @@ Wms.FunctionGroupContentTreeView=Flame.TreeView.extend({
 	_createNodeRecursively:function(parentNode, functionGroup){
 		
 		if(functionGroup.subs && functionGroup.subs.length >0){
-			if(!parentNode.treeItemChildren){
+			if(!parentNode.treeItemChildren || parentNode.treeItemChildren.length==0){
 				parentNode.set('treeItemChildren',[]); 
 			}
 			for(var i = 0 ; i < functionGroup.subs.length; i++){
@@ -171,7 +191,6 @@ Wms.MainView = Flame.View.extend({
 			},
 			
 			click:function(event) {
-				console.log('Got an click event');
 				this.set('isHidden',!this.get('isHidden'));
 				return false;
 			},	
@@ -217,7 +236,7 @@ Wms.MainView = Flame.View.extend({
 	frameView:Flame.HorizontalSplitView.extend({
 		elementId: 'frameView',
 		controller: Wms.functionsConroller,
-		leftWidth:250,
+		leftWidth:330,
 		minLeftWidth:0,
 		minRightWidth:$(window).width()*0.8,
 		allowResizing:true,	
@@ -266,6 +285,7 @@ Wms.MainView = Flame.View.extend({
 				animated:'slide', 
 				clearStyle:true,
 				collapsible:true,
+				autoHeight:true,
 				fillSpace:true,
 				
 				init:function(){
@@ -295,7 +315,6 @@ Wms.MainView = Flame.View.extend({
 	})	
 });
 
-Wms.functionsConroller.loadFunctionGroups();
 
 
 

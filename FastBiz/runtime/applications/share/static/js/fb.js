@@ -145,7 +145,6 @@ Fb.AccordionView = Flame.View.extend(JQ.Widget,{
 	 
 	init:function(){
 		this._super();
-		this._createTabs();
 		this.addObserver('headers', this, this._createTabs);
         this.addObserver('contentViews', this, this._createTabs);
 	},
@@ -160,7 +159,6 @@ Fb.AccordionView = Flame.View.extend(JQ.Widget,{
 				self._createTab(header, contentViews[idx]);
 			}
 		});
-		
 		this.rerender();
 	},
 	

@@ -22,18 +22,22 @@ public class FunctionGroup implements BizResource{
     @JsonIgnore
     private String              accessExpression;
 
+    private String              url;
+
     private List<FunctionGroup> subs             = new ArrayList<FunctionGroup>();
 
     public FunctionGroup() {}
 
     public FunctionGroup(String id, String expression) {
         setId(id);
+        setAccessExpression(expression);
     }
 
     public FunctionGroup(FunctionGroup copy) {
         setId(copy.getId());
         setIcon(copy.getIcon());
         setDisplay(copy.getDisplay());
+        setUrl(copy.getUrl());
         setAccessExpression(copy.getAccessExpression());
         for (FunctionGroup sub : copy.getSubs()) {
             this.subs.add(new FunctionGroup(sub));
@@ -84,6 +88,14 @@ public class FunctionGroup implements BizResource{
 
     public void setIcon(String icon){
         this.icon = icon;
+    }
+
+    public String getUrl(){
+        return url;
+    }
+
+    public void setUrl(String url){
+        this.url = url;
     }
 
     public List<FunctionGroup> getSubs(){

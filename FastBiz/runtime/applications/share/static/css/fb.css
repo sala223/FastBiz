@@ -43,4 +43,9 @@
 
 .fb-accordion-content-view{
 	border:0;
+	
+}
+
+.ui-accordion .ui-accordion-content{
+	padding-left:6px;
 }
