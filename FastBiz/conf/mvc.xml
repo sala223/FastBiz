@@ -11,7 +11,7 @@
        ">
 	<mvc:default-servlet-handler />
 	<context:component-scan base-package="com.fastbiz.idm.web.controller" />
-	<mvc:annotation-driven />
+	<mvc:annotation-driven/>
 	<mvc:interceptors>
 		<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 			<property name="paramName">
@@ -89,6 +89,7 @@
 		<property name="order" value="3" />
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
 	</bean>
 	<bean id="viewNameTranslator" class="org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator" />
 	<bean id="messageSourceUI" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -104,7 +105,19 @@
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
+	<mvc:default-servlet-handler/>
+	<bean id="simpleUrlHandlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="order" value="0" />
+		<property name="mappings">
+			<props>
+				<prop key="/**/*.xsp">urlFilenameViewController</prop>
+				<prop key="/**/*.fsp">urlFilenameViewController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="urlFilenameViewController" class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
 	<bean id="localeController" class="com.fastbiz.core.web.controller.LocaleController" />
 	<bean id="gateController" class="com.fastbiz.core.web.controller.GateController" />
+	<bean id="entityExtensionController" class="com.fastbiz.core.web.controller.EntityExtensionController" />
 </beans>

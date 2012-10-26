@@ -36,7 +36,7 @@
 	<classpathentry kind="lib" path="lib/derby/derbynet.jar"/>
 	<classpathentry kind="lib" path="lib/c3p0-0.9.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/c3p0-oracle-thin-extras-0.9.1.2.jar"/>
-	<classpathentry kind="lib" path="lib/tomcat/tomcat-embed-core.jar" sourcepath="C:/workstation/tools/javathirdlib/apache-tomcat-7.0.30-src.zip"/>
+	<classpathentry kind="lib" path="lib/tomcat/tomcat-embed-core.jar" sourcepath="C:/workstation/tools/javathirdlib/apache-tomcat-7.0.27-src/java"/>
 	<classpathentry kind="lib" path="lib/tomcat/tomcat-embed-jasper.jar"/>
 	<classpathentry kind="lib" path="lib/tomcat/tomcat-embed-logging-juli.jar"/>
 	<classpathentry kind="lib" path="lib/tomcat/tomcat-embed-logging-log4j.jar"/>
@@ -59,9 +59,6 @@
 	<classpathentry kind="lib" path="lib/spring/spring-security-core-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-security-3.1.0.RELEASE/dist/spring-security-core-3.1.0.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="lib/spring/spring-security-crypto-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/validation-api-1.0.0.GA.jar"/>
-	<classpathentry kind="lib" path="lib/bval-core-0.4.jar"/>
-	<classpathentry kind="lib" path="lib/bval-jsr303-0.4.jar"/>
-	<classpathentry kind="lib" path="lib/bval-extras-0.4.jar"/>
 	<classpathentry kind="lib" path="lib/commons-beanutils-1.8.3.jar"/>
 	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang3-3.1.jar"/>
@@ -89,5 +86,8 @@
 	<classpathentry kind="lib" path="lib/spring/spring-batch-infrastructure-2.1.8.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/eclipselink/jpa/javax.persistence_2.0.4.v201112161009.jar"/>
 	<classpathentry kind="lib" path="lib/spring/org.springframework.instrument.tomcat-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.instrument.tomcat-sources-3.1.0.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/bval-core-0.5.jar" sourcepath="C:/Users/i061134/Downloads/bval-parent-0.5-source-release.zip"/>
+	<classpathentry kind="lib" path="lib/bval-extras-0.5.jar"/>
+	<classpathentry kind="lib" path="lib/bval-jsr303-0.5.jar" sourcepath="C:/Users/i061134/Downloads/bval-parent-0.5-source-release.zip"/>
 	<classpathentry kind="output" path="runtime/framework"/>
 </classpath>

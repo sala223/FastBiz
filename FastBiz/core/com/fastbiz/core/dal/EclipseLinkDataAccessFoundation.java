@@ -66,8 +66,13 @@ public class EclipseLinkDataAccessFoundation extends JPADataAccessFoundation{
         return session.getClassDescriptorForAlias(entity);
     }
 
+    protected ClassDescriptor getClassDescrptor(Class<?> entityClass){
+        Session session = getSession();
+        return session.getClassDescriptor(entityClass);
+    }
+
     protected Session getSession(){
         EntityManager em = getEntityManager();
-        return  em.unwrap(Session.class);
+        return em.unwrap(Session.class);
     }
 }

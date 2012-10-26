@@ -21,7 +21,7 @@ import org.eclipse.persistence.config.CacheIsolationType;
 import com.fastbiz.core.entity.MultiTenantSupport;
 
 @Cache(isolation = CacheIsolationType.SHARED)
-@Entity(name = Constants.CATEGORY.CATEGORY_ENTITY_NAME)
+@Entity
 @Table(name = Constants.CATEGORY.CATEGORY_ENTITY_TABLE)
 public class Category extends MultiTenantSupport{
 

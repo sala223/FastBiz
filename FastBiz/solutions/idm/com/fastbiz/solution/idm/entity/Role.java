@@ -13,6 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.codehaus.jackson.annotate.JsonTypeInfo;
@@ -23,7 +24,8 @@ import org.eclipse.persistence.config.CacheIsolationType;
 import org.springframework.security.core.GrantedAuthority;
 import com.fastbiz.core.entity.MultiTenantSupport;
 
-@Entity(name = "ROLE")
+@Entity
+@Table(name="ROLE")
 @MappedSuperclass
 @Cache(isolation = CacheIsolationType.SHARED)
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)

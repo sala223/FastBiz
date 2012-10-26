@@ -38,12 +38,12 @@
 											<property name="id" value="SYS_1_1_1" />
 											<property name="display" value="functiongroup.SYS_1_1_1" />
 											<property name="icon" value="static/images/master_data.png" />
-											<property name="url" value="fg/md/category.html" />
+											<property name="url" value="fg/md/category.xsp" />
 										</bean>
 										<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
 											<property name="id" value="SYS_1_1_2" />
 											<property name="display" value="functiongroup.SYS_1_1_2" />
-											<property name="url" value="fg/md/category.html" />
+											<property name="url" value="fg/md/category.xsp" />
 										</bean>
 									</list>
 								</property>
@@ -57,17 +57,17 @@
 											<property name="id" value="SYS_1_2_1" />
 											<property name="display" value="functiongroup.SYS_1_2_1" />
 											<property name="icon" value="static/images/master_data.png" />
-											<property name="url" value="fg/md/production.html" />
+											<property name="url" value="fg/md/production.xsp" />
 										</bean>
 										<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
 											<property name="id" value="SYS_1_2_2" />
 											<property name="display" value="functiongroup.SYS_1_2_2" />
-											<property name="url" value="fg/md/category.html" />
+											<property name="url" value="fg/md/category.xsp" />
 										</bean>
 										<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
 											<property name="id" value="SYS_1_2_3" />
 											<property name="display" value="functiongroup.SYS_1_2_3" />
-											<property name="url" value="fg/md/category.html" />
+											<property name="url" value="fg/md/category.xsp" />
 										</bean>
 									</list>
 								</property>
@@ -80,12 +80,12 @@
 										<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
 											<property name="id" value="SYS_1_3_1" />
 											<property name="display" value="functiongroup.SYS_1_3_1" />
-											<property name="url" value="fg/md/category.html" />
+											<property name="url" value="fg/md/category.xsp" />
 										</bean>
 										<bean class="com.fastbiz.wms.web.model.ui.FunctionGroup">
 											<property name="id" value="SYS_1_3_2" />
 											<property name="display" value="functiongroup.SYS_1_3_2" />
-											<property name="url" value="fg/md/category.html" />
+											<property name="url" value="fg/md/category.xsp" />
 										</bean>
 									</list>
 								</property>

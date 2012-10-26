@@ -6,17 +6,15 @@ public class WMSException extends ServiceException{
 
     private static final long   serialVersionUID = 1L;
 
-    private static final String WMS_SOLUTION_ID  = "wms";
-
     public WMSException(String serviceName, int errorCode) {
-        super(WMS_SOLUTION_ID, serviceName, errorCode);
+        super(serviceName, errorCode);
     }
 
     public WMSException(String serviceName, int errorCode, Throwable cause) {
-        super(WMS_SOLUTION_ID, serviceName, errorCode, cause);
+        super(serviceName, errorCode, cause);
     }
 
     public WMSException(String serviceName, int errorCode, String message, Object ... args) {
-        super(WMS_SOLUTION_ID, serviceName, errorCode, message, args);
+        super(serviceName, errorCode, message, args);
     }
 }

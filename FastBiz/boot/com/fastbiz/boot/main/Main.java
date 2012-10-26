@@ -19,14 +19,16 @@ public class Main{
         Class<?> bootstrapControllerClass = null;
         try {
             bootstrapControllerClass = Class.forName(BOOTSTRAP_CONTROLLER_CLASS_NAME);
-            System.out.println("BootstrapClassLoader is not set, auto weave will not work.");
-            Thread.currentThread().setContextClassLoader(new DummyInstrumentableClassLoader(bootstrapControllerClass.getClassLoader())); 
+            System.out.println("BootstrapClassLoader is able to load from AppClassLoader, auto weave will not work.");
+            Thread.currentThread().setContextClassLoader(new DummyInstrumentableClassLoader(bootstrapControllerClass.getClassLoader()));
+            System.setProperty("ENTITY_AUTO_WIRE", "false");
         } catch (ClassNotFoundException ex) {
             ClassLoader bootstrapClassLoader = createBootStrapClassLoader();
             bootstrapControllerClass = bootstrapClassLoader.loadClass(BOOTSTRAP_CONTROLLER_CLASS_NAME);
             bootstrapClassLoader.loadClass(BOOTSTRAP_CONTROLLER_CLASS_NAME);
             Thread.currentThread().setContextClassLoader(bootstrapClassLoader);
             System.out.println("BootstrapClassLoader is set, enable auto weave.");
+            System.setProperty("ENTITY_AUTO_WIRE", "true");
         }
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Class<?> environmentConfigurationClass = classLoader.loadClass(ENVIRONMENT_CONFIGURATION_CLASS_NAME);

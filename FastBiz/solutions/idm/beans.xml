@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:context="http://www.springframework.org/schema/context"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
@@ -11,34 +11,8 @@
 	<context:component-scan base-package="com.fastbiz.solution.idm.service" />
 	<context:component-scan base-package="com.fastbiz.solution.idm.adapter.authentication" />
 	<beans profile="debug">
-		<bean id="ENTITY_SOURCES" class="com.fastbiz.core.service.provisioning.JsonEntitySources" scope="prototype">
-			<property name="JsonFiles">
-				<list>
-					<bean class="com.fastbiz.core.service.provisioning.JsonEntitySources$JsonFile">
-						<property name="fileName" value="sample/permission.json" />
-						<property name="entityClassName" value="com.fastbiz.solution.idm.entity.Permission[]" />
-					</bean>
-					<bean class="com.fastbiz.core.service.provisioning.JsonEntitySources$JsonFile">
-						<property name="fileName" value="sample/system_role.json" />
-						<property name="entityClassName" value="com.fastbiz.solution.idm.entity.SystemRole[]" />
-					</bean>
-					<bean class="com.fastbiz.core.service.provisioning.JsonEntitySources$JsonFile">
-						<property name="fileName" value="sample/role.json" />
-						<property name="entityClassName" value="com.fastbiz.solution.idm.entity.Role[]" />
-					</bean>
-					<bean class="com.fastbiz.core.service.provisioning.JsonEntitySources$JsonFile">
-						<property name="fileName" value="sample/user.json" />
-						<property name="entityClassName" value="com.fastbiz.solution.idm.entity.User[]" />
-					</bean>
-				</list>
-			</property>
-			<property name="postConstructors">
-				<list>
-					<bean class="com.fastbiz.solution.idm.provisioning.UserPostConstructor">
-						<property name="passwordEncoder" ref="shaPasswordEncoder" />
-					</bean>
-				</list>
-			</property>
+		<bean name="userPostConstructor" class="com.fastbiz.solution.idm.provisioning.UserPostConstructor">
+			<property name="passwordEncoder" ref="shaPasswordEncoder" />
 		</bean>
 	</beans>
 </beans>

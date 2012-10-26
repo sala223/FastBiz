@@ -9,6 +9,8 @@ public class ProvisioningContext{
 
     private Map<String, ProvisioningStatus> status = new ConcurrentHashMap<String, ProvisioningStatus>();
 
+    public ProvisioningContext() {}
+
     public synchronized void addBeanRunningStatus(Class<?> beanClass){
         status.put(beanClass.getName(), new ProvisioningStatus(beanClass));
     }
@@ -34,7 +36,7 @@ public class ProvisioningContext{
         }
         return beans;
     }
-    
+
     public List<ProvisioningStatus> listBeansWithoutError(){
         List<ProvisioningStatus> beans = new ArrayList<ProvisioningStatus>();
         for (ProvisioningStatus ps : status.values()) {

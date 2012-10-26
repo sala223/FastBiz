@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:sec="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:sec="http://www.springframework.org/schema/security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans 
         http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
@@ -76,10 +77,14 @@
 		<property name="authenticationManager" ref="authenticationManager" />
 		<property name="filterProcessesUrl" value="/secure/authenticate" />
 		<property name="authenticationFailureHandler" ref="authenticationFailureHandler" />
+		<property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>
 	</bean>
 	<bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
 		<property name="defaultFailureUrl" value="/secure/login" />
 		<property name="useForward" value="true" />
+	</bean>
+	<bean id="authenticationSuccessHandler" class="org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler">
+		<property name="defaultTargetUrl" value="/" />
 	</bean>
 	<bean id="channelProcessingFilter" class="org.springframework.security.web.access.channel.ChannelProcessingFilter">
 		<property name="channelDecisionManager" ref="channelDecisionManager" />
@@ -99,7 +104,8 @@
 			</list>
 		</property>
 	</bean>
-	<sec:filter-security-metadata-source id="securityInterceptorMetadataSource" use-expressions="true">
+	<sec:filter-security-metadata-source id="securityInterceptorMetadataSource"
+		use-expressions="true">
 		<sec:intercept-url pattern="/**" access="isAuthenticated()" />
 	</sec:filter-security-metadata-source>
 	<sec:filter-security-metadata-source id="channelMetadataSource">

@@ -207,7 +207,7 @@ public class CatalinaEmbedded implements Embedded{
         Host host = getHost();
         StandardContext context = new StandardContext();
         ContextConfig config = new ContextConfig();
-         context.addLifecycleListener(config);
+        context.addLifecycleListener(config);
         context.setName("/" + application.getName());
         context.setPath(application.getPath());
         context.setDocBase(application.getDocBase());

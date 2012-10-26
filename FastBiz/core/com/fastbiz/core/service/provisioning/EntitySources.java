@@ -9,4 +9,5 @@ public interface EntitySources{
     boolean hasNext();
     
     List<EntityPostConstructor> getPostConstructors();
+    
 }

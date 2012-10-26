@@ -1,9 +1,13 @@
 package com.fastbiz.core.solution.spring;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -26,13 +30,8 @@ public class StandardSolutionFactory implements SolutionFactory{
     private ApplicationContext    parent;
 
     private static final String   PARENT_BEAN_CONFIG_FILE = "core-beans.xml";
-    
-    private static final String   SPRING_PROFILE_PROPERTY = "spring.profiles.active";
 
     public StandardSolutionFactory(SolutionBrowser solutionBrowser, boolean lazy) {
-        if (DebugUtils.isDebugEnabled()) {
-            System.setProperty(SPRING_PROFILE_PROPERTY, "debug");
-        }
         this.browser = solutionBrowser;
         if (!lazy) {
             createParentApplicationContext();
@@ -94,14 +93,32 @@ public class StandardSolutionFactory implements SolutionFactory{
 
     private static final class SolutionParentApplicationContext extends ClassPathXmlApplicationContext{
 
-        private SolutionBrowser solutionBrowser;
+        private SolutionBrowser     solutionBrowser;
 
-        private static String   SOLUTION_BROWSER_BEAN_NAME = "SOLUTION_BROWSER";
+        private static String       SOLUTION_BROWSER_BEAN_NAME = "SOLUTION_BROWSER";
+
+        private static final Logger LOG                        = LoggerFactory.getLogger(SolutionParentApplicationContext.class);
 
         public SolutionParentApplicationContext(SolutionBrowser solutionBrowser, String[] configLocations) {
             this.solutionBrowser = solutionBrowser;
             setConfigLocations(configLocations);
+            setProfiles();
             refresh();
+        }
+
+        private void setProfiles(){
+            List<String> profiles = new ArrayList<String>();
+            if (DebugUtils.isDebugEnabled()) {
+                LOG.debug("Enable debug profile.");
+                profiles.add("debug");
+            }
+            if (Boolean.parseBoolean(System.getProperty("ENTITY_AUTO_WIRE"))) {
+                LOG.debug("Enable autowire profile.");
+                profiles.add("autowire");
+            }
+            if (profiles.size() > 0) {
+                this.getEnvironment().setActiveProfiles(profiles.toArray(new String[0]));
+            }
         }
 
         @Override

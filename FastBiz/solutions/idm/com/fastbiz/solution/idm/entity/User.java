@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.eclipse.persistence.annotations.Cache;
@@ -21,7 +22,8 @@ import com.fastbiz.core.entity.type.Image;
 import com.fastbiz.solution.idm.validation.IDMPayload;
 
 @Cache
-@Entity(name = "M_USER")
+@Entity
+@Table(name="M_USER")
 @FetchGroup(name = "AuthenticationInfo", attributes = { @FetchAttribute(name = "code"), @FetchAttribute(name = "password"),
                 @FetchAttribute(name = "email"), @FetchAttribute(name = "telephone"), })
 public class User extends MasterData implements Serializable{
@@ -68,7 +70,7 @@ public class User extends MasterData implements Serializable{
     @Column
     private boolean    locked;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "USER_ROLE")
     private List<Role> roles;
 

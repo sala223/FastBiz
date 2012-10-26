@@ -1,29 +1,26 @@
 package com.fastbiz.core.biz.exception;
 
 import java.io.StringWriter;
+import com.fastbiz.common.exception.ErrorCodeExporter;
 import com.fastbiz.common.exception.InfrastructureException;
 
-public class BusinessException extends InfrastructureException{
+public class BusinessException extends InfrastructureException implements ErrorCodeExporter{
 
-    private static final long     serialVersionUID        = 1L;
+    private static final long     serialVersionUID = 1L;
 
     protected int                 errorCode;
 
-    private String              solutionId;
+    protected static String       indentation      = "[FASTBIZ-SOLUTION]";
 
-    protected static String       indentation             = "[FASTBIZ-SOLUTION]";
+    protected static final String CR               = System.getProperty("line.separator");
 
-    protected static final String CR                      = System.getProperty("line.separator");
-
-    public BusinessException(String solutionId, int errorCode, Throwable cause) {
+    public BusinessException(int errorCode, Throwable cause) {
         super(cause);
-        this.solutionId = solutionId;
         this.errorCode = errorCode;
     }
 
-    public BusinessException(String solutionId, int errorCode, String message, Object ... args) {
+    public BusinessException(int errorCode, String message, Object ... args) {
         super(message, args);
-        this.solutionId = solutionId;
         this.errorCode = errorCode;
     }
 
@@ -34,9 +31,6 @@ public class BusinessException extends InfrastructureException{
     @Override
     public String getMessage(){
         StringWriter writer = new StringWriter(100);
-        writer.write(CR);
-        writer.write(indentation);
-        writer.write("Solution ID:" + getSolutionId());
         writer.write(CR);
         writer.write(indentation);
         writer.write("Error Code:" + getErrorCode());
@@ -62,13 +56,5 @@ public class BusinessException extends InfrastructureException{
 
     public void setErrorCode(int errorCode){
         this.errorCode = errorCode;
-    }
-
-    public String getSolutionId(){
-        return solutionId;
-    }
-
-    public void setSolutionId(String solutionId){
-        this.solutionId = solutionId;
     }
 }

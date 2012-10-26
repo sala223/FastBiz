@@ -25,6 +25,7 @@ public class SolutionApplicationContext extends AbstractXmlApplicationContext{
         newConfPathes[0] = DEFAULT_BEAN_CONFIG_FILE;
         System.arraycopy(confPathes, 0, newConfPathes, 1, confPathes.length);
         setConfigLocations(newConfPathes);
+        this.getEnvironment().setActiveProfiles(parent.getEnvironment().getActiveProfiles());
         if (refresh) {
             refresh();
         }

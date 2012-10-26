@@ -4,25 +4,18 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import com.fastbiz.common.utils.json.JsonUtils;
-import com.fastbiz.core.solution.SolutionDescriptorAware;
-import com.fastbiz.core.solution.descriptor.SolutionDescriptor;
 
-public class JsonEntitySources implements EntitySources, SolutionDescriptorAware{
+public class JsonEntitySources extends AbstractEntitySources{
 
-    private List<JsonFile>              files        = new ArrayList<JsonFile>();
+    private List<JsonFile> files        = new ArrayList<JsonFile>();
 
-    private SolutionDescriptor          solutionDescriptor;
+    private boolean        isOpen;
 
-    private List<EntityPostConstructor> postConstructors;
-
-    private boolean                     isOpen;
-
-    private int                         currentIndex = 0;
+    private int            currentIndex = 0;
 
     public void reset(){
         isOpen = false;
@@ -37,34 +30,21 @@ public class JsonEntitySources implements EntitySources, SolutionDescriptorAware
         this.files = files;
     }
 
-    public void setPostConstructors(List<EntityPostConstructor> postConstructors){
-        this.postConstructors = postConstructors;
-    }
-
-    @Override
-    public List<EntityPostConstructor> getPostConstructors(){
-        if (this.postConstructors != null) {
-            return Collections.unmodifiableList(postConstructors);
-        }
-        return null;
-    }
-
     @Override
     public List<?> getEntitySet(){
         JsonFile jFile = files.get(currentIndex);
         currentIndex++;
-        File file = new File(solutionDescriptor.getSolutionPath(), jFile.getFileName());
+        File file = getFileByFileName(jFile.getFileName());
         return new JsonEntitySource(file, jFile.getEntityClassName()).getEntitySet();
+    }
+
+    protected File getFileByFileName(String fileName){
+        return new File(fileName);
     }
 
     @Override
     public boolean hasNext(){
         return files.size() > currentIndex;
-    }
-
-    @Override
-    public void setSolutionDescriptor(SolutionDescriptor solutionDescriptor){
-        this.solutionDescriptor = solutionDescriptor;
     }
 
     @Override

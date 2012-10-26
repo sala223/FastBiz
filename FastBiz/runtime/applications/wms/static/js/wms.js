@@ -74,7 +74,7 @@ Wms.FunctionGroupContentTreeItemView=Flame.TreeItemView.extend({
 		if(fg.url){
 			open(fg.url);
 		}else{
-			alert("function group url is not set");
+			open(fg.id+".html");
 		}
 		return false;
 	},	

@@ -31,6 +31,12 @@ public abstract class ExtensibleEntity extends MultiTenantSupport{
     @JsonProperty
     private Map<String, DateTimeAttribute> dateTimeAttributes = new HashMap<String, DateTimeAttribute>();
 
+    @ElementCollection
+    @CollectionTable(joinColumns = @JoinColumn(name = "ID"))
+    @MapKey(name = "attributeName")
+    @JsonProperty
+    private Map<String, BlobAttribute>     blobAttributes     = new HashMap<String, BlobAttribute>();
+
     public Attribute getAttribute(String name){
         Attribute attribute = stringAttributes.get(name);
         if (attribute == null) {
@@ -65,6 +71,10 @@ public abstract class ExtensibleEntity extends MultiTenantSupport{
         return dateTimeAttributes.get(name);
     }
 
+    public BlobAttribute getBlobAttribute(String name){
+        return blobAttributes.get(name);
+    }
+
     public void addStringAttribute(String attributeName, String value){
         Assert.notNull(attributeName);
         Assert.notNull(value);
@@ -81,6 +91,12 @@ public abstract class ExtensibleEntity extends MultiTenantSupport{
         Assert.notNull(attributeName);
         Assert.notNull(value);
         dateTimeAttributes.put(attributeName, new DateTimeAttribute(attributeName, value));
+    }
+
+    public void addBlobAttribute(String attributeName, byte[] value){
+        Assert.notNull(attributeName);
+        Assert.notNull(value);
+        blobAttributes.put(attributeName, new BlobAttribute(attributeName, value));
     }
 
     @PrePersist

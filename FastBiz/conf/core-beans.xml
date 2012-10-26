@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans 
 	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
@@ -11,6 +12,8 @@
 	http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
 	<bean id="SOLUTION_FACTORY" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:/comp/SolutionFactory" />
 		<property name="lookupOnStartup" value="false" />
@@ -38,18 +41,22 @@
 	<bean id="ENTITY_MANAGER_FACTORY" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="DATASOURCE" />
 		<property name="jpaDialect" ref="JPA_DIALECT" />
-		<property name="loadTimeWeaver">
-			<bean class="org.springframework.instrument.classloading.ReflectiveLoadTimeWeaver" />
+		<property name="jpaProperties">
+			<props>
+				<prop key="eclipselink.weaving">false</prop>
+				<prop key="eclipselink.weaving.fetchgroups">false</prop>
+			</props>
 		</property>
 	</bean>
-	<bean name="JPA_DIALECT" class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect">
+	<bean id="JPA_DIALECT" class="org.springframework.orm.jpa.vendor.EclipseLinkJpaDialect">
 		<property name="lazyDatabaseTransaction" value="true" />
 	</bean>
 	<bean id="VALIDATOR_MESSAGE_INTERPOLATOR" class="com.fastbiz.core.validation.message.MessageSourceMessageInterpolator">
 		<constructor-arg index="0" ref="SOLUTION_MESSAGE_SOURCE_CREATOR" />
 		<property name="messageBaseName" value="message/ValidationMessages" />
 	</bean>
-	<bean id="SOLUTION_MESSAGE_SOURCE_CREATOR" class="com.fastbiz.core.message.DefaultSolutionMessageSourceCreator" scope="singleton"></bean>
+	<bean id="SOLUTION_MESSAGE_SOURCE_CREATOR" class="com.fastbiz.core.message.DefaultSolutionMessageSourceCreator"
+		scope="singleton"></bean>
 	<bean id="VALIDATOR" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
 		<property name="providerClass" value="org.apache.bval.jsr303.ApacheValidationProvider" />
 		<property name="messageInterpolator" ref="VALIDATOR_MESSAGE_INTERPOLATOR" />
@@ -82,6 +89,8 @@
 		<property name="transactionAttributeSource" ref="TRANSACTION_ATTRIBUTE_SOURCE" />
 		<property name="tenantInjectionInterceptor" ref="TENANT_INJECTION_INTERCEPTOR" />
 	</bean>
+	<bean id="EXTENSIBLE_ENTITY_ATTRIBUTE_DAL" class="com.fastbiz.core.dal.ExtensibleEntityAttributeDAL" autowire="byType" />
+	<bean id="ENTITY_EXTENSION_SERVICE" class="com.fastbiz.core.service.extension.EntityExtensionService" />
 	<bean id="JAXB2_MARSHALLER" class="org.springframework.oxm.jaxb.Jaxb2Marshaller" abstract="true">
 		<property name="classesToBeBound">
 			<list>
@@ -99,4 +108,19 @@
 			</map>
 		</property>
 	</bean>
+	<beans profile="autowire">
+		<bean id="ENTITY_MANAGER_FACTORY" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+			<property name="dataSource" ref="DATASOURCE" />
+			<property name="jpaDialect" ref="JPA_DIALECT" />
+			<property name="loadTimeWeaver">
+				<bean class="org.springframework.instrument.classloading.ReflectiveLoadTimeWeaver" />
+			</property>
+			<property name="jpaProperties">
+				<props>
+					<prop key="eclipselink.weaving">true</prop>
+					<prop key="eclipselink.weaving.fetchgroups">true</prop>
+				</props>
+			</property>
+		</bean>
+	</beans>
 </beans>

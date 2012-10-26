@@ -15,7 +15,7 @@ import org.eclipse.persistence.annotations.Index;
 public abstract class MasterData extends ExtensibleEntity{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "ID")
     private long    id;
 

@@ -4,7 +4,7 @@ public interface Constants{
 
     public static interface CATEGORY{
 
-        public static final String CATEGORY_ENTITY_NAME   = "CATEGORY";
+        public static final String CATEGORY_ENTITY_NAME   = "Category";
         
         public static final String CATEGORY_ENTITY_TABLE  = "CATEGORY";
         

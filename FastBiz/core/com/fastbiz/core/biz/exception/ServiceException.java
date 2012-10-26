@@ -8,17 +8,17 @@ public class ServiceException extends BusinessException{
 
     protected String          serviceName;
 
-    public ServiceException(String solutionId, String serviceName, int errorCode) {
-        this(solutionId, serviceName, errorCode, null);
+    public ServiceException(String serviceName, int errorCode) {
+        this(serviceName, errorCode, null);
     }
 
-    public ServiceException(String solutionId, String serviceName, int errorCode, Throwable cause) {
-        super(solutionId, errorCode, cause);
+    public ServiceException(String serviceName, int errorCode, Throwable cause) {
+        super(errorCode, cause);
         this.serviceName = serviceName;
     }
 
-    public ServiceException(String solutionId, String serviceName, int errorCode, String message, Object ... args) {
-        super(solutionId, errorCode, message, args);
+    public ServiceException(String serviceName, int errorCode, String message, Object ... args) {
+        super(errorCode, message, args);
         this.serviceName = serviceName;
     }
 
@@ -29,9 +29,6 @@ public class ServiceException extends BusinessException{
     @Override
     public String getMessage(){
         StringWriter writer = new StringWriter(100);
-        writer.write(CR);
-        writer.write(indentation);
-        writer.write("Solution ID:" + getSolutionId());
         writer.write(CR);
         writer.write(indentation);
         writer.write("Service Name:" + getServiceName());
