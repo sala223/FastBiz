@@ -70,11 +70,6 @@
 		<constructor-arg index="0" ref="JPA_TRANSACTION_MANAGER" />
 		<constructor-arg index="1" ref="TRANSACTION_ATTRIBUTE_SOURCE" />
 	</bean>
-	<bean id="TENANT_INJECTION_INTERCEPTOR" class="com.fastbiz.core.tenant.TenantInjectionInterceptor">
-		<constructor-arg index="0" ref="JPA_TRANSACTION_MANAGER" />
-		<constructor-arg index="1" ref="TENANT_HOLDER" />
-	</bean>
-	<bean id="TENANT_HOLDER" class="com.fastbiz.core.tenant.TenantHolder" />
 	<bean id="parentMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
@@ -85,11 +80,7 @@
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
-	<bean id="TENANT_ADVISOR" class="com.fastbiz.core.tenant.TenantInjectionAdvisor">
-		<property name="transactionAttributeSource" ref="TRANSACTION_ATTRIBUTE_SOURCE" />
-		<property name="tenantInjectionInterceptor" ref="TENANT_INJECTION_INTERCEPTOR" />
-	</bean>
-	<bean id="EXTENSIBLE_ENTITY_ATTRIBUTE_DAL" class="com.fastbiz.core.dal.ExtensibleEntityAttributeDAL" autowire="byType" />
+	<bean id="EXTENSIBLE_ENTITY_ATTRIBUTE_DAL" class="com.fastbiz.core.dal.ExtensibleEntityMetadataDAL" autowire="byType" />
 	<bean id="ENTITY_EXTENSION_SERVICE" class="com.fastbiz.core.service.extension.EntityExtensionService" />
 	<bean id="JAXB2_MARSHALLER" class="org.springframework.oxm.jaxb.Jaxb2Marshaller" abstract="true">
 		<property name="classesToBeBound">

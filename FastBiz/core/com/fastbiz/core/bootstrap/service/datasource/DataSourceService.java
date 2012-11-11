@@ -15,7 +15,6 @@ import com.fastbiz.core.bootstrap.service.datasource.cfg.DataSourceDefinition;
 import com.fastbiz.core.bootstrap.service.datasource.cfg.DataSourcesDefinition;
 import com.fastbiz.core.bootstrap.service.datasource.cfg.NonTxDataSourceDefinition;
 import com.fastbiz.core.bootstrap.service.datasource.cfg.XADataSourceDefinition;
-import com.fastbiz.core.tenant.TenantHolder;
 
 public class DataSourceService extends BootstrapServiceBase implements DataSourcesDefinitionSource{
 
@@ -46,7 +45,7 @@ public class DataSourceService extends BootstrapServiceBase implements DataSourc
             if (factory != null) {
                 Object ds = factory.createDataSource(dsd);
                 String jndiName = dsd.getJndiName();
-                DataSourceDelegator delegator = new DataSourceDelegator(new TenantHolder(), (CommonDataSource) ds);
+                DataSourceDelegator delegator = new DataSourceDelegator((CommonDataSource) ds);
                 try {
                     LOG.info("Bind datasource {} to jndi {}", ds, jndiName);
                     InitialContext initContext = new InitialContext();

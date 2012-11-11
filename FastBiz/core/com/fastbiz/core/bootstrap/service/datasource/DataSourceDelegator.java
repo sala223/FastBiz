@@ -11,18 +11,16 @@ import javax.sql.XAConnection;
 import javax.sql.XADataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.fastbiz.core.tenant.TenantResolver;
+import com.fastbiz.core.tenant.TenantHolder;
 import com.mchange.v2.c3p0.impl.AbstractPoolBackedDataSource;
 
 public class DataSourceDelegator implements DataSource, XADataSource{
 
     public CommonDataSource     impl;
 
-    private TenantResolver      tenantAware;
-
     private static final Logger LOG = LoggerFactory.getLogger(DataSourceDelegator.class);
 
-    public DataSourceDelegator(TenantResolver tentantAware, CommonDataSource impl) {
+    public DataSourceDelegator(CommonDataSource impl) {
         this.impl = impl;
     }
 
@@ -67,7 +65,7 @@ public class DataSourceDelegator implements DataSource, XADataSource{
     }
 
     public String getTenantId(){
-        return tenantAware.getTenantId();
+        return TenantHolder.getTenant();
     }
 
     public void close(){

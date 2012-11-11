@@ -18,6 +18,8 @@ import com.fastbiz.core.solution.SolutionBrowserAware;
 import com.fastbiz.core.solution.SolutionException;
 import com.fastbiz.core.solution.SolutionFactory;
 import com.fastbiz.core.solution.StandardSolution;
+import com.fastbiz.core.solution.ioc.BeanFactory;
+import com.fastbiz.core.solution.ioc.DefaultBeanFactory;
 
 public class StandardSolutionFactory implements SolutionFactory{
 
@@ -130,5 +132,15 @@ public class StandardSolutionFactory implements SolutionFactory{
                 beanFactory.registerSingleton(SOLUTION_BROWSER_BEAN_NAME, solutionBrowser);
             }
         }
+    }
+
+    @Override
+    public BeanFactory getCoreBeanFactory(){
+        if (parent == null) {
+            synchronized (this) {
+                this.createParentApplicationContext();
+            }
+        }
+        return new DefaultBeanFactory(parent.getAutowireCapableBeanFactory());
     }
 }

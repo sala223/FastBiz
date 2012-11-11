@@ -89,5 +89,6 @@
 	<classpathentry kind="lib" path="lib/bval-core-0.5.jar" sourcepath="C:/Users/i061134/Downloads/bval-parent-0.5-source-release.zip"/>
 	<classpathentry kind="lib" path="lib/bval-extras-0.5.jar"/>
 	<classpathentry kind="lib" path="lib/bval-jsr303-0.5.jar" sourcepath="C:/Users/i061134/Downloads/bval-parent-0.5-source-release.zip"/>
+	<classpathentry kind="lib" path="lib/oval-1.80.jar" sourcepath="C:/workstation/tools/javathirdlib/oval-1.80-without-dependencies/oval-1.80-sources.jar"/>
 	<classpathentry kind="output" path="runtime/framework"/>
 </classpath>

@@ -9,6 +9,7 @@ import com.fastbiz.core.solution.SID;
 import com.fastbiz.core.solution.Solution;
 import com.fastbiz.core.solution.SolutionFactory;
 import com.fastbiz.core.solution.StandardSolutionBrowser;
+import com.fastbiz.core.tenant.TenantHolder;
 
 public class SolutionInjectionTestExecutionListener extends AbstractTestExecutionListener{
 
@@ -20,6 +21,7 @@ public class SolutionInjectionTestExecutionListener extends AbstractTestExecutio
     public void prepareTestInstance(TestContext testContext) throws Exception{
         LOG.debug("Inject solution id to TestClass {}", testContext.getTestInstance().getClass());
         injectSolution(testContext);
+        TenantHolder.setTenant("test");
     }
 
     protected void injectSolution(TestContext testContext){

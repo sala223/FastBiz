@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import com.fastbiz.core.entity.ExtensibleEntityAttribute;
+import com.fastbiz.core.entity.metadata.EntityExtendedAttrDescriptor;
 import com.fastbiz.core.service.extension.EntityExtensionService;
 
 @Controller
@@ -19,7 +19,7 @@ public class EntityExtensionController{
     @RequestMapping("/{entity}/get")
     ModelAndView getEntityExtensionAttributes(@PathVariable("entity") String entity){
         ModelAndView mav = new ModelAndView();
-        List<ExtensibleEntityAttribute> extendedAttributes = entityExtensionService.getExtendedAttributes(entity);
+        List<EntityExtendedAttrDescriptor> extendedAttributes = entityExtensionService.getExtendedAttributes(entity);
         mav.addObject(extendedAttributes);
         return mav;
     }

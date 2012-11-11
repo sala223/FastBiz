@@ -32,4 +32,8 @@ public class DefaultBeanFactory implements BeanFactory{
     public <T> T getBean(Class<T> beanType){
         return delegator.getBean(beanType);
     }
+
+    public Object unwrap(){
+        return delegator;
+    }
 }

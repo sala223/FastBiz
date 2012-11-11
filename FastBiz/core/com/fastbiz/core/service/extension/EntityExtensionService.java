@@ -5,22 +5,22 @@ import org.eclipse.persistence.descriptors.ClassDescriptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.fastbiz.core.dal.ExtensibleEntityAttributeDAL;
-import com.fastbiz.core.entity.ExtensibleEntityAttribute;
+import com.fastbiz.core.dal.ExtensibleEntityMetadataDAL;
+import com.fastbiz.core.entity.metadata.EntityExtendedAttrDescriptor;
 
 @Service("entityExtensionService")
 public class EntityExtensionService{
 
     @Autowired
-    protected ExtensibleEntityAttributeDAL extensibleEntityAttributeDAL;
+    protected ExtensibleEntityMetadataDAL extensibleEntityAttributeDAL;
 
     @Transactional
-    public List<ExtensibleEntityAttribute> getExtendedAttributes(Class<?> entityClass){
+    public List<EntityExtendedAttrDescriptor> getExtendedAttributes(Class<?> entityClass){
         return extensibleEntityAttributeDAL.getExtendedAttributes(entityClass);
     }
 
     @Transactional
-    public List<ExtensibleEntityAttribute> getExtendedAttributes(String entityName){
+    public List<EntityExtendedAttrDescriptor> getExtendedAttributes(String entityName){
         ClassDescriptor descriptor = extensibleEntityAttributeDAL.getEntityDescriptor(entityName);
         if (descriptor == null) {
             throw ExtensionException.noSuchEntityException(entityName);
@@ -34,7 +34,7 @@ public class EntityExtensionService{
     }
 
     @Transactional
-    public void addEntityAttributes(List<ExtensibleEntityAttribute> attributes){
+    public void addEntityAttributes(List<EntityExtendedAttrDescriptor> attributes){
         this.addEntityAttributes(attributes);
     }
 

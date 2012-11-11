@@ -7,30 +7,30 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import org.eclipse.persistence.descriptors.ClassDescriptor;
 import org.springframework.stereotype.Repository;
-import com.fastbiz.core.entity.ExtensibleEntityAttribute;
+import com.fastbiz.core.entity.metadata.EntityExtendedAttrDescriptor;
 
 @Repository
-public class ExtensibleEntityAttributeDAL extends EclipseLinkDataAccessFoundation{
+public class ExtensibleEntityMetadataDAL extends EclipseLinkDataAccessFoundation{
 
-    public List<ExtensibleEntityAttribute> getExtendedAttributes(Class<?> entityClass){
+    public List<EntityExtendedAttrDescriptor> getExtendedAttributes(Class<?> entityClass){
         String alias = this.getClassDescrptor(entityClass).getAlias();
         return this.getExtendedAttributes(alias);
     }
 
-    public List<ExtensibleEntityAttribute> getExtendedAttributes(String entityName){
+    public List<EntityExtendedAttrDescriptor> getExtendedAttributes(String entityName){
         CriteriaBuilder builder = createQueryBuilder();
-        CriteriaQuery<ExtensibleEntityAttribute> query = builder.createQuery(ExtensibleEntityAttribute.class);
-        Root<ExtensibleEntityAttribute> root = query.from(ExtensibleEntityAttribute.class);
+        CriteriaQuery<EntityExtendedAttrDescriptor> query = builder.createQuery(EntityExtendedAttrDescriptor.class);
+        Root<EntityExtendedAttrDescriptor> root = query.from(EntityExtendedAttrDescriptor.class);
         query.where(builder.equal(root.get("entity"), entityName));
         return this.executeQuery(query);
     }
 
-    public ExtensibleEntityAttribute getExtendedAttribute(String entityName, String attributeName){
+    public EntityExtendedAttrDescriptor getExtendedAttribute(String entityName, String attributeName){
         CriteriaBuilder builder = createQueryBuilder();
-        CriteriaQuery<ExtensibleEntityAttribute> query = builder.createQuery(ExtensibleEntityAttribute.class);
-        Root<ExtensibleEntityAttribute> root = query.from(ExtensibleEntityAttribute.class);
+        CriteriaQuery<EntityExtendedAttrDescriptor> query = builder.createQuery(EntityExtendedAttrDescriptor.class);
+        Root<EntityExtendedAttrDescriptor> root = query.from(EntityExtendedAttrDescriptor.class);
         query.where(builder.equal(root.get("entity"), entityName));
-        query.where(builder.equal(root.get("attributeName"), attributeName));
+        query.where(builder.equal(root.get("name"), attributeName));
         return this.executeSingleQuery(query);
     }
 
@@ -38,14 +38,14 @@ public class ExtensibleEntityAttributeDAL extends EclipseLinkDataAccessFoundatio
         if (attributes == null || attributes.length == 0) {
             return 0;
         }
-        String fmt = "DELETE %s u WHERE u.attributeName IN :ATTRIBUTE_NAMES";
+        String fmt = "DELETE %s u WHERE u.name IN :ATTRIBUTE_NAMES";
         String sql = String.format(fmt, getEntityAlias(entityClass));
         Query query = this.getEntityManager().createQuery(sql);
         query.setParameter("ATTRIBUTE_NAMES", attributes);
         return query.executeUpdate();
     }
 
-    public void addEntityAttibutes(List<ExtensibleEntityAttribute> attributes){
+    public void addEntityAttibutes(List<EntityExtendedAttrDescriptor> attributes){
         if (attributes != null && attributes.size() > 0) {
             this.bulkInsert(attributes);
         }
