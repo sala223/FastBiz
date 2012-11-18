@@ -8,12 +8,16 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKey;
 import javax.persistence.Table;
+import org.eclipse.persistence.annotations.Index;
 
 @Entity
 @Table(name = "ENTITY_EXT_ATTR_CONSTRAINT")
@@ -24,13 +28,25 @@ public class EntityExtendedAttrConstraint{
     @Column(name = "CONSTRAINT_ID")
     private int                              id;
 
-    @Column(length = 256)
-    private String                           checkType;
+    @Column(length = 128)
+    @Index
+    private String                           name;
 
-    @ElementCollection
+    @Column(length = 128)
+    @Enumerated(EnumType.STRING)
+    private ConstraintCheckType              checkType;
+
+    @ElementCollection(fetch=FetchType.EAGER)
     @CollectionTable(name = "EXTENDED_ATTR_CONSTRAINT_PARS", joinColumns = @JoinColumn(name = "PAR_ID"))
     @MapKey(name = "name")
     private Map<String, ConstraintParameter> parameters;
+
+    public EntityExtendedAttrConstraint() {}
+
+    public EntityExtendedAttrConstraint(String name, ConstraintCheckType checkType) {
+        this.name = name;
+        this.checkType = checkType;
+    }
 
     public int getId(){
         return id;
@@ -40,12 +56,20 @@ public class EntityExtendedAttrConstraint{
         this.id = id;
     }
 
-    public String getCheckType(){
+    public ConstraintCheckType getCheckType(){
         return checkType;
     }
 
-    public void setCheckType(String checkType){
+    public void setCheckType(ConstraintCheckType checkType){
         this.checkType = checkType;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public void setName(String name){
+        this.name = name;
     }
 
     public Map<String, ConstraintParameter> getParameters(){

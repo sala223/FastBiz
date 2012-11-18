@@ -1,6 +1,5 @@
 [ 
 	{
-  		"id" : 1,
   		"createdTime" : "2012-07-19 15:56:34",
   		"createdBy" : 0,
   		"validFrom" : "2012-07-19 15:56:34",
@@ -22,7 +21,6 @@
   		}
 	},  
 	{
-  		"id" : 2,
   		"createdBy" : 0,
   		"code" : "admin2",
   		"firstName" : "xia",

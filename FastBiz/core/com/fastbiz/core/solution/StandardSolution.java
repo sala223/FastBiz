@@ -1,5 +1,7 @@
 package com.fastbiz.core.solution;
 
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import com.fastbiz.core.solution.descriptor.SolutionDescriptor;
@@ -14,6 +16,8 @@ public class StandardSolution extends AbstractSolution{
     private ApplicationContext         parent;
 
     private SolutionDescriptor         descriptor;
+
+    private DefaultBeanFactory         beanFactory;
 
     public StandardSolution(SolutionDescriptor descriptor, ApplicationContext parent) {
         this.parent = parent;
@@ -33,6 +37,7 @@ public class StandardSolution extends AbstractSolution{
 
     protected void createApplicationContext(){
         applicationContext = new SolutionApplicationContext(descriptor, parent);
+        beanFactory = new DefaultBeanFactory(applicationContext.getAutowireCapableBeanFactory());
     }
 
     @Override
@@ -49,13 +54,19 @@ public class StandardSolution extends AbstractSolution{
 
     @Override
     protected BeanFactory getBeanFactory(){
-        return new DefaultBeanFactory(applicationContext);
+        return beanFactory;
     }
 
     @SuppressWarnings("unchecked")
     public <T> T unwrap(Class<T> type){
         if (type == ApplicationContext.class) {
             return (T) applicationContext;
+        }
+        if (type == ConfigurableListableBeanFactory.class) {
+            return (T) applicationContext.getBeanFactory();
+        }
+        if (type == AutowireCapableBeanFactory.class) {
+            return (T) applicationContext.getAutowireCapableBeanFactory();
         }
         return null;
     }

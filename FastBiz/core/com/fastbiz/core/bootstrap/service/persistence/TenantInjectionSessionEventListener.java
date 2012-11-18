@@ -34,13 +34,14 @@ public class TenantInjectionSessionEventListener extends SessionEventAdapter{
         String tenantId = TenantHolder.getTenant();
         if (tenantId == null) {
             session.getLog().write("TenantId is not bounded to current session");
+            return;
         }
         Object value = session.getProperties().get(MultiTenantSupport.MULTITENANT_CONTEXT_PROPERTY);
         if (value != null) {
-            String newTenantId = value.toString();
-            if (!StringUtils.isNullOrEmpty(newTenantId) && !tenantId.equals(newTenantId)) {
+            String currentTenantId = value.toString();
+            if (!StringUtils.isNullOrEmpty(currentTenantId) && !currentTenantId.equals(tenantId)) {
                 String fmt = "TenantId %s is bound to current transaction, you cannot change it to %s ";
-                throw new TenantAlreadyBoundException(String.format(fmt, tenantId, newTenantId));
+                throw new TenantAlreadyBoundException(String.format(fmt, currentTenantId, tenantId));
             }
         } else {
             session.getLog().write("Inject TenantId " + tenantId + " to session");

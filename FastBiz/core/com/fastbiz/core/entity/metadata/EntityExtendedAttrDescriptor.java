@@ -9,19 +9,31 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.QueryHint;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.springframework.util.Assert;
 import org.springframework.util.ReflectionUtils;
 import com.fastbiz.core.entity.MultiTenantSupport;
+import org.eclipse.persistence.annotations.Index;
+import org.eclipse.persistence.config.QueryHints;
 
+;
 @Entity
 @Table(name = "ENTITY_EXT_ATTR")
+@NamedQuery(name = EntityExtendedAttrDescriptor.NQ_FIND_EXTENDED_ATTRS_BY_ENTITY_NAME, query = "SELECT e FROM EntityExtendedAttrDescriptor e where e.entityName=:ENTITY_NAME", hints = { @QueryHint(name = QueryHints.BATCH, value = "e.constraintSet.constraints") })
 public class EntityExtendedAttrDescriptor extends MultiTenantSupport implements EntityAttrDescriptor{
+
+    public static final String              NQ_FIND_EXTENDED_ATTRS_BY_ENTITY_NAME = "findAttrsByEntityName";
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int                             id;
+
+    @Column(length = 56)
+    @Index
+    private String                          entityName;
 
     @Column(length = 56)
     private String                          name;
@@ -32,7 +44,7 @@ public class EntityExtendedAttrDescriptor extends MultiTenantSupport implements 
     @Transient
     private String                          accessMethodName;
 
-    @Column
+    @Column(nullable=false)
     @Enumerated(EnumType.STRING)
     private EntityAttrType                  type;
 
@@ -40,15 +52,15 @@ public class EntityExtendedAttrDescriptor extends MultiTenantSupport implements 
     private String                          description;
 
     @Embedded
-    private EntityExtendedAttrConstraintSet constraintSet;
+    private EntityExtendedAttrConstraintSet constraintSet = new EntityExtendedAttrConstraintSet();
 
-    private static final String             STRING_ATTR_ACCESS_METHOD_NAME  = "getStringAttribute";
+    private static final String             STRING_ATTR_ACCESS_METHOD_NAME        = "getStringAttribute";
 
-    private static final String             DECIMAL_ATTR_ACCESS_METHOD_NAME = "getDecimalAttribute";
+    private static final String             DECIMAL_ATTR_ACCESS_METHOD_NAME       = "getDecimalAttribute";
 
-    private static final String             DATE_ATTR_ACCESS_METHOD_NAME    = "getDateTimeAttributes";
+    private static final String             DATE_ATTR_ACCESS_METHOD_NAME          = "getDateTimeAttributes";
 
-    private static final String             BLOB_ATTR_ACCESS_METHOD_NAME    = "getBlobAttribute";
+    private static final String             BLOB_ATTR_ACCESS_METHOD_NAME          = "getBlobAttribute";
 
     public EntityExtendedAttrDescriptor() {}
 
@@ -113,6 +125,14 @@ public class EntityExtendedAttrDescriptor extends MultiTenantSupport implements 
         this.type = type;
     }
 
+    public String getEntityName(){
+        return entityName;
+    }
+    
+    public void setEntityName(String entityName){
+        this.entityName = entityName;
+    }
+
     public EntityExtendedAttrConstraintSet getConstraintSet(){
         return constraintSet;
     }
@@ -135,4 +155,5 @@ public class EntityExtendedAttrDescriptor extends MultiTenantSupport implements 
         Method method = ReflectionUtils.findMethod(entity.getClass(), this.getAccessMethodName(), String.class);
         return ReflectionUtils.invokeMethod(method, entity);
     }
+    
 }

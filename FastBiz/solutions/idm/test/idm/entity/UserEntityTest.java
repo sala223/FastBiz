@@ -1,12 +1,16 @@
 package test.idm.entity;
 
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import com.fastbiz.core.entity.type.Gender;
 import com.fastbiz.solution.idm.entity.User;
 import com.fastbiz.solution.idm.service.UserManagementService;
 import test.idm.IDMTest;
 
 public class UserEntityTest extends IDMTest{
+
+    @Autowired
+    private UserManagementService userManagementService;
 
     @Test
     public void testInsert(){
@@ -16,7 +20,7 @@ public class UserEntityTest extends IDMTest{
         user.setLastName("Pin");
         user.setPassword("ew3333");
         user.setGender(Gender.male);
-        solution.getBean(UserManagementService.class).createUser(user);
+        userManagementService.createUser(user);
     }
 
     @Test
