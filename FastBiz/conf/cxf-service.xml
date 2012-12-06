@@ -1,0 +1,43 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+         http://www.springframework.org/schema/beans 
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://cxf.apache.org/jaxrs 
+         http://cxf.apache.org/schemas/jaxrs.xsd">
+	<bean class="com.fastbiz.core.web.context.JAXWsWebServicePublisherBeanPostProcessor">
+		<property name="urlPrefix" value="/ws/" />
+	</bean>
+	<bean class="com.fastbiz.core.web.context.JAXRSServicePublisherBeanPostProcessor"/>
+	<bean id="depthProperties" class="org.apache.cxf.staxutils.DocumentDepthProperties">
+		<property name="innerElementCountThreshold" value="500" />
+	</bean>
+	<bean id="jacksonMapper" class="org.codehaus.jackson.map.ObjectMapper">
+		<property name="serializationConfig.dateFormat">
+			<bean class="java.text.SimpleDateFormat">
+				<constructor-arg value="yyyy-MM-dd HH:mm:ss" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="jaxbProvider" class="org.apache.cxf.jaxrs.provider.JAXBElementProvider">
+		<property name="depthProperties" ref="depthProperties" />
+	</bean>
+	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJsonProvider">
+		<property name="mapper" ref="jacksonMapper" />
+	</bean>
+	<bean id="localeResource" class="com.fastbiz.core.web.resources.LocaleResource" />
+	<bean id="extensionEntityResource" class="com.fastbiz.core.web.resources.ExtensionEntityResource" />
+	<jaxrs:server address="/rest">
+		<jaxrs:providers>
+			<ref bean="jsonProvider" />
+			<ref bean="jaxbProvider" />
+		</jaxrs:providers>
+		<jaxrs:serviceBeans>
+			<ref bean="localeResource" />
+			<ref bean="extensionEntityResource" />
+		</jaxrs:serviceBeans>
+		<jaxrs:properties>
+			<entry key="depthInnerElementCountThreshold" value="500" />
+		</jaxrs:properties>
+	</jaxrs:server>
+</beans>

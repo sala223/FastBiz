@@ -55,15 +55,18 @@ import com.fastbiz.core.bootstrap.service.appserver.EmbeddedSpec;
 
 public class CatalinaEmbedded implements Embedded{
 
-    private static final Logger log = LoggerFactory.getLogger(CatalinaEmbedded.class);
+    private static final Logger log                        = LoggerFactory.getLogger(CatalinaEmbedded.class);
 
-    private DataMarshaller      sdp = new EncryptionDataMarshaller();
+    private DataMarshaller      sdp                        = new EncryptionDataMarshaller();
 
     protected CatalinaSpec      spec;
 
     protected Charset           charset;
 
     private StandardServer      server;
+
+    private static String[]     beanConfigurationLocations = { "WEB-INF/web-beans.xml", "classpath:META-INF/cxf/cxf.xml",
+                    "classpath:META-INF/cxf/cxf-servlet.xml" };
 
     public void setServer(Server server){
         if (server instanceof StandardServer) {
@@ -197,9 +200,10 @@ public class CatalinaEmbedded implements Embedded{
     private void setStandardConfiguration(ApplicationDescriptor application, StandardContext context){
         String docBase = application.getDocBase();
         if (new File(FileUtils.newFilePath(docBase, "WEB-INF", "web-beans.xml")).exists()) {
-            context.getServletContext().setInitParameter("solutionId", application.getName());
-            context.getServletContext().setInitParameter("contextConfigLocation", "WEB-INF/web-beans.xml");
-            context.addApplicationListener("com.fastbiz.core.web.spring.listener.ContextLoaderListener");
+            context.getServletContext().setInitParameter("solution-id", application.getName());
+            String contextConfigLocation = StringUtils.arrayToCommaDelimitedString(beanConfigurationLocations);
+            context.getServletContext().setInitParameter("contextConfigLocation", contextConfigLocation);
+            context.addApplicationListener("com.fastbiz.core.web.context.ContextLoaderListener");
         }
     }
 
@@ -211,7 +215,6 @@ public class CatalinaEmbedded implements Embedded{
         context.setName("/" + application.getName());
         context.setPath(application.getPath());
         context.setDocBase(application.getDocBase());
-        
         context.setReloadable(true);
         context.setCookies(true);
         context.setAddWebinfClassesResources(true);

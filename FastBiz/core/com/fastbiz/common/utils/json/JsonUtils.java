@@ -3,6 +3,9 @@ package com.fastbiz.common.utils.json;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.annotate.JsonAutoDetect.Visibility;
 import org.codehaus.jackson.annotate.JsonMethod;
@@ -64,5 +67,17 @@ public class JsonUtils{
         } catch (IOException ex) {
             throw new JsonException(ex);
         }
+    }
+
+    public static <T> Map<String, List<T>> wrapList(String propertyName, List<T> objects){
+        Map<String, List<T>> wrapper = new HashMap<String, List<T>>(1);
+        wrapper.put(propertyName, objects);
+        return wrapper;
+    }
+
+    public static <T> Map<String, T[]> wrapArray(String propertyName, T ... objects){
+        Map<String, T[]> wrapper = new HashMap<String, T[]>(1);
+        wrapper.put(propertyName, objects);
+        return wrapper;
     }
 }

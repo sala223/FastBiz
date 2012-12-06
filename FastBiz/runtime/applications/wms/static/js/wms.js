@@ -50,9 +50,9 @@ Wms.functionsConroller=Em.Object.create({
 	
 	loadFunctionGroups:function(){ 	
 		var controller = this;
-		jQuery.getJSON("ui/functionGroup.json", function(json) {
+		jQuery.getJSON(Fb.urls.restPrefix+"/ui/functionGroup", function(json) {
 			var rootFunctionGroup = Wms.FunctionGroup.create();
-			rootFunctionGroup.setProperties(json['functionGroup']);
+			rootFunctionGroup.setProperties(json);
 			controller.set('functionGroups',rootFunctionGroup['subs']); 
 		});		 
 	}

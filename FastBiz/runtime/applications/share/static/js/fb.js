@@ -4,9 +4,10 @@ Fb.urls={};
 
 Fb.init=function(){
 	Flame.imagePath = '/share/static/images/';	 
-	Fb.imagePath = '/share/static/images/';	 
-	Fb.urls.language='permitted/locale/language.json';
-	Fb.urls.supportedLanguages='permitted/locale/supportedLanguages.json';
+	Fb.imagePath = '/share/static/images/';	
+	Fb.urls.restPrefix='api/rest';
+	Fb.urls.language=Fb.urls.restPrefix+'/locale/language';
+	Fb.urls.supportedLanguages=Fb.urls.restPrefix+'/locale/supportedLanguages';
 	window.I18N=Ember.STRINGS;
 	Fb.language='en';
 	Fb.languageVarName='language';
@@ -17,8 +18,9 @@ Fb.init=function(){
 			url: Fb.urls.language,
 			dataType: 'json',
 			success: function(data, textStatus, jqXHR) { 
-				var languageCode=data.language.code;
-				Fb.language = data.language.code;
+				var language=data;
+				var languageCode=language.code;
+				Fb.language = language.code;
 				var res = resource+'_'+languageCode + '.js';
 				$.ajax({
 					async: false,
@@ -200,7 +202,7 @@ Fb.languageConroller=Ember.Object.create({
 		var supportedLanguages = this.get('supportedLanguages');
 		if(supportedLanguages.length == 0 || this.get('refresh')){
 			$.getJSON(Fb.urls.supportedLanguages, function(data, textStatus, jqXHR){
-				var languages = data['languageList'];
+				var languages = data['languages'];
 				for(var i=0; i<languages.length; i++) {
 					var language = languages[i];
 					supportedLanguages.push({languageTitle:language['display'],languageCode:language['code'],isChecked:false,enabled:true, action:'changeLanguage'});

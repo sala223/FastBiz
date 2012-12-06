@@ -1,12 +1,10 @@
 package com.fastbiz.core.solution;
 
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import com.fastbiz.core.solution.descriptor.SolutionDescriptor;
-import com.fastbiz.core.solution.ioc.BeanFactory;
-import com.fastbiz.core.solution.ioc.DefaultBeanFactory;
+import com.fastbiz.core.solution.ioc.BeanContainer;
+import com.fastbiz.core.solution.ioc.SpringBeanFactoryAdapter;
 import com.fastbiz.core.solution.spring.SolutionApplicationContext;
 
 public class StandardSolution extends AbstractSolution{
@@ -17,7 +15,7 @@ public class StandardSolution extends AbstractSolution{
 
     private SolutionDescriptor         descriptor;
 
-    private DefaultBeanFactory         beanFactory;
+    private SpringBeanFactoryAdapter   beanFactory;
 
     public StandardSolution(SolutionDescriptor descriptor, ApplicationContext parent) {
         this.parent = parent;
@@ -25,8 +23,7 @@ public class StandardSolution extends AbstractSolution{
         refresh();
     }
 
-    @Override
-    public void refresh(){
+    protected void refresh(){
         close();
         if (applicationContext == null) {
             createApplicationContext();
@@ -37,10 +34,9 @@ public class StandardSolution extends AbstractSolution{
 
     protected void createApplicationContext(){
         applicationContext = new SolutionApplicationContext(descriptor, parent);
-        beanFactory = new DefaultBeanFactory(applicationContext.getAutowireCapableBeanFactory());
+        beanFactory = new SpringBeanFactoryAdapter(applicationContext.getAutowireCapableBeanFactory());
     }
 
-    @Override
     public void close(){
         if (applicationContext != null) {
             applicationContext.close();
@@ -53,21 +49,12 @@ public class StandardSolution extends AbstractSolution{
     }
 
     @Override
-    protected BeanFactory getBeanFactory(){
+    protected BeanContainer getBeanContainer(){
         return beanFactory;
     }
 
-    @SuppressWarnings("unchecked")
-    public <T> T unwrap(Class<T> type){
-        if (type == ApplicationContext.class) {
-            return (T) applicationContext;
-        }
-        if (type == ConfigurableListableBeanFactory.class) {
-            return (T) applicationContext.getBeanFactory();
-        }
-        if (type == AutowireCapableBeanFactory.class) {
-            return (T) applicationContext.getAutowireCapableBeanFactory();
-        }
-        return null;
+    @Override
+    public ApplicationContext getApplicationContext(){
+        return applicationContext;
     }
 }

@@ -1,6 +1,8 @@
 package com.fastbiz.solution.idm.service;
 
 import java.util.Set;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,12 @@ import com.fastbiz.core.validation.exception.ValidationException;
 import com.fastbiz.solution.idm.adapter.authentication.PasswordEncoder;
 import com.fastbiz.solution.idm.dal.UserDAL;
 import com.fastbiz.solution.idm.entity.User;
+import com.fastbiz.solution.idm.service.contract.IUserManagementService;
 import com.fastbiz.solution.idm.util.SolutionHelper;
 
 @Service("userManagementService")
-public class UserManagementService{
+@WebService(endpointInterface = "com.fastbiz.solution.idm.service.contract.IUserManagementService", serviceName = "userManagementService")
+public class UserManagementService implements IUserManagementService{
 
     @Autowired
     protected UserDAL         userDAL;
@@ -55,6 +59,7 @@ public class UserManagementService{
     }
 
     @Transactional
+    @WebMethod
     public void updatePassword(String code, String newPassword){
         User user = userDAL.getUserByCode(code);
         if (user != null) {

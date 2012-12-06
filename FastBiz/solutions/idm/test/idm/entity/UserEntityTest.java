@@ -4,13 +4,13 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.fastbiz.core.entity.type.Gender;
 import com.fastbiz.solution.idm.entity.User;
-import com.fastbiz.solution.idm.service.UserManagementService;
+import com.fastbiz.solution.idm.service.contract.IUserManagementService;
 import test.idm.IDMTest;
 
 public class UserEntityTest extends IDMTest{
 
     @Autowired
-    private UserManagementService userManagementService;
+    private IUserManagementService userManagementService;
 
     @Test
     public void testInsert(){

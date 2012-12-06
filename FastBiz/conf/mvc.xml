@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:jaxrs="http://cxf.apache.org/jaxrs" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans 
         http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
@@ -8,10 +8,13 @@
         http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.0.xsd
+        http://cxf.apache.org/jaxrs 
+        http://cxf.apache.org/schemas/jaxrs.xsd
        ">
-	<mvc:default-servlet-handler />
+	<import resource="classpath:cxf-service.xml" />
 	<context:component-scan base-package="com.fastbiz.idm.web.controller" />
-	<mvc:annotation-driven/>
+	<mvc:default-servlet-handler />
+	<mvc:annotation-driven />
 	<mvc:interceptors>
 		<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 			<property name="paramName">
@@ -19,9 +22,6 @@
 			</property>
 		</bean>
 	</mvc:interceptors>
-
-	<mvc:resources mapping="/static/**" location="/static/" />
-	<mvc:resources mapping="/html/**" location="/html/" />
 	<mvc:resources mapping="/share/static/**" location="file:/${FASTBIZ_HOME}/runtime/share/static/" />
 	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
 	<bean id="fmHtmlEscape" class="freemarker.template.utility.HtmlEscape" />
@@ -54,26 +54,6 @@
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="maxUploadSize" value="5242880" />
 	</bean>
-	<bean id="jaxb2Marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller" parent="JAXB2_MARSHALLER">
-	</bean>
-	<bean id="contentNegotiatingViewResolver" class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-		<property name="order" value="1" />
-		<property name="mediaTypes">
-			<map>
-				<entry key="json" value="application/json" />
-				<entry key="xml" value="application/xml" />
-				<entry key="atom" value="application/atom+xml" />
-			</map>
-		</property>
-		<property name="defaultViews">
-			<list>
-				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
-				<bean class="org.springframework.web.servlet.view.xml.MarshallingView">
-					<property name="marshaller" ref="jaxb2Marshaller" />
-				</bean>
-			</list>
-		</property>
-	</bean>
 	<bean id="freemarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
 		<property name="order" value="2" />
 		<property name="cache" value="true" />
@@ -105,7 +85,6 @@
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="useCodeAsDefaultMessage" value="true" />
 	</bean>
-	<mvc:default-servlet-handler/>
 	<bean id="simpleUrlHandlerMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="order" value="0" />
 		<property name="mappings">
@@ -117,7 +96,5 @@
 	</bean>
 	<bean id="urlFilenameViewController" class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver" />
-	<bean id="localeController" class="com.fastbiz.core.web.controller.LocaleController" />
 	<bean id="gateController" class="com.fastbiz.core.web.controller.GateController" />
-	<bean id="entityExtensionController" class="com.fastbiz.core.web.controller.EntityExtensionController" />
 </beans>

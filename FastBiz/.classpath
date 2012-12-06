@@ -63,8 +63,6 @@
 	<classpathentry kind="lib" path="lib/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang3-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/spring/org.springframework.web-3.1.0.RELEASE.jar" sourcepath="C:/workstation/tools/javathirdlib/spring-framework-3.1.0.RELEASE/src/org.springframework.web-sources-3.1.0.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/cxf/cxf-2.6.0.jar" sourcepath="C:/workstation/tools/javathirdlib/cxf/apache-cxf-2.6.0-src.zip"/>
-	<classpathentry kind="lib" path="lib/cxf/xmlschema-core-2.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/cxf/neethi-3.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/cxf/wsdl4j-1.6.2.jar"/>
 	<classpathentry kind="lib" path="lib/javassist.jar"/>
@@ -90,5 +88,12 @@
 	<classpathentry kind="lib" path="lib/bval-extras-0.5.jar"/>
 	<classpathentry kind="lib" path="lib/bval-jsr303-0.5.jar" sourcepath="C:/Users/i061134/Downloads/bval-parent-0.5-source-release.zip"/>
 	<classpathentry kind="lib" path="lib/oval-1.80.jar" sourcepath="C:/workstation/tools/javathirdlib/oval-1.80-without-dependencies/oval-1.80-sources.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/cxf-2.7.0.jar" sourcepath="C:/Users/i061134/Downloads/apache-cxf-2.7.0-src.zip"/>
+	<classpathentry kind="lib" path="lib/cxf/javax.ws.rs-api-2.0-m10.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/xmlschema-core-2.0.3.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/httpasyncclient-4.0-beta3.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/httpclient-4.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/httpcore-4.2.2.jar"/>
+	<classpathentry kind="lib" path="lib/cxf/httpcore-nio-4.2.2.jar"/>
 	<classpathentry kind="output" path="runtime/framework"/>
 </classpath>

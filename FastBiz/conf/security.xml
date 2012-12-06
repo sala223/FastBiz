@@ -12,21 +12,6 @@
 	<bean id="idmSolution" factory-bean="SOLUTION_FACTORY" factory-method="getSolution">
 		<constructor-arg index="0" value="idm" />
 	</bean>
-	<bean id="userDAL" factory-bean="idmSolution" factory-method="getBean">
-		<constructor-arg index="0" value="userDAL" />
-	</bean>
-	<bean id="passwordEncoder" factory-bean="idmSolution" factory-method="getBean">
-		<constructor-arg index="0" value="shaPasswordEncoder" />
-	</bean>
-	<bean id="userManagementService" factory-bean="idmSolution" factory-method="getBean">
-		<constructor-arg index="0" value="userManagementService" />
-	</bean>
-	<bean id="userDetailsService" factory-bean="idmSolution" factory-method="getBean">
-		<constructor-arg index="0" value="userDetailsService" />
-	</bean>
-	<bean id="saltSource" factory-bean="idmSolution" factory-method="getBean">
-		<constructor-arg index="0" value="saltSource" />
-	</bean>
 	<bean id="authenticationManager" class="org.springframework.security.authentication.ProviderManager">
 		<property name="providers">
 			<list>
@@ -35,9 +20,9 @@
 		</property>
 	</bean>
 	<bean name="authenticationProvider" class="com.fastbiz.core.web.spring.security.authentication.EclipseLinkMultiTenantAuthenticationProvider">
-		<property name="saltSource" ref="saltSource" />
-		<property name="passwordEncoder" ref="passwordEncoder" />
-		<property name="userDetailsService" ref="userDetailsService" />
+		<property name="passwordEncoder" value="#{idmSolution.getBean('shaPasswordEncoder')}" />
+		<property name="userDetailsService" value="#{idmSolution.getBean('userDetailsService')}" />
+		<property name="saltSource" value="#{idmSolution.getBean('saltSource')}" />
 	</bean>
 	<bean id="webAccessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
 		<constructor-arg>
@@ -77,7 +62,7 @@
 		<property name="authenticationManager" ref="authenticationManager" />
 		<property name="filterProcessesUrl" value="/secure/authenticate" />
 		<property name="authenticationFailureHandler" ref="authenticationFailureHandler" />
-		<property name="authenticationSuccessHandler" ref="authenticationSuccessHandler"/>
+		<property name="authenticationSuccessHandler" ref="authenticationSuccessHandler" />
 	</bean>
 	<bean id="authenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler">
 		<property name="defaultFailureUrl" value="/secure/login" />
@@ -109,7 +94,7 @@
 		<sec:intercept-url pattern="/**" access="isAuthenticated()" />
 	</sec:filter-security-metadata-source>
 	<sec:filter-security-metadata-source id="channelMetadataSource">
-		<sec:intercept-url pattern="/secure/**" access="REQUIRES_SECURE_CHANNEL" />
+		<sec:intercept-url pattern="/**/secure/**" access="REQUIRES_SECURE_CHANNEL" />
 	</sec:filter-security-metadata-source>
 	<bean id="secureChannelProcessor" class="org.springframework.security.web.access.channel.SecureChannelProcessor" />
 	<bean id="insecureChannelProcessor" class="org.springframework.security.web.access.channel.InsecureChannelProcessor" />
@@ -120,7 +105,7 @@
 				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,multiTenantAuthenticationFilter" />
 			<sec:filter-chain pattern="/secure/login" filters="channelProcessingFilter,localeContextHolderFilter" />
 			<sec:filter-chain pattern="/static/**" filters="none" />
-			<sec:filter-chain pattern="/permitted/**"
+			<sec:filter-chain pattern="/**/permitted/**"
 				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,tenantContextBindFilter" />
 			<sec:filter-chain pattern="/**"
 				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,tenantContextBindFilter,exceptionTranslationFilter,filterSecurityInterceptor" />

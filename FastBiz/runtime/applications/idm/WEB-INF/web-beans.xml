@@ -8,6 +8,5 @@
 	http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd  
 	http://www.springframework.org/schema/security 
 	http://www.springframework.org/schema/security/spring-security-3.1.xsd">
-	<import resource="classpath:mvc.xml" />
 	<import resource="classpath:security.xml" />
 </beans>

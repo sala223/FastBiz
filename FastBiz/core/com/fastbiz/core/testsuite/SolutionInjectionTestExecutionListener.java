@@ -44,7 +44,7 @@ public class SolutionInjectionTestExecutionListener extends AbstractTestExecutio
             }
             Object bean = testContext.getTestInstance();
             StandardSolution standardSolution = (StandardSolution) solution;
-            AutowireCapableBeanFactory beanFactory = standardSolution.unwrap(AutowireCapableBeanFactory.class);
+            AutowireCapableBeanFactory beanFactory = standardSolution.getApplicationContext().getAutowireCapableBeanFactory();
             beanFactory.autowireBeanProperties(bean, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
             beanFactory.initializeBean(bean, testContext.getTestClass().getName());
         }

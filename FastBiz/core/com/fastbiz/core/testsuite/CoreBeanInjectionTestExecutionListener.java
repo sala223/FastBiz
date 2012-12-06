@@ -4,7 +4,7 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.support.AbstractTestExecutionListener;
 import com.fastbiz.core.solution.StandardSolutionBrowser;
-import com.fastbiz.core.solution.ioc.DefaultBeanFactory;
+import com.fastbiz.core.solution.ioc.SpringBeanFactoryAdapter;
 import com.fastbiz.core.solution.spring.StandardSolutionFactory;
 import com.fastbiz.core.tenant.TenantHolder;
 
@@ -32,7 +32,7 @@ public class CoreBeanInjectionTestExecutionListener extends AbstractTestExecutio
                 testContext.setAttribute(SOLUTION_FACTORY_ATTR, obj);
             }
         }
-        DefaultBeanFactory coreBeanFactory = (DefaultBeanFactory) obj.getCoreBeanFactory();
+        SpringBeanFactoryAdapter coreBeanFactory = (SpringBeanFactoryAdapter) obj.getCoreBeanContainer();
         AutowireCapableBeanFactory beanFactory = (AutowireCapableBeanFactory) coreBeanFactory.unwrap();
         beanFactory.autowireBeanProperties(bean, AutowireCapableBeanFactory.AUTOWIRE_NO, false);
         beanFactory.initializeBean(bean, testContext.getTestClass().getName());

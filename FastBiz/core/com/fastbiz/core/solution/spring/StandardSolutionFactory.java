@@ -18,8 +18,8 @@ import com.fastbiz.core.solution.SolutionBrowserAware;
 import com.fastbiz.core.solution.SolutionException;
 import com.fastbiz.core.solution.SolutionFactory;
 import com.fastbiz.core.solution.StandardSolution;
-import com.fastbiz.core.solution.ioc.BeanFactory;
-import com.fastbiz.core.solution.ioc.DefaultBeanFactory;
+import com.fastbiz.core.solution.ioc.BeanContainer;
+import com.fastbiz.core.solution.ioc.SpringBeanFactoryAdapter;
 
 public class StandardSolutionFactory implements SolutionFactory{
 
@@ -135,12 +135,12 @@ public class StandardSolutionFactory implements SolutionFactory{
     }
 
     @Override
-    public BeanFactory getCoreBeanFactory(){
+    public BeanContainer getCoreBeanContainer(){
         if (parent == null) {
             synchronized (this) {
                 this.createParentApplicationContext();
             }
         }
-        return new DefaultBeanFactory(parent.getAutowireCapableBeanFactory());
+        return new SpringBeanFactoryAdapter(parent.getAutowireCapableBeanFactory());
     }
 }
