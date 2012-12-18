@@ -8,18 +8,18 @@ public class BusinessException extends InfrastructureException implements ErrorC
 
     private static final long     serialVersionUID = 1L;
 
-    protected int                 errorCode;
+    protected String              errorCode;
 
     protected static String       indentation      = "[FASTBIZ-SOLUTION]";
 
     protected static final String CR               = System.getProperty("line.separator");
 
-    public BusinessException(int errorCode, Throwable cause) {
+    public BusinessException(String errorCode, Throwable cause) {
         super(cause);
         this.errorCode = errorCode;
     }
 
-    public BusinessException(int errorCode, String message, Object ... args) {
+    public BusinessException(String errorCode, String message, Object ... args) {
         super(message, args);
         this.errorCode = errorCode;
     }
@@ -50,11 +50,11 @@ public class BusinessException extends InfrastructureException implements ErrorC
         return writer.toString();
     }
 
-    public int getErrorCode(){
+    public String getErrorCode(){
         return errorCode;
     }
 
-    public void setErrorCode(int errorCode){
+    public void setErrorCode(String errorCode){
         this.errorCode = errorCode;
     }
 }

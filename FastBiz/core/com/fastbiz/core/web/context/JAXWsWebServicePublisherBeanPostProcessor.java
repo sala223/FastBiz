@@ -17,9 +17,10 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-public class JAXWsWebServicePublisherBeanPostProcessor implements BeanPostProcessor, BeanFactoryAware{
+public class JAXWsWebServicePublisherBeanPostProcessor implements BeanPostProcessor, BeanFactoryAware, ServletConfigAware{
 
     private static final Logger LOG         = LoggerFactory.getLogger(JAXWsWebServicePublisherBeanPostProcessor.class);
 
@@ -36,8 +37,6 @@ public class JAXWsWebServicePublisherBeanPostProcessor implements BeanPostProces
     private String              urlPrefix   = "/ws/";
 
     private String              busBeanName = "cxf";
-
-    private Bus                 bus;
 
     public void setUrlPrefix(String urlPrefix){
         this.urlPrefix = urlPrefix;
@@ -64,6 +63,10 @@ public class JAXWsWebServicePublisherBeanPostProcessor implements BeanPostProces
     }
 
     private void createAndPublishEndpoint(String url, Object implementor){
+        Bus bus = (Bus) beanFactory.getBean(busBeanName);
+        if (bus == null || !(bus instanceof Bus)) {
+            throw new NullPointerException("cannot get bus bean from bean name " + busBeanName);
+        }
         ServerFactoryBean serverFactory = null;
         if (prototypeServerFactoryBeanName != null) {
             if (!beanFactory.isPrototype(prototypeServerFactoryBeanName)) {
@@ -106,11 +109,6 @@ public class JAXWsWebServicePublisherBeanPostProcessor implements BeanPostProces
 
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException{
         this.beanFactory = beanFactory;
-        Object bean = beanFactory.getBean(busBeanName);
-        if (bean == null || !(bean instanceof Bus)) {
-            throw new NullPointerException("cannot get bus bean from bean name " + busBeanName);
-        }
-        this.bus = (Bus) bean;
     }
 
     public String getPrototypeServerFactoryBeanName(){

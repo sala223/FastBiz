@@ -67,7 +67,7 @@ public class DefaultFunctionGroupService implements IFunctionGroupService, Messa
     protected FunctionGroup applyAuthority(FunctionGroup functionGroup){
         Authentication authentication = getSecurityContext().getAuthentication();
         if (authentication == null) {
-            throw new AuthenticationException(AuthenticationException.AUTHENTICATION_NOT_AUTHENTICATED);
+            throw new AuthenticationException(AuthenticationException.ERROR_CODE_AUTHENTICATION_NOT_AUTHENTICATED);
         }
         ArrayList<ConfigAttribute> configAttributes = new ArrayList<ConfigAttribute>();
         if (functionGroup.getAccessExpression() != null) {

@@ -80,6 +80,10 @@
 		<property name="localeResolver" ref="localeResolver" />
 	</bean>
 	<bean id="tenantContextBindFilter" class="com.fastbiz.core.tenant.TenantContextBindFilter" />
+	<bean id="csrfTokenService" class="com.fastbiz.core.web.security.csrf.CSRFTokenServiceImpl" />
+	<bean id="csrfTokenCheckFilter" class="com.fastbiz.core.web.security.csrf.CSRFTokenCheckFilter">
+		<property name="CSRFTokenService" ref="csrfTokenService" />
+	</bean>
 	<bean id="securityContextPersistenceFilter" class="org.springframework.security.web.context.SecurityContextPersistenceFilter" />
 	<bean id="channelDecisionManager" class="org.springframework.security.web.access.channel.ChannelDecisionManagerImpl">
 		<property name="channelProcessors">
@@ -108,7 +112,7 @@
 			<sec:filter-chain pattern="/**/permitted/**"
 				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,tenantContextBindFilter" />
 			<sec:filter-chain pattern="/**"
-				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,tenantContextBindFilter,exceptionTranslationFilter,filterSecurityInterceptor" />
+				filters="channelProcessingFilter,localeContextHolderFilter,securityContextPersistenceFilter,tenantContextBindFilter,exceptionTranslationFilter,filterSecurityInterceptor,csrfTokenCheckFilter" />
 		</sec:filter-chain-map>
 	</bean>
 </beans>

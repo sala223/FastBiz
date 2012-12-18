@@ -17,19 +17,23 @@
 			<property name="eclipselink.jdbc.read-connections.min" value="5" />
 			<property name="eclipselink.jdbc.write-connections.min" value="5" />
 			<property name="eclipselink.jdbc.sequence-connection-pool.min" value="2" />
-			<property name="eclipselink.jdbc.exclusive-connection.mode" value="Always"/>
+			<property name="eclipselink.jdbc.exclusive-connection.mode" value="Always" />
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="eclipselink.weaving" value="true" />
-			<property name="eclipselink.cache.shared.default" value="true" />
+			<property name="eclipselink.weaving.internal" value="true" />
+			<property name="eclipselink.weaving.lazy" value="true" />
 			<property name="eclipselink.weaving.fetchgroups" value="true" />
+			<property name="eclipselink.weaving.changetracking" value="true" />
+			<property name="eclipselink.cache.shared.default" value="true" />
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
 			<property name="eclipselink.ddl-generation.output-mode" value="database" />
 			<property name="eclipselink.jdbc.uppercase-columns" value="true" />
 			<property name="eclipselink.create-ddl-jdbc-file-name" value="runtime/sql/ddl_script.sql" />
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
-			<property name="eclipselink.session-event-listener" value="com.fastbiz.core.bootstrap.service.persistence.TenantInjectionSessionEventListener"/>
+			<property name="eclipselink.session.customizer" value="com.fastbiz.core.bootstrap.service.persistence.SolutionsSessionCustomizer"/>
+			<property name="eclipselink.session-event-listener" value="com.fastbiz.core.bootstrap.service.persistence.TenantInjectionSessionEventListener" />
 			<!-- single persist unit for multiple tenants -->
-			<property name="eclipselink.multitenant.tenants-share-cache" value="false" />
+			<property name="eclipselink.multitenant.tenants-share-cache" value="true" />
 			<property name="eclipselink.multitenant.tenants-share-emf" value="true" />
 			<property name="eclipselink.metadata-source" value="com.fastbiz.core.bootstrap.service.persistence.SolutionsMetaDataSource" />
 			<property name="system.tenant.id" value="SYSTEM" />

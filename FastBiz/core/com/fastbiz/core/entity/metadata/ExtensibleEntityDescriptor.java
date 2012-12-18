@@ -4,9 +4,9 @@ import java.util.List;
 
 public class ExtensibleEntityDescriptor{
 
-    private String                             entity;
+    private String                          entity;
 
-    private List<EntityExtendedAttrDescriptor> extendedAttributes;
+    private List<ExtensibleEntityAttrGroup> extendedAttrGroups;
 
     public String getEntity(){
         return entity;
@@ -16,11 +16,11 @@ public class ExtensibleEntityDescriptor{
         this.entity = entity;
     }
 
-    public List<EntityExtendedAttrDescriptor> getExtendedAttributes(){
-        return extendedAttributes;
+    public List<ExtensibleEntityAttrGroup> getExtendedAttrGroups(){
+        return extendedAttrGroups;
     }
 
-    public void setExtendedAttributes(List<EntityExtendedAttrDescriptor> extendedAttributes){
-        this.extendedAttributes = extendedAttributes;
+    public void setExtendedAttrGroups(List<ExtensibleEntityAttrGroup> extendedAttrGroups){
+        this.extendedAttrGroups = extendedAttrGroups;
     }
 }

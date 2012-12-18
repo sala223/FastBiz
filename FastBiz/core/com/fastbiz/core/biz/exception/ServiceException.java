@@ -8,16 +8,16 @@ public class ServiceException extends BusinessException{
 
     protected String          serviceName;
 
-    public ServiceException(String serviceName, int errorCode) {
+    public ServiceException(String serviceName, String errorCode) {
         this(serviceName, errorCode, null);
     }
 
-    public ServiceException(String serviceName, int errorCode, Throwable cause) {
+    public ServiceException(String serviceName, String errorCode, Throwable cause) {
         super(errorCode, cause);
         this.serviceName = serviceName;
     }
 
-    public ServiceException(String serviceName, int errorCode, String message, Object ... args) {
+    public ServiceException(String serviceName, String errorCode, String message, Object ... args) {
         super(errorCode, message, args);
         this.serviceName = serviceName;
     }

@@ -45,6 +45,9 @@
 			<props>
 				<prop key="eclipselink.weaving">false</prop>
 				<prop key="eclipselink.weaving.fetchgroups">false</prop>
+				<prop key="eclipselink.weaving.changetracking">false</prop>
+				<prop key="eclipselink.weaving.lazy">false</prop>
+				<prop key="eclipselink.weaving.internal">false</prop>
 			</props>
 		</property>
 	</bean>
@@ -61,6 +64,13 @@
 		<property name="providerClass" value="org.apache.bval.jsr303.ApacheValidationProvider" />
 		<property name="messageInterpolator" ref="VALIDATOR_MESSAGE_INTERPOLATOR" />
 	</bean>
+	<bean id="SOLUTION_VALIDATOR" class="com.fastbiz.core.entity.validation.SolutionEntityValidator">
+		<property name="entityExtendedAttrFactory" ref="ENTITY_EXTENDED_ATTR_FACTORY" />
+		<property name="constraintCheckInvokerFactory">
+			<bean class="com.fastbiz.core.entity.validation.ConstraintCheckInvokerFactory" />
+		</property>
+	</bean>
+	<bean id="ENTITY_EXTENDED_ATTR_FACTORY" class="com.fastbiz.core.entity.validation.CachedTenantEntityExtendedAttrFactory" />
 	<bean id="TRANSACTION_ATTRIBUTE_SOURCE" class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource" />
 	<bean id="TRANSACTION_ADVISOR" class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor">
 		<property name="TransactionInterceptor" ref="TRANSACTION_INTERCEPTOR" />
@@ -110,6 +120,9 @@
 				<props>
 					<prop key="eclipselink.weaving">true</prop>
 					<prop key="eclipselink.weaving.fetchgroups">true</prop>
+					<prop key="eclipselink.weaving.changetracking">true</prop>
+					<prop key="eclipselink.weaving.lazy">true</prop>
+					<prop key="eclipselink.weaving.internal">true</prop>
 				</props>
 			</property>
 		</bean>

@@ -15,9 +15,9 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 
 public class JAXRSServicePublisherBeanPostProcessor implements BeanPostProcessor, BeanFactoryAware{
 
-    private static final Logger    LOG = LoggerFactory.getLogger(JAXRSServicePublisherBeanPostProcessor.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JAXRSServicePublisherBeanPostProcessor.class);
 
-    private JAXRSServerFactoryBean serverBean;
+    private BeanFactory         beanFactory;
 
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException{
         return bean;
@@ -35,16 +35,19 @@ public class JAXRSServicePublisherBeanPostProcessor implements BeanPostProcessor
     }
 
     private void createAndPublishRSService(Object bean){
-        JAXRSServiceFactoryBean serviceFactory = serverBean.getServiceFactory();
-        List<Object> beans = new ArrayList<Object>();
-        beans.add(bean);
-        serviceFactory.setResourceClassesFromBeans(beans);
-    }
-
-    public void setBeanFactory(BeanFactory beanFactory) throws BeansException{
-        serverBean = beanFactory.getBean(JAXRSServerFactoryBean.class);
+        JAXRSServerFactoryBean serverBean = beanFactory.getBean(JAXRSServerFactoryBean.class);
         if (serverBean == null) {
             throw new NullPointerException("JAXRSServerFactoryBean bean is not defined");
         }
+        JAXRSServiceFactoryBean serviceFactory = serverBean.getServiceFactory();
+        if (!serviceFactory.getResourceClasses().contains(bean.getClass())) {
+            List<Object> beans = new ArrayList<Object>(1);
+            beans.add(bean);
+            serviceFactory.setResourceClassesFromBeans(beans);
+        }
+    }
+
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException{
+        this.beanFactory = beanFactory;
     }
 }

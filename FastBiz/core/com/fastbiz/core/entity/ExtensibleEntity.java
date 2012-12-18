@@ -16,17 +16,17 @@ import org.springframework.util.Assert;
 public abstract class ExtensibleEntity extends MultiTenantSupport{
 
     @ElementCollection
-    @CollectionTable(joinColumns = @JoinColumn(name = "ID"))
+    @CollectionTable(joinColumns = @JoinColumn(name = "ENTITY_ID"))
     @MapKey(name = "attributeName")
     private Map<String, StringAttribute>   stringAttributes   = new HashMap<String, StringAttribute>();
 
     @ElementCollection
-    @CollectionTable(joinColumns = @JoinColumn(name = "ID"))
+    @CollectionTable(joinColumns = @JoinColumn(name = "ENTITY_ID"))
     @MapKey(name = "attributeName")
     private Map<String, DecimalAttribute>  decimalAttributes  = new HashMap<String, DecimalAttribute>();
 
     @ElementCollection
-    @CollectionTable(joinColumns = @JoinColumn(name = "ID"))
+    @CollectionTable(joinColumns = @JoinColumn(name = "ENTITY_ID"))
     @MapKey(name = "attributeName")
     @JsonProperty
     private Map<String, DateTimeAttribute> dateTimeAttributes = new HashMap<String, DateTimeAttribute>();

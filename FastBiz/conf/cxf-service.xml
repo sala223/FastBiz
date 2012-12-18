@@ -8,7 +8,7 @@
 	<bean class="com.fastbiz.core.web.context.JAXWsWebServicePublisherBeanPostProcessor">
 		<property name="urlPrefix" value="/ws/" />
 	</bean>
-	<bean class="com.fastbiz.core.web.context.JAXRSServicePublisherBeanPostProcessor"/>
+	<bean class="com.fastbiz.core.web.context.JAXRSServicePublisherBeanPostProcessor" />
 	<bean id="depthProperties" class="org.apache.cxf.staxutils.DocumentDepthProperties">
 		<property name="innerElementCountThreshold" value="500" />
 	</bean>

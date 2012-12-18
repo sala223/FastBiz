@@ -13,7 +13,7 @@ import com.fastbiz.solution.wms.entity.Constants;
 @Repository
 public class CategoryDAL extends EclipseLinkDataAccessFoundation implements Constants{
 
-    public int disableCategoryRecursively(int categoryId){
+    public int disableCategoryRecursively(long categoryId){
         String eql = "UPDATE %s as c where c.id=:ID set c.isActive=:STATUS and c.children.isActive=:STATUS";
         Query query = this.getEntityManager().createQuery(String.format(eql, Constants.CATEGORY.CATEGORY_ENTITY_NAME));
         query.setParameter("ID", categoryId);
@@ -21,7 +21,7 @@ public class CategoryDAL extends EclipseLinkDataAccessFoundation implements Cons
         return query.executeUpdate();
     }
 
-    public int getChildrenSize(int categoryId){
+    public int getChildrenSize(long categoryId){
         String eql = "SELECT COUNT(c.children.id) FROM %s as c where c.id=:ID";
         Query query = this.getEntityManager().createQuery(String.format(eql, Constants.CATEGORY.CATEGORY_ENTITY_NAME));
         query.setParameter("ID", categoryId);
@@ -43,7 +43,7 @@ public class CategoryDAL extends EclipseLinkDataAccessFoundation implements Cons
         return query.executeUpdate();
     }
 
-    public List<Category> getCategoryChildren(int categoryId){
+    public List<Category> getCategoryChildren(long categoryId){
         CriteriaBuilder builder = createQueryBuilder();
         CriteriaQuery<Category> query = builder.createQuery(Category.class);
         Root<Category> root = query.from(Category.class);

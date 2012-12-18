@@ -20,26 +20,26 @@ public class CategoryService{
     @Qualifier("VALIDATOR")
     protected Validator validator;
 
-    public void deleteCategory(int categoryId){
+    public void deleteCategory(long categoryId){
         categoryDAL.remove(Category.class, categoryId);
     }
 
     public void removeCategoryByName(String categoryName){
         categoryDAL.removeCategoryByName(categoryName);
     }
-    
-    public void getCategoryChildren(int categoryId){
+
+    public void getCategoryChildren(long categoryId){
         categoryDAL.remove(Category.class, categoryId);
     }
 
-    public void updateCategoryParent(int categoryId, int parentCategoryId){
+    public void updateCategoryParent(long categoryId, long parentCategoryId){
         Category find = categoryDAL.find(Category.class, categoryId);
         if (find == null) {
-            throw CategoryException.CategoryNonExistException();
+            throw CategoryException.CategoryNonExistException(categoryId);
         }
         Category parent = categoryDAL.find(Category.class, categoryId);
         if (parent == null) {
-            throw CategoryException.parentCategoryNotExistException();
+            throw CategoryException.parentCategoryNotExistException(parentCategoryId);
         }
         find.setParent(parent);
         categoryDAL.merge(find);
@@ -48,11 +48,11 @@ public class CategoryService{
     public void updateCategoryParent(String categoryName, String parentCategoryName){
         Category find = categoryDAL.findCategoryByName(categoryName);
         if (find == null) {
-            throw CategoryException.CategoryNonExistException();
+            throw CategoryException.CategoryNonExistException(categoryName);
         }
         Category parent = categoryDAL.findCategoryByName(parentCategoryName);
         if (parent == null) {
-            throw CategoryException.parentCategoryNotExistException();
+            throw CategoryException.parentCategoryNotExistException(parentCategoryName);
         }
         find.setParent(parent);
         categoryDAL.merge(find);
@@ -63,13 +63,13 @@ public class CategoryService{
         validator.validate(category);
         Category find = categoryDAL.findCategoryByName(category.getName());
         if (find != null) {
-            throw CategoryException.CategoryAlreadyExistException();
+            throw CategoryException.CategoryAlreadyExistException(category.getName());
         }
         Category parentValue = category.getParent();
         if (parentValue != null) {
             Category parent = categoryDAL.find(Category.class, parentValue.getId());
             if (parent == null) {
-                throw CategoryException.parentCategoryNotExistException();
+                throw CategoryException.parentCategoryNotExistException(parentValue.getId());
             }
         }
         categoryDAL.insert(category);
@@ -81,7 +81,7 @@ public class CategoryService{
     }
 
     @Transactional
-    public void disableCategory(int categoryId, boolean disableChildren){
+    public void disableCategory(long categoryId, boolean disableChildren){
         if (disableChildren) {
             categoryDAL.disableCategoryRecursively(categoryId);
         } else {

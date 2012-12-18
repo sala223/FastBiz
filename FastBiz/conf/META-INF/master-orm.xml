@@ -4,5 +4,6 @@
 	xmlns="http://www.eclipse.org/eclipselink/xsds/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	version="2.1">
 	<entity class="com.fastbiz.core.entity.metadata.EntityExtendedAttrDescriptor" />
-	<entity class="com.fastbiz.core.entity.metadata.EntityExtendedAttrConstraint" />
+	<embeddable class="com.fastbiz.core.entity.metadata.EntityExtendedAttrConstraint">
+	</embeddable>
 </entity-mappings>

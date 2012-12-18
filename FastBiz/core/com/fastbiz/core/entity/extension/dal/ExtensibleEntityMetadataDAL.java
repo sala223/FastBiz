@@ -3,9 +3,6 @@ package com.fastbiz.core.entity.extension.dal;
 import java.util.Arrays;
 import java.util.List;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import org.eclipse.persistence.descriptors.ClassDescriptor;
 import org.springframework.stereotype.Repository;
 import com.fastbiz.core.dal.EclipseLinkDataAccessFoundation;
@@ -29,17 +26,6 @@ public class ExtensibleEntityMetadataDAL extends EclipseLinkDataAccessFoundation
         this.bulkInsert(newAttrs);
     }
 
-    public void createEntityAttributes(Class<?> entityClass, List<EntityExtendedAttrDescriptor> newAttrs){
-        ClassDescriptor descriptor = checkEntityValidity(entityClass);
-        createEntityAttributes(descriptor.getAlias(), newAttrs);
-    }
-
-    public List<EntityExtendedAttrDescriptor> getExtendedAttributes(Class<?> entityClass){
-        checkEntityValidity(entityClass);
-        String alias = this.getClassDescrptor(entityClass).getAlias();
-        return this.getExtendedAttributes(alias);
-    }
-
     public List<EntityExtendedAttrDescriptor> getExtendedAttributes(String entityName){
         checkEntityValidity(entityName);
         String queryName = EntityExtendedAttrDescriptor.NQ_FIND_EXTENDED_ATTRS_BY_ENTITY_NAME;
@@ -48,25 +34,13 @@ public class ExtensibleEntityMetadataDAL extends EclipseLinkDataAccessFoundation
         return query.getResultList();
     }
 
-    public EntityExtendedAttrDescriptor getExtendedAttribute(Class<?> entityClass, String attributeName){
-        checkEntityValidity(entityClass);
-        String alias = this.getClassDescrptor(entityClass).getAlias();
-        return this.getExtendedAttribute(alias, attributeName);
-    }
-
     public EntityExtendedAttrDescriptor getExtendedAttribute(String entityName, String attributeName){
         checkEntityValidity(entityName);
-        CriteriaBuilder builder = createQueryBuilder();
-        CriteriaQuery<EntityExtendedAttrDescriptor> query = builder.createQuery(EntityExtendedAttrDescriptor.class);
-        Root<EntityExtendedAttrDescriptor> root = query.from(EntityExtendedAttrDescriptor.class);
-        query.where(builder.equal(root.get("entityName"), entityName));
-        query.where(builder.equal(root.get("name"), attributeName));
+        String queryName = EntityExtendedAttrDescriptor.NQ_FIND_EXTENDED_ATTR_BY_ATTR_NAME;
+        Query query = this.getEntityManager().createNamedQuery(queryName);
+        query.setParameter("ENTITY_NAME", entityName);
+        query.setParameter("ATTR_NAME", attributeName);
         return this.executeSingleQuery(query);
-    }
-
-    public int deleteEntityAttibutes(Class<?> entityClass, String[] attributes){
-        ClassDescriptor descriptor = checkEntityValidity(entityClass);
-        return deleteEntityAttibutes(descriptor.getAlias(), attributes);
     }
 
     public int deleteEntityAttibutes(String entityName, String[] attributes){
@@ -82,8 +56,23 @@ public class ExtensibleEntityMetadataDAL extends EclipseLinkDataAccessFoundation
         return query.executeUpdate();
     }
 
+    public void updateEntityAttribute(EntityExtendedAttrDescriptor attr){
+        checkEntityValidity(attr.getEntityName());
+        EntityExtendedAttrDescriptor old = this.find(EntityExtendedAttrDescriptor.class, attr.getId());
+        if (old == null) {
+            throw ExtensionException.EntityAttributeNotExist(attr.getId());
+        }
+        if (old.getEntityName().equals(attr.getEntityName())) {
+            throw ExtensionException.EntityAttributeOwnerUnModifiable(attr, old.getEntityName());
+        }
+        this.update(attr);
+    }
+
     public String getEntityAlias(Class<?> entityClass){
-        this.checkEntityValidity(entityClass);
+        ClassDescriptor descriptor = this.getClassDescrptor(entityClass);
+        if (descriptor == null) {
+            throw ExtensionException.notAnEntityClassException(entityClass);
+        }
         return this.getClassDescrptor(entityClass).getAlias();
     }
 
@@ -91,18 +80,10 @@ public class ExtensibleEntityMetadataDAL extends EclipseLinkDataAccessFoundation
         return this.getClassDescrptor(entityName);
     }
 
-    protected ClassDescriptor checkEntityValidity(Class<?> entityClass){
-        ClassDescriptor descriptor = this.getClassDescrptor(entityClass);
-        if (descriptor == null) {
-            throw ExtensionException.notAnEntityClassException(entityClass);
-        }
-        return descriptor;
-    }
-
     protected void checkEntityValidity(String entityName){
         ClassDescriptor descriptor = this.getEntityDescriptor(entityName);
         if (descriptor == null) {
-            throw ExtensionException.noSuchEntityException(entityName);
+            throw ExtensionException.noSuchEntityTypeException(entityName);
         }
     }
 }
